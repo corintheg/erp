@@ -26,3 +26,12 @@ Route::middleware('auth:sanctum')->group(function () {
         return response()->json(auth()->user());
     });
 });
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\FinanceController;
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->middleware('role:admin');
+    Route::get('/transactions', [FinanceController::class, 'index'])->middleware('role:manager');
+});

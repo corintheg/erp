@@ -11,7 +11,10 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->unique();
             $table->timestamps();
+
         });
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('set null');});
     }
 
     public function down(): void
@@ -19,3 +22,5 @@ return new class extends Migration {
         Schema::dropIfExists('roles');
     }
 };
+
+
