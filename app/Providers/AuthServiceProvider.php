@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('view-finances', function (User $user) {
-            return in_array($user->role, ['admin', 'manager']);
+            return in_array($user->role, ['admin', 'finance', '']);
         });
     }
 }

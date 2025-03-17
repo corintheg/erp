@@ -18,8 +18,8 @@ class SalaireController extends Controller
         $request->validate([
             'id_employe' => 'required|exists:employes,id_employe',
             'montant' => 'required|numeric',
-            'date_debut' => 'required|date',
-            'date_fin' => 'nullable|date'
+            'date_creation' => 'required|date',
+            'date_modification' => 'nullable|date'
         ]);
 
         $salaire = Salaire::create($request->only(['id_employe','montant','date_debut','date_fin']));
