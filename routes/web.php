@@ -9,10 +9,18 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+
+//GESTION DES ENMPLOYÉ
 // Route pour afficher le formulaire (GET)
 Route::get('/add_employe', function () {
-    return view('auth.add_employe'); // Assure-toi que tu as une vue add_employe.blade.php
+    return view('auth.add_employe');
 });
 
 // Route pour enregistrer un employé
 Route::post('/add_employe', [EmployeController::class, 'add_employe']);
+
+
+//GESTION DES DEMANDE DE CONGÉ
+Route::get('/leave_request', function () {
+    return view('leave_request');
+});
