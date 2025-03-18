@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="erp@localhost" uuid="b827fbff-2064-471c-9724-aad7e94dac54">
-      <driver-ref>mysql.8</driver-ref>
+    <data-source source="LOCAL" name="MariaDB" uuid="e7438f79-a150-4373-8a67-f4bd8baf3a96">
+      <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/erp</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="database.introspection.mysql.dbe5060" value="true" />
-      </jdbc-additional-properties>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>http://localhost/phpmyadmin/index.php?route=/database/structure&amp;db=erp</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
