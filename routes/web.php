@@ -27,4 +27,3 @@ Route::post('/add_employe', [EmployeController::class, 'add_employe']);
 Route::get('/leave_request', function () {
     return view('leave_request');
 });
->>>>>>> routes/web.php
