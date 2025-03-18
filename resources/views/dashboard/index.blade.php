@@ -44,7 +44,7 @@
     async function fetchData(url) {
         try {
             const response = await fetch(url, {
-                headers: { 'Authorization': 'Bearer VOTRE_JETON_SANCTUM' } // Remplacez par un vrai token
+                headers: { 'Authorization': 'Bearer VOTRE_JETON_SANCTUM' }
             });
             return await response.json();
         } catch (error) {
