@@ -10,9 +10,9 @@ Route::get('/', function () {
 });
 
 // Route pour afficher le formulaire (GET)
-Route::get('/register', function () {
-    return view('auth.register'); // Assure-toi que tu as une vue register.blade.php
+Route::get('/add_employe', function () {
+    return view('auth.add_employe'); // Assure-toi que tu as une vue add_employe.blade.php
 });
 
 // Route pour enregistrer un employé
-Route::post('/register', [EmployeController::class, 'register']);
+Route::post('/add_employe', [EmployeController::class, 'add_employe']);
