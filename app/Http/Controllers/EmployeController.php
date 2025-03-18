@@ -7,7 +7,7 @@ use App\Models\Employe; // Assure-toi d'importer le modèle si nécessaire
 
 class EmployeController extends Controller
 {
-    public function register(Request $request)
+    public function add_employe(Request $request)
     {
         $employe = new Employe();
         $employe->nom = $request->nom;
