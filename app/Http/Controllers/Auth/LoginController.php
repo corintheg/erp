@@ -15,19 +15,22 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'username' => ['required'],
             'mot_de_passe' => ['required'],
+        ], [
+            'username.required' => 'Le champ nom d’utilisateur est obligatoire.',
+            'mot_de_passe.required' => 'Le champ mot de passe est obligatoire.',
         ]);
 
-        if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['mot_de_passe']])) {
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->mot_de_passe])) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard'); // ou ta route protégée
+            session()->flash('success', 'Connexion réussie !');
+            return redirect()->intended('dashboard');
         }
 
-        return back()->withErrors([
-            'username' => 'Les identifiants sont incorrects.',
-        ]);
+        return back()->with('error', 'Les identifiants sont incorrects.');
+
     }
 
     public function logout(Request $request)

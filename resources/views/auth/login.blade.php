@@ -19,6 +19,25 @@
             <h1 class="text-3xl font-bold text-gray-800">Bienvenue</h1>
             <p class="text-gray-600 mt-2">Connectez-vous pour continuer</p>
         </div>
+        @if (session('success'))
+            <div style="color: green;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div style="color: red;">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div style="color: red;">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="mb-4">
@@ -27,8 +46,8 @@
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
             </div>
             <div class="mb-6">
-                <label for="password" class="block text-gray-700 font-medium mb-2">Mot de passe</label>
-                <input type="password" name="password" id="password" placeholder="Votre mot de passe" required
+                <label for="mot_de_passe" class="block text-gray-700 font-medium mb-2">Mot de passe</label>
+                <input type="password" name="mot_de_passe" id="mot_de_passe" placeholder="Votre mot de passe" required
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
             </div>
             <button type="submit"
