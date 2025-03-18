@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="min-h-screen flex items-center justify-center bg-gray-100">
-        <form action="/register" method="POST" class="w-full max-w-md md:max-w-lg lg:max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md animate-fade-in">
+        <form action="/add_employe" method="POST" class="w-full max-w-md md:max-w-lg lg:max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md animate-fade-in">
             @csrf
             <div class="mb-4 animate-slide-up" style="animation-delay: 0.1s;">
                 <input
