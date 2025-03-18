@@ -16,10 +16,10 @@ class CongeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_employe' => 'employes,id_employe',
-            'type_conge' => 'RTT,CP,Maladie',
-            'date_debut' => 'date',
-            'date_fin' => 'date|after_or_equal:date_debut'
+            'id_employe' => 'required|exists:employes,id_employe',
+            'type_conge' => 'required|in:RTT,CP,Maladie',
+            'date_debut' => 'required|date',
+            'date_fin' => 'required|date|after_or_equal:date_debut'
         ]);
 
         $conge = Conge::create($request->only(['id_employe','type_conge','date_debut','date_fin']));
@@ -36,7 +36,7 @@ class CongeController extends Controller
     {
         $conge = Conge::findOrFail($id);
         $request->validate([
-            'statut' => 'En attente,Validé,Annulé',
+            'statut' => 'required|in:En attente,Validé,Annulé',
             'commentaires' => 'nullable|string'
         ]);
         $conge->update($request->only(['statut','commentaires']));

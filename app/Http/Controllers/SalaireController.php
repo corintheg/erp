@@ -16,9 +16,9 @@ class SalaireController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_employe' => 'employes,id_employe',
-            'montant' => 'numeric',
-            'date_creation' => 'date',
+            'id_employe' => 'required|exists:employes,id_employe',
+            'montant' => 'required|numeric',
+            'date_creation' => 'required|date',
             'date_modification' => 'nullable|date'
         ]);
 

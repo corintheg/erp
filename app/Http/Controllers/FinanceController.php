@@ -15,9 +15,9 @@ class FinanceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'type_operation' => 'dépense,revenu,facture,taxe',
-            'montant'        => 'numeric',
-            'date_operation' => 'date',
+            'type_operation' => 'required|in:dépense,revenu,facture,taxe',
+            'montant'        => 'required|numeric',
+            'date_operation' => 'required|date',
         ]);
 
         $transaction = Finance::create($request->all());
