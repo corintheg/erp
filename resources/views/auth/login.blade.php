@@ -5,10 +5,8 @@
     <meta charset="UTF-8">
     <title>Connexion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Petite personnalisation pour activer le backdrop-blur sur certains navigateurs */
         .backdrop-blur {
             backdrop-filter: blur(10px);
         }
@@ -21,23 +19,41 @@
             <h1 class="text-3xl font-bold text-gray-800">Bienvenue</h1>
             <p class="text-gray-600 mt-2">Connectez-vous pour continuer</p>
         </div>
-        <form method="POST" action="">
+        @if (session('success'))
+            <div style="color: green;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div style="color: red;">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div style="color: red;">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
+        <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="mb-4">
-                <label for="email" class="block text-gray-700 font-medium mb-2">Adresse Email</label>
-                <input type="email" name="email" id="email" placeholder="Votre email" required autofocus
+                <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
+                <input type="text" name="username" id="username" placeholder="Votre username" required autofocus
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
             </div>
             <div class="mb-6">
-                <label for="password" class="block text-gray-700 font-medium mb-2">Mot de passe</label>
-                <input type="password" name="password" id="password" placeholder="Votre mot de passe" required
+                <label for="mot_de_passe" class="block text-gray-700 font-medium mb-2">Mot de passe</label>
+                <input type="password" name="mot_de_passe" id="mot_de_passe" placeholder="Votre mot de passe" required
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
             </div>
             <button type="submit"
                 class="w-full py-3 bg-[#38d62c] text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 cursor-pointer ">Se
                 connecter</button>
         </form>
-
     </div>
 </body>
 

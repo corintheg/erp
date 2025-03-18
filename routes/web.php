@@ -2,12 +2,15 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmployeController;
 
-// Page d'accueil (connexion)
-Route::get('/', function () {
-    return view('auth.login');
-});
+
+
+Route::get('/', [LoginController::class, 'showLoginForm'])->name(name: 'login');
+Route::post('/', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 
 //GESTION DES ENMPLOYÉ
@@ -24,3 +27,4 @@ Route::post('/add_employe', [EmployeController::class, 'add_employe']);
 Route::get('/leave_request', function () {
     return view('leave_request');
 });
+>>>>>>> routes/web.php
