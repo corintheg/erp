@@ -10,7 +10,7 @@ class StatistiquePlanningController extends Controller
     public function index()
     {
         $totalPlannings = Planning::count();
-        $planningsEffectues = Planning::where('status', 'terminé')->count();
+        $planningsEffectues = Planning::where('status', 'termine')->count();
         $planningsEnCours = Planning::where('status', 'en cours')->count();
 
         return response()->json([

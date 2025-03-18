@@ -16,8 +16,8 @@ class AbsenceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_employe' => 'employes,id_employe',
-            'date_absence' => 'date',
+            'id_employe' => 'required|exists:employes,id_employe',
+            'date_absence' => 'required|date',
             'motif' => 'nullable|string'
         ]);
 

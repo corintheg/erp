@@ -10,8 +10,8 @@ class StatistiqueRhController extends Controller
     public function index()
     {
         $congesDemandes = Conge::count();
-        $congesApprouves = Conge::where('statut', 'approuvé')->count();
-        $congesRefuses = Conge::where('statut', 'refusé')->count();
+        $congesApprouves = Conge::where('statut', 'approuve')->count();
+        $congesRefuses = Conge::where('statut', 'refuse')->count();
 
         return response()->json([
             'conges_demandes' => $congesDemandes,

@@ -10,7 +10,7 @@ class StatistiqueLivraisonController extends Controller
     public function index()
     {
         $totalLivraisons = Livraison::count();
-        $livraisonsEffectuees = Livraison::where('status', 'livré')->count();
+        $livraisonsEffectuees = Livraison::where('status', 'livre')->count();
         $livraisonsEnCours = Livraison::where('status', 'en cours')->count();
 
         return response()->json([
