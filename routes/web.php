@@ -7,18 +7,22 @@ use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\CongeController;
 
 
-
 Route::get('/', [LoginController::class, 'showLoginForm'])->name(name: 'login');
 Route::post('/', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('/dashboard/index');
+    });
+});
 
 //GESTION DES ENMPLOYÉ
 // Route pour afficher le formulaire (GET)
 Route::get('/add_employe', [EmployeController::class,'view_add_employe']);
 // Route pour enregistrer un employé
 Route::post('/add_employe', [EmployeController::class, 'add_employe']);
+
 
 
 //GESTION DES DEMANDE DE CONGÉ
