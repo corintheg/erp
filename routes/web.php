@@ -13,17 +13,26 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
-//GESTION DES ENMPLOYÉ
-// Route pour afficher le formulaire (GET)
-Route::get('/add_employe', function () {
-    return view('auth.add_employe');
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('/dashboard/index');
+    });
+
+    //GESTION DES ENMPLOYÉ
+    // Route pour afficher le formulaire (GET)
+    Route::get('/add_employe', function () {
+        return view('auth.add_employe');
+    });
+
+    // Route pour enregistrer un employé
+    Route::post('/add_employe', [EmployeController::class, 'add_employe']);
+
+
+    //GESTION DES DEMANDE DE CONGÉ
+    Route::get('/leave_request', function () {
+        return view('leave_request');
+    });
 });
 
-// Route pour enregistrer un employé
-Route::post('/add_employe', [EmployeController::class, 'add_employe']);
-
-
-//GESTION DES DEMANDE DE CONGÉ
-Route::get('/leave_request', function () {
-    return view('leave_request');
-});
