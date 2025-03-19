@@ -7,6 +7,9 @@ use App\Models\Employe; // Assure-toi d'importer le modèle si nécessaire
 
 class EmployeController extends Controller
 {
+    function view_add_employe() {
+        return view('auth.add_employe');
+    }
     public function add_employe(Request $request)
     {
         $employe = new Employe();
