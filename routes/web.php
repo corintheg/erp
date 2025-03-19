@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\CongeController;
 
 
 
@@ -27,3 +28,6 @@ Route::post('/add_employe', [EmployeController::class, 'add_employe']);
 Route::get('/leave_request', function () {
     return view('leave_request');
 });
+
+Route::post('/leave_request', [CongeController::class, 'leave_request']);
+
