@@ -37,6 +37,9 @@
     <form action="/leave_request" method="POST" class="card p-4">
         @csrf
 
+        <!-- Champ caché pour l'ID de l'utilisateur -->
+        <input type="hidden" name="user_id" value="{{ Auth::user()->id_utilisateur }}">
+
         <!-- Type de congé -->
         <div class="mb-3">
             <label for="type_conge" class="form-label">Type de congé</label>
@@ -76,11 +79,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Récupérer les éléments
     const typeCongeSelect = document.getElementById('type_conge');
     const submitButton = document.getElementById('submitButton');
 
-    // Écouter les changements sur le select
     typeCongeSelect.addEventListener('change', function() {
         if (this.value === 'Maladie') {
             submitButton.textContent = 'Envoyer le congé';

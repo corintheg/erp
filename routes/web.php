@@ -16,18 +16,12 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //GESTION DES ENMPLOYÉ
 // Route pour afficher le formulaire (GET)
-Route::get('/add_employe', function () {
-    return view('auth.add_employe');
-});
-
+Route::get('/add_employe', [EmployeController::class,'view_add_employe']);
 // Route pour enregistrer un employé
 Route::post('/add_employe', [EmployeController::class, 'add_employe']);
 
 
 //GESTION DES DEMANDE DE CONGÉ
-Route::get('/leave_request', function () {
-    return view('leave_request');
-});
-
+Route::get('/leave_request',[CongeController::class,'view_leave_request']);
 Route::post('/leave_request', [CongeController::class, 'leave_request']);
 

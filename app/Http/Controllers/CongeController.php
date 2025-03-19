@@ -45,14 +45,21 @@ class CongeController extends Controller
 //        $conge->delete();
 //        return response()->json(['message' => 'Congé supprimé']);
 //    }
+
+    public function view_leave_request(){
+            return view('leave_request');
+        }
     public function leave_request(Request $request)
     {
 
         $conge = new Conge();
+        $conge->id_employe = $request->user_id ;
         $conge->type_conge = $request->type_conge;
         $conge->date_debut = $request->date_debut;
+        $conge->commentaires =$request->raison;
         $conge->date_fin = $request->date_fin;
         $conge->save();
         return response()->json(['message' => 'Employé enregistré avec succès !']);
     }
+
 }
