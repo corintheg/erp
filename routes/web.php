@@ -11,8 +11,9 @@ use App\Http\Controllers\CongeController;
 Route::middleware('guest')->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm'])->name(name: 'login');
     Route::post('/', [LoginController::class, 'login']);
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
