@@ -21,9 +21,8 @@ Route::middleware(['auth'])->group(function () {
     });
     //GESTION DES EMPLOYÉS
     // Route pour afficher le formulaire (GET)
-    Route::get('/add_employe', [EmployeController::class, 'view_add_employe']);
-    // Route pour enregistrer un employé
-    Route::post('/add_employe', [EmployeController::class, 'add_employe']);
+    Route::get('/add_employe', [EmployeController::class, 'create']);
+    Route::post('/add_employe', [EmployeController::class, 'add_employe'])->name('add_employe');
 
 
     //GESTION DES DEMANDE DE CONGÉ
