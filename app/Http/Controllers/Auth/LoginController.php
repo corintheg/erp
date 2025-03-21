@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Utilisateur;
 
 class LoginController extends Controller
 {
@@ -23,14 +25,19 @@ class LoginController extends Controller
             'mot_de_passe.required' => 'Le champ mot de passe est obligatoire.',
         ]);
 
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->mot_de_passe])) {
+        // Récupération de l'utilisateur par username
+        $user = Utilisateur::where('username', $request->username)->first();
+
+        // Vérification manuelle du mot de passe
+        if ($user && Hash::check($request->mot_de_passe, $user->getAuthPassword())) {
+            // Connexion de l'utilisateur
+            Auth::login($user);
             $request->session()->regenerate();
             session()->flash('success', 'Connexion réussie !');
             return redirect()->intended('dashboard');
         }
 
         return back()->with('error', 'Les identifiants sont incorrects.');
-
     }
 
     public function logout(Request $request)
@@ -38,6 +45,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect('/login');
     }
 }
