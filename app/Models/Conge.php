@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Conge extends Model
 {
+    public $timestamps = false; // Désactive `created_at` et `updated_at`
+
     use HasFactory;
 
     protected $table = 'conges';
