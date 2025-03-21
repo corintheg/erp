@@ -24,4 +24,6 @@ class Employe extends Model
 
     // Désactiver les timestamps (si ta table ne contient pas `created_at` et `updated_at`)
     public $timestamps = false;
+
+
 }
