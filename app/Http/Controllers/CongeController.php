@@ -47,7 +47,7 @@ class CongeController extends Controller
 //    }
 
     public function view_leave_request(){
-            return view('leave_request');
+            return view('leave.leave_request');
         }
     public function leave_request(Request $request)
     {
