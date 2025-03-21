@@ -10,7 +10,12 @@ class EmployeController extends Controller
     public function create()
     {
         $employes = Employe::all();
-        return view('auth.add_employe', compact('employes'));
+        return view('employes.add_employe', compact('employes'));
+    }
+    public function index()
+    {
+        $employes = Employe::all();
+        return view('employes.management', compact('employes'));
     }
     public function add_employe(Request $request)
     {
@@ -41,5 +46,30 @@ class EmployeController extends Controller
         $employe->date_embauche = $request->date_embauche;
         $employe->departement = $request->departement;
         $employe->save();
+    }
+    public function update(Request $request, $id)
+    {
+        // Validation des données
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'departement' => 'required|string',
+            'date_embauche' => 'required|date',
+            'date_debauche' => 'nullable|date|after_or_equal:date_embauche',
+        ]);
+
+        //dd($request->all());
+        $employe = Employe::findOrFail($id);
+        $employe->update($request->only([
+            'nom',
+            'prenom',
+            'email',
+            'departement',
+            'date_embauche',
+            'date_debauche'
+        ]));
+
+        return redirect()->route('employes.index')->with('success', 'Employé mis à jour avec succès.');
     }
 }
