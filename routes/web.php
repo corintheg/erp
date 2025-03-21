@@ -5,8 +5,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\CongeController;
+use App\Http\Controllers\SalaireController;
 
 
+Route::get('/finance/salaries', [SalaireController::class, 'index'])->name('salaries.index');
+Route::get('/finance/salaries/add', [SalaireController::class, 'create'])->name('salaries.create');
+Route::post('/finance/salaries', [SalaireController::class, 'store'])->name('salaries.store');
+Route::get('/finance/salaries/edit/{id}', [SalaireController::class, 'edit'])->name('salaries.edit');
+Route::put('/finance/salaries/{id}', [SalaireController::class, 'update'])->name('salaries.update');
+Route::delete('/finance/salaries/{id}', [SalaireController::class, 'destroy'])->name('salaries.delete');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+    Route::get('/inventory', fn() => view('inventory'))->name('inventory');
+    Route::get('/hr', fn() => view('hr'))->name('hr');
+    Route::resource('/finance/salaries', SalaireController::class)->names('salaries');
+    Route::get('/settings', fn() => view('settings'))->name('settings');
+    Route::post('/logout', fn() => auth()->logout())->name('logout');
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm'])->name(name: 'login');
@@ -18,6 +34,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('/dashboard/index');
+
+
     });
     //GESTION DES EMPLOYÉS
 

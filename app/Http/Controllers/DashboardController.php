@@ -11,10 +11,11 @@ class DashboardController extends Controller
     {
         // 📌 Statistiques des employés (Regroupement par rôle)
         $employeeStats = DB::table('roles')
-            ->join('utilisateurs', 'id_employe', '=', 'id_employe') // Correction de la jointure
-            ->select('roles.nom_role', DB::raw('COUNT(id_role) as total'))
+            ->join('utilisateurs', 'roles.id_role', '=', 'id_role')
+            ->select('roles.nom_role', DB::raw('COUNT(roles.id_role) as total'))
             ->groupBy('roles.nom_role')
             ->get();
+
 
         // 📌 Statistiques financières (Revenus & Dépenses)
         $financeStats = DB::table('finances')
