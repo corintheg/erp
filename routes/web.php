@@ -16,9 +16,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('/dashboard/index');
-    });
+
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
 
     //GESTION DES ENMPLOYÉ
     // Route pour afficher le formulaire (GET)
