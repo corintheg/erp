@@ -7,6 +7,9 @@ use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\CongeController;
 use App\Http\Controllers\SalaireController;
 
+Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
+
+
 
 Route::get('/finance/salaries', [SalaireController::class, 'index'])->name('salaries.index');
 Route::get('/finance/salaries/add', [SalaireController::class, 'create'])->name('salaries.create');
@@ -36,7 +39,11 @@ Route::middleware(['auth'])->group(function () {
         return view('/dashboard/index');
 
 
+
+
     });
+
+
     //GESTION DES EMPLOYÉS
 
 
@@ -56,4 +63,16 @@ Route::middleware(['auth'])->group(function () {
 
 
 });
+Route::get('/finance', function () {
+    return view('finance');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/finance', function () {
+        return view('/finance');
+
+
+
+
+    });});
 

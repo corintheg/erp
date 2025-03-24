@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Finance;
+use App\Models\Salaire;
 use Illuminate\Http\Request;
 
 class FinanceController extends Controller
 {
+    // Récupération des transactions financières
     public function index()
     {
         $transactions = Finance::all();
         return response()->json($transactions);
     }
+
+    // Création d'une transaction
     public function store(Request $request)
     {
         $request->validate([
@@ -27,12 +31,14 @@ class FinanceController extends Controller
         ], 201);
     }
 
+    // Affichage d'une transaction spécifique
     public function show($id)
     {
         $transaction = Finance::findOrFail($id);
         return response()->json($transaction);
     }
 
+    // Mise à jour d'une transaction
     public function update(Request $request, $id)
     {
         $transaction = Finance::findOrFail($id);
@@ -43,6 +49,7 @@ class FinanceController extends Controller
         ]);
     }
 
+    // Suppression d'une transaction
     public function destroy($id)
     {
         $transaction = Finance::findOrFail($id);
@@ -50,5 +57,17 @@ class FinanceController extends Controller
         return response()->json([
             'message' => 'Transaction supprimée'
         ]);
+    }
+}
+
+// Déplacer cette méthode dans un autre contrôleur (ex: SalaireController)
+class SalaireController extends Controller
+{
+    public function index()
+    {
+        $salaries = Salaire::all();
+        $totalSalaries = $salaries->sum('montant');
+
+        return view('finances.index', compact('salaries', 'totalSalaries'));
     }
 }
