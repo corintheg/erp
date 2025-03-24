@@ -17,7 +17,6 @@ class CongeController extends Controller
     {
         $conge = Conge::findOrFail($id);
         $conge->statut = 'Validé';
-        $conge->commentaires = $request->input('commentaires', $conge->commentaires);
         $conge->save();
 
         return redirect()->route('leave.approval')->with('success', 'Demande de congé approuvée avec succès.');
@@ -27,7 +26,6 @@ class CongeController extends Controller
     {
         $conge = Conge::findOrFail($id);
         $conge->statut = 'Annulé';
-        $conge->commentaires = $request->input('commentaires', $conge->commentaires); // Ajout ou mise à jour des commentaires
         $conge->save();
 
         return redirect()->route('leave.approval')->with('success', 'Demande de congé refusée avec succès.');
