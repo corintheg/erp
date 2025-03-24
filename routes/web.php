@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () { // Vérifie si l'utilisateur n'
     //GESTION DES EMPLOYÉS
     // Route pour afficher le formulaire (GET)
     Route::get('/add_employe', [EmployeController::class, 'view_add_employe'])
-        ->middleware(PermissionMiddleware::class . ':admin');
+        ->middleware(PermissionMiddleware::class . ':superadmin');
 
     // Route pour enregistrer un employé
     Route::post('/add_employe', [EmployeController::class, 'add_employe']);
@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () { // Vérifie si l'utilisateur n'
     Route::post('/leave_request', [CongeController::class, 'leave_request']);
 
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard')
-        ->middleware('permission:superadmin');
+        ->middleware(PermissionMiddleware::class . ':superadmin');
 
 
 });

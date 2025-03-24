@@ -9,15 +9,20 @@ use Illuminate\Support\Facades\Auth;
 class PermissionMiddleware
 {
 
-    public function handle(Request $request, Closure $next, string $role)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         $user = Auth::user();
 
-        // Si pas connecté ou n'a pas le rôle, on refuse l'accès
-        if (!$user || !$user->hasRole($role)) {
+        if (!$user) {
             abort(403, 'Accès refusé');
         }
 
-        return $next($request);
+        foreach ($roles as $role) {
+            if ($user->hasRole($role)) {
+                return $next($request);
+            }
+        }
+
+        abort(403, 'Accès refusé');
     }
 }
