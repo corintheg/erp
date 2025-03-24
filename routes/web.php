@@ -22,14 +22,6 @@ Route::middleware(['auth'])->group(function () { // Vérifie si l'utilisateur n'
     Route::get('/dashboard', function () {
         return view('/dashboard/index');
     });
-    //GESTION DES EMPLOYÉS
-    // Route pour afficher le formulaire (GET)
-    Route::get('/add_employe', [EmployeController::class, 'view_add_employe'])
-        ->middleware(PermissionMiddleware::class . ':superadmin');
-
-    // Route pour enregistrer un employé
-    Route::post('/add_employe', [EmployeController::class, 'add_employe']);
-
 
     //GESTION DES DEMANDE DE CONGÉ
     Route::get('/leave_request', [CongeController::class, 'view_leave_request']);
@@ -39,5 +31,9 @@ Route::middleware(['auth'])->group(function () { // Vérifie si l'utilisateur n'
         ->middleware(PermissionMiddleware::class . ':superadmin');
 
 
+    Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager,rh')->group(function () {
+        Route::get('/add_employe', [EmployeController::class, 'view_add_employe']);
+        Route::post('/add_employe', [EmployeController::class, 'add_employe']);
+    });
 });
 
