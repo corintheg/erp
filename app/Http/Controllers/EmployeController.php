@@ -34,7 +34,7 @@ class EmployeController extends Controller
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'email' => 'required|email|unique:employes,email',
-            'departement' => 'required|in:rh,finance,informatique,livraison',
+            'departement' => 'required|in:rh,finance,informatique,livraison,employe',
             'telephone' => 'required|string|max:20|unique:employes,telephone',
             'date_embauche' => 'required|date',
         ], $messages);
@@ -46,6 +46,8 @@ class EmployeController extends Controller
         $employe->date_embauche = $request->date_embauche;
         $employe->departement = $request->departement;
         $employe->save();
+        return redirect()->route('add_employe')->with('success', 'Demande de congé approuvée avec succès.');
+
     }
     public function update(Request $request, $id)
     {

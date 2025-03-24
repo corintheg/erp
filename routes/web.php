@@ -19,13 +19,10 @@ Route::middleware(['auth'])->group(function () {
         return view('/dashboard/index');
     });
     //GESTION DES EMPLOYÉS
-    // Route pour afficher le formulaire (GET)
     Route::get('/add_employe', [EmployeController::class, 'create']);
     Route::post('/add_employe', [EmployeController::class, 'add_employe'])->name('add_employe');
     Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
     Route::put('/employes/{id}', [EmployeController::class, 'update'])->name('employes.update');
-
-
     //GESTION DES DEMANDE DE CONGÉ
     Route::get('/leave_approval', [CongeController::class, 'approval'])->name('leave.approval');
     Route::post('/leave_approve/{id}', [CongeController::class, 'approveLeave'])->name('leave.approve');

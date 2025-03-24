@@ -109,6 +109,7 @@
                     <option value="finance" {{ old('departement') == 'finance' ? 'selected' : '' }}>Finance</option>
                     <option value="informatique" {{ old('departement') == 'informatique' ? 'selected' : '' }}>Informatique</option>
                     <option value="livraison" {{ old('departement') == 'livraison' ? 'selected' : '' }}>Livraison</option>
+                    <option value="employe" {{ old('departement') == 'employe' ? 'selected' : '' }}>Employé</option>
                 </select>
                 @if ($errors->has('departement'))
                     <div class="text-red-500 text-sm">{{ $errors->first('departement') }}</div>
@@ -134,7 +135,7 @@
                 <input
                         type="text"
                         id="searchInput"
-                        placeholder="Rechercher par nom..."
+                        placeholder="Rechercher par nom, prénom, email, département, ID..."
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]"
                 >
             </div>
@@ -161,6 +162,8 @@
                         @foreach($employes as $employe)
                             <li class="employee-item p-3 bg-gray-50 rounded-md hover:bg-gray-100 transition"
                                 data-nom="{{ $employe->nom }}"
+                                data-prenom="{{ $employe->prenom }}"
+                                data-email="{{ $employe->email }}"
                                 data-departement="{{ $employe->departement }}"
                                 data-id="{{ $employe->id_employe }}">
                                 <span class="font-medium">{{ $employe->nom }} {{ $employe->prenom }}</span>
@@ -192,14 +195,24 @@
         }
     }
 
-    // Fonction de recherche
+    // Fonction de recherche améliorée
     document.getElementById('searchInput').addEventListener('input', function(e) {
         const searchTerm = e.target.value.toLowerCase();
         const employees = document.getElementsByClassName('employee-item');
 
         Array.from(employees).forEach(employee => {
             const nom = employee.getAttribute('data-nom').toLowerCase();
-            if (nom.includes(searchTerm)) {
+            const prenom = employee.getAttribute('data-prenom').toLowerCase();
+            const email = employee.getAttribute('data-email').toLowerCase();
+            const departement = employee.getAttribute('data-departement').toLowerCase();
+            const id = employee.getAttribute('data-id').toLowerCase();
+
+            // Vérifie si le terme de recherche correspond à l'un des champs
+            if (nom.includes(searchTerm) ||
+                prenom.includes(searchTerm) ||
+                email.includes(searchTerm) ||
+                departement.includes(searchTerm) ||
+                id.includes(searchTerm)) {
                 employee.style.display = 'block';
             } else {
                 employee.style.display = 'none';
