@@ -10,16 +10,23 @@ class Employe extends Model
     use HasFactory;
 
     protected $table = 'employes';
+
     protected $primaryKey = 'id_employe';
+
     protected $fillable = [
         'nom',
         'prenom',
         'email',
-        'departement',
+        'telephone',
         'date_embauche',
-        'date_debauche'
+        'departement',
     ];
 
     public $timestamps = false;
+
+    public function salaires()
+    {
+        return $this->hasMany(Salaire::class, 'id_employe');
+    }
 
 }

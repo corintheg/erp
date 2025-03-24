@@ -8,7 +8,7 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "✅ Connexion réussie à la base de données.<br><br>";
-    $tables = ['users', 'salaires', 'conges', 'absences', 'stocks', 'fournisseurs', 'livraisons', 'plannings', 'documents'];
+    $tables = ['utilisateurs', 'utilisateurs_roles', 'salaires', 'conges', 'absences', 'jobs', 'stocks', 'fournisseurs', 'livraisons', 'finances', 'roles'];
 
     foreach ($tables as $table) {
         $stmt = $pdo->query("SHOW TABLES LIKE '$table'");
@@ -38,7 +38,7 @@ try {
     echo "<h2>✅ Connexion réussie à la base de données.</h2>";
 
     // Tables à vérifier
-    $tables = ['users', 'employes', 'salaires', 'conges', 'absences', 'transactions', 'stocks', 'fournisseurs', 'livraisons', 'plannings', 'documents'];
+    $tables = ['utilisateurs', 'utilisateurs_roles', 'employes', 'salaires', 'conges', 'absences', 'jobs', 'stocks', 'fournisseurs', 'livraisons', 'finances', 'roles'];
 
     foreach ($tables as $table) {
         $stmt = $pdo->query("SHOW TABLES LIKE '$table'");
