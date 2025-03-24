@@ -2,17 +2,35 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    use HasFactory;
+    protected $table = 'roles';
+    protected $primaryKey = 'id_role';
 
-    protected $fillable = ['name'];
+    // Si c'est auto-incrémenté
+    public $incrementing = true;
+    protected $keyType = 'int';
 
-    public function users()
+    // Pas de timestamps par défaut
+    public $timestamps = false;
+
+    protected $fillable = [
+        'nom_role',
+        'description',
+    ];
+
+    /**
+     * Relation Many-to-Many inversée : un rôle peut appartenir à plusieurs utilisateurs
+     */
+    public function utilisateurs()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(
+            Utilisateur::class,
+            'utilisateurs_roles',
+            'id_role',
+            'id_utilisateur'
+        );
     }
 }

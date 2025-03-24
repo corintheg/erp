@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\CongeController;
+use App\Http\Middleware\PermissionMiddleware;
+use App\Http\Controllers\AdminController;
 
 
 Route::middleware('guest')->group(function () {
