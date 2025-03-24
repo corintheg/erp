@@ -2,52 +2,66 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Salaire;
 use Illuminate\Http\Request;
+use App\Models\Salaire;
 
 class SalaireController extends Controller
 {
     public function index()
     {
-        $salaires = Salaire::with('employe')->get();
-        return response()->json($salaires);
+        // Récupérer tous les salaires avec les employés associés
+        $salaries = Salaire::all();
+
+        // Calcul du total des salaires
+        $totalSalaries = $salaries->sum('montant');
+
+        // Passer les données à la vue
+        return view('salaries.index', compact('salaries', 'totalSalaries'));
+    }
+
+    public function create()
+    {
+        return view('salaries.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'id_employe' => 'required|exists:employes,id_employe',
+            'employe_nom' => 'required|string|max:255',
             'montant' => 'required|numeric',
-            'date_creation' => 'required|date',
-            'date_modification' => 'nullable|date'
+            'date_debut' => 'required|date',
+            'date_fin' => 'nullable|date|after_or_equal:date_debut'
         ]);
 
-        $salaire = Salaire::create($request->only(['id_employe','montant','date_debut','date_fin']));
-        return response()->json(['message' => 'Salaire ajouté avec succès', 'salaire' => $salaire], 201);
+        Salaire::create($request->all());
+        return redirect()->route('salaries.index')->with('success', 'Salaire ajouté avec succès.');
     }
 
-    public function show($id)
+    public function edit($id)
     {
-        $salaire = Salaire::with('employe')->findOrFail($id);
-        return response()->json($salaire);
+        $salaire = Salaire::findOrFail($id);
+        return view('salaries.edit', compact('salaire'));
     }
 
     public function update(Request $request, $id)
     {
-        $salaire = Salaire::findOrFail($id);
         $request->validate([
-            'montant' => 'numeric',
-            'date_debut' => 'date',
-            'date_fin' => 'nullable|date'
+            'employe_nom' => 'required|string|max:255',
+            'montant' => 'required|numeric',
+            'date_debut' => 'required|date',
+            'date_fin' => 'nullable|date|after_or_equal:date_debut'
         ]);
-        $salaire->update($request->only(['montant','date_debut','date_fin']));
-        return response()->json(['message' => 'Salaire mis à jour', 'salaire' => $salaire]);
+
+        $salaire = Salaire::findOrFail($id);
+        $salaire->update($request->all());
+
+        return redirect()->route('salaries.index')->with('success', 'Salaire mis à jour avec succès.');
     }
 
     public function destroy($id)
     {
         $salaire = Salaire::findOrFail($id);
         $salaire->delete();
-        return response()->json(['message' => 'Salaire supprimé']);
+        return redirect()->route('salaries.index')->with('success', 'Salaire supprimé avec succès.');
     }
 }
