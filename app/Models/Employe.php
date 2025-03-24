@@ -28,4 +28,5 @@ class Employe extends Model
     {
         return $this->hasMany(Salaire::class, 'id_employe');
     }
+
 }
