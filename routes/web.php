@@ -20,13 +20,10 @@ Route::put('/finance/salaries/{id}', [SalaireController::class, 'update'])->name
 Route::delete('/finance/salaries/{id}', [SalaireController::class, 'destroy'])->name('salaries.delete');
 
 Route::middleware('auth')->group(function () {
-Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/inventory', fn() => view('inventory'))->name('inventory');
     Route::get('/hr', fn() => view('hr'))->name('hr');
     Route::resource('/finance/salaries', SalaireController::class)->names('salaries');
     Route::get('/settings', fn() => view('settings'))->name('settings');
-    Route::get('/finance', [SalaireController::class, 'index'])->name('finance');
-    Route::post('/logout', fn() => auth()->logout())->name('logout');
 });
 Route::middleware('guest')->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm'])->name(name: 'login');
@@ -34,15 +31,22 @@ Route::middleware('guest')->group(function () {
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    //GESTION DES EMPLOYÉS
-    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    //GESTION DES ENMPLOYÉ
-    // Route pour afficher le formulaire (GET)
-    Route::get('/add_employe', [EmployeController::class, 'create']);
-    Route::post('/add_employe', [EmployeController::class, 'add_employe'])->name('add_employe');
-    Route::put('/employes/{id}', [EmployeController::class, 'update'])->name('employes.update');
+    Route::prefix('admin')->group(function () {
+        Route::get('/', [AdminController::class, 'dashboard'])->name('admin.index');
+        Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
+        Route::post('/', [AdminController::class, 'store'])->name('admin.store');
+        Route::get('/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit');
+        Route::put('/{id}', [AdminController::class, 'update'])->name('admin.update');
+        Route::delete('/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+    });
+    Route::middleware(PermissionMiddleware::class . ':superadmin,admin')->group(function () {
+        Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.index');
+
+
+    });
+
     //GESTION DES DEMANDE DE CONGÉS
     Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
     //GESTION DES DEMANDE DE CONGÉ
