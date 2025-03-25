@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\RosterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -9,14 +8,20 @@ use App\Http\Controllers\CongeController;
 use App\Http\Middleware\PermissionMiddleware;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SalaireController;
+use App\Http\Controllers\FournisseurController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
+
+
+
 Route::get('/finance/salaries', [SalaireController::class, 'index'])->name('salaries.index');
 Route::get('/finance/salaries/add', [SalaireController::class, 'create'])->name('salaries.create');
 Route::post('/finance/salaries', [SalaireController::class, 'store'])->name('salaries.store');
 Route::get('/finance/salaries/edit/{id}', [SalaireController::class, 'edit'])->name('salaries.edit');
 Route::put('/finance/salaries/{id}', [SalaireController::class, 'update'])->name('salaries.update');
 Route::delete('/finance/salaries/{id}', [SalaireController::class, 'destroy'])->name('salaries.delete');
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/inventory', fn() => view('inventory'))->name('inventory');
@@ -31,6 +36,10 @@ Route::middleware('guest')->group(function () {
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+
     Route::get('/dashboard', function () {
         return view('/dashboard/index');
     });
@@ -41,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/add_employe', [EmployeController::class, 'create']);
     Route::post('/add_employe', [EmployeController::class, 'add_employe'])->name('add_employe');
     Route::put('/employes/{id}', [EmployeController::class, 'update'])->name('employes.update');
+    //GESTION DES DEMANDE DE CONGÉS
     Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
     //GESTION DES DEMANDE DE CONGÉ
     Route::get('/leave_approval', [CongeController::class, 'approval'])->name('leave.approval');
@@ -48,12 +58,36 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/leave_reject/{id}', [CongeController::class, 'rejectLeave'])->name('leave.reject');
     Route::get('/leave_request', [CongeController::class, 'view_leave_request'])->name('leave.request');
     Route::post('/leave_request', [CongeController::class, 'leave_request'])->name('leave.request.store');
+
+
+    Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager,rh')->group(function () {
+        Route::get('/add_employe', [EmployeController::class, 'view_add_employe']);
+        Route::post('/add_employe', [EmployeController::class, 'add_employe']);
+
+        //GESTION DES EMPLOYÉS
+        // Route pour afficher le formulaire (GET)
+        Route::get('/add_employe', [EmployeController::class, 'create']);
+        Route::post('/add_employe', [EmployeController::class, 'add_employe'])->name('add_employe');
+        Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
+        Route::put('/employes/{id}', [EmployeController::class, 'update'])->name('employes.update');
+
+    });
+    Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager,finance,livreur')->group(function () {
+        Route::resource('fournisseurs', FournisseurController::class);
+    });
+
 });
+
 Route::get('/finance', function () {
     return view('finance');
 });
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/finance', function () {
         return view('/finance');
+
+
+
+
     });
 });
