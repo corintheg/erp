@@ -15,6 +15,9 @@ class Utilisateur extends Authenticatable
 
     protected $hidden = ['mot_de_passe'];
 
+    const CREATED_AT = 'date_creation';
+    const UPDATED_AT = 'date_modification';
+
     /**
      * Retourne le mot de passe pour l'authentification.
      * Laravel utilisera cette méthode pour récupérer le hash.
