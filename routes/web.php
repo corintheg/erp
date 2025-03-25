@@ -6,6 +6,7 @@ use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\CongeController;
 use App\Http\Middleware\PermissionMiddleware;
 use App\Http\Controllers\FournisseurController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::middleware('guest')->group(function () {
@@ -15,9 +16,8 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('/dashboard/index');
-    });
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     //GESTION DES DEMANDE DE CONGÉS
     Route::get('/leave_approval', [CongeController::class, 'approval'])->name('leave.approval');
@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/employes/{id}', [EmployeController::class, 'update'])->name('employes.update');
 
     });
-    Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager')->group(function () {
+    Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager,finance,livreur')->group(function () {
         Route::resource('fournisseurs', FournisseurController::class);
     });
 
