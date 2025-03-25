@@ -87,4 +87,8 @@ class EmployeController extends Controller
             return redirect()->route('employes.index')->with('error', 'Erreur lors de la mise à jour de l\'employé.');
         }
     }
+    public function salaires()
+    {
+        return $this->hasMany(Salaire::class, 'id_employe');
+    }
 }

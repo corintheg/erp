@@ -121,7 +121,7 @@
                     <tbody>
                     @foreach ($salaries as $salaire)
                         <tr class="border-b">
-                            <td class="p-2">{{ $salaire->employe_nom }}</td>
+                            <td class="p-2">{{ $salaire->employe ? $salaire->employe->nom : 'Inconnu' }}</td>
                             <td class="p-2">{{ number_format($salaire->montant, 2, ',', ' ') }}</td>
                             <td class="p-2">{{ $salaire->date_debut->format('d/m/Y') }}</td>
                             <td class="p-2">{{ $salaire->date_fin ? $salaire->date_fin->format('d/m/Y') : '-' }}</td>
