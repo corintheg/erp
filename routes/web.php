@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -12,8 +11,6 @@ use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\DashboardController;
 
 Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
-
-
 
 Route::get('/finance/salaries', [SalaireController::class, 'index'])->name('salaries.index');
 Route::get('/finance/salaries/add', [SalaireController::class, 'create'])->name('salaries.create');
@@ -28,13 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('/finance/salaries', SalaireController::class)->names('salaries');
     Route::get('/settings', fn() => view('settings'))->name('settings');
 });
-
 Route::middleware('guest')->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm'])->name(name: 'login');
     Route::post('/', [LoginController::class, 'login']);
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -53,6 +48,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     //GESTION DES DEMANDE DE CONGÉS
+    Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
+    //GESTION DES DEMANDE DE CONGÉ
     Route::get('/leave_approval', [CongeController::class, 'approval'])->name('leave.approval');
     Route::post('/leave_approve/{id}', [CongeController::class, 'approveLeave'])->name('leave.approve');
     Route::post('/leave_reject/{id}', [CongeController::class, 'rejectLeave'])->name('leave.reject');
@@ -77,16 +74,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
 });
-Route::get('/finance', function () {
-    return view('finance');
-});
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/finance', function () {
-        return view('/finance');
 
 
 
 
-    });
-});

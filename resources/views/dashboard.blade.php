@@ -63,9 +63,40 @@
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <!-- Barre de recherche dans la sidebar (visible en dessous de 769px) -->
-        <div id="search-bar-sidebar" class="p-4">
-            <div class="relative">
+    </div>
+    <nav class="mt-6">
+        <a href="/dashboard" class="flex items-center p-4 hover:bg-gray-700">
+            <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+        </a>
+        <a href="/inventory" class="flex items-center p-4 hover:bg-gray-700">
+            <i class="fas fa-warehouse mr-3"></i> Inventaire
+        </a>
+        <a href="/hr" class="flex items-center p-4 hover:bg-gray-700">
+            <i class="fas fa-users mr-3"></i> Ressources Humaines
+        </a>
+        <a href="/finance" class="flex items-center p-4 hover:bg-gray-700">
+            <i class="fas fa-chart-line mr-3"></i> Finances
+        </a>
+        <a href="/settings" class="flex items-center p-4 hover:bg-gray-700">
+            <i class="fas fa-cog mr-3"></i> Paramètres
+        </a>
+    </nav>
+    <div class="absolute bottom-0 p-4">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit">Se déconnecter</button>
+        </form>
+    </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content flex-1 ml-64 p-6">
+    <!-- Header -->
+    <header class="bg-white shadow p-4 rounded-lg mb-6 flex justify-between items-center">
+        <h2 class="text-2xl font-semibold">Tableau de Bord</h2>
+        <div class="flex items-center space-x-4">
+            <!-- Barre de recherche dans le header (visible à partir de 769px) -->
+            <div id="search-bar-header" class="relative">
                 <input type="text" placeholder="Rechercher..."
                     class="w-full bg-gray-700 text-white border rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#55deaf]">
                 <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
