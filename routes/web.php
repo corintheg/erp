@@ -58,13 +58,30 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
     Route::put('/employes/{id}', [EmployeController::class, 'update'])->name('employes.update');
 
-
-    //GESTION DES DEMANDE DE CONGÉ
+    //GESTION DES DEMANDE DE CONGÉS
     Route::get('/leave_approval', [CongeController::class, 'approval'])->name('leave.approval');
     Route::post('/leave_approve/{id}', [CongeController::class, 'approveLeave'])->name('leave.approve');
     Route::post('/leave_reject/{id}', [CongeController::class, 'rejectLeave'])->name('leave.reject');
     Route::get('/leave_request', [CongeController::class, 'view_leave_request'])->name('leave.request');
     Route::post('/leave_request', [CongeController::class, 'leave_request'])->name('leave.request.store');
+
+
+    Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager,rh')->group(function () {
+        Route::get('/add_employe', [EmployeController::class, 'view_add_employe']);
+        Route::post('/add_employe', [EmployeController::class, 'add_employe']);
+
+        //GESTION DES EMPLOYÉS
+        // Route pour afficher le formulaire (GET)
+        Route::get('/add_employe', [EmployeController::class, 'create']);
+        Route::post('/add_employe', [EmployeController::class, 'add_employe'])->name('add_employe');
+        Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
+        Route::put('/employes/{id}', [EmployeController::class, 'update'])->name('employes.update');
+
+    });
+    Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager,finance,livreur')->group(function () {
+        Route::resource('fournisseurs', FournisseurController::class);
+    });
+
 });
 Route::get('/finance', function () {
     return view('finance');
