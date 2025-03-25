@@ -8,6 +8,8 @@ use App\Http\Controllers\CongeController;
 use App\Http\Middleware\PermissionMiddleware;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SalaireController;
+use App\Http\Controllers\FournisseurController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
 
@@ -36,22 +38,11 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('/dashboard/index');
-
-
-
-
-    });
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
 
     //GESTION DES EMPLOYÉS
-
-
-    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-
-
-    //GESTION DES ENMPLOYÉ
     // Route pour afficher le formulaire (GET)
     Route::get('/add_employe', [EmployeController::class, 'create']);
     Route::post('/add_employe', [EmployeController::class, 'add_employe'])->name('add_employe');
@@ -94,4 +85,5 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    });});
+    });
+});
