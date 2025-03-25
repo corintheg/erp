@@ -24,4 +24,9 @@ class Employe extends Model
         return $this->hasMany(Salaire::class, 'id_employe');
     }
 
+    public function utilisateur()
+    {
+        return $this->hasOne(Utilisateur::class, 'id_employe', 'id_employe');
+    }
+
 }
