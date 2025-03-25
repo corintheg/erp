@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Gestion des Employés | ERP</title>
 </head>
@@ -11,16 +12,13 @@
     <div class="max-w-7xl mx-auto">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">Gestion des Employés</h1>
 
-        <!-- Message de succès -->
         @if (session('success'))
             <div class="mb-4 p-2 bg-green-100 text-green-700 rounded-md">
                 {{ session('success') }}
             </div>
         @endif
 
-        <!-- Tableau des employés -->
         <div class="bg-white rounded-lg shadow-md p-6">
-            <!-- Barre de recherche -->
             <div class="mb-4 flex flex-col sm:flex-row gap-4">
                 <input
                         type="text"
@@ -30,7 +28,6 @@
                 >
             </div>
 
-            <!-- Tableau -->
             <div class="overflow-x-auto">
                 <table class="w-full text-left" id="employeeTable">
                     <thead class="bg-gray-200">
@@ -41,6 +38,7 @@
                         <th class="px-4 py-3 font-semibold text-gray-700">Département</th>
                         <th class="px-4 py-3 font-semibold text-gray-700">Date d'embauche</th>
                         <th class="px-4 py-3 font-semibold text-gray-700">Date de débauche</th>
+                        <th class="px-4 py-3 font-semibold text-gray-700">Actif</th> <!-- Nouvelle colonne -->
                         <th class="px-4 py-3 font-semibold text-gray-700">Actions</th>
                     </tr>
                     </thead>
@@ -54,8 +52,13 @@
                             <td class="px-4 py-3">{{ $employe->date_embauche }}</td>
                             <td class="px-4 py-3">{{ $employe->date_debauche ?? 'N/A' }}</td>
                             <td class="px-4 py-3">
+                                <span class="{{ $employe->actif ? 'text-green-600' : 'text-red-600' }}">
+                                    {{ $employe->actif ? 'Oui' : 'Non' }}
+                                </span>
+                            </td> <!-- Affichage de actif -->
+                            <td class="px-4 py-3">
                                 <button
-                                        onclick="openEditModal('{{ $employe->id_employe }}', '{{ $employe->nom }}', '{{ $employe->prenom }}', '{{ $employe->email }}', '{{ $employe->departement }}', '{{ $employe->date_embauche }}', '{{ $employe->date_debauche ?? '' }}')"
+                                        onclick="openEditModal('{{ $employe->id_employe }}', '{{ $employe->nom }}', '{{ $employe->prenom }}', '{{ $employe->email }}', '{{ $employe->departement }}', '{{ $employe->date_embauche }}', '{{ $employe->date_debauche ?? '' }}', '{{ $employe->actif }}')"
                                         class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200"
                                 >
                                     Modifier
@@ -64,7 +67,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center py-4 text-gray-500">Aucun employé trouvé.</td>
+                            <td colspan="8" class="text-center py-4 text-gray-500">Aucun employé trouvé.</td> <!-- colspan ajusté à 8 -->
                         </tr>
                     @endforelse
                     </tbody>
@@ -73,7 +76,6 @@
         </div>
     </div>
 
-    <!-- Modal pour modifier un employé -->
     <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center">
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-xl font-semibold mb-4">Modifier un employé</h2>
@@ -120,52 +122,35 @@
 </div>
 
 <script>
-    console.log('Page chargée. Nombre d\'employés :', document.querySelectorAll('.employee-item').length);
-
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const employees = document.querySelectorAll('.employee-item');
-            console.log('Recherche pour :', searchTerm);
-
-            employees.forEach(employee => {
-                const nom = employee.getAttribute('data-nom').toLowerCase();
-                employee.style.display = nom.includes(searchTerm) ? '' : 'none';
-            });
-        });
-    } else {
-        console.error("Barre de recherche 'searchInput' non trouvée.");
-    }
-
-    function openEditModal(id, nom, prenom, email, departement, dateEmbauche, dateDebauche) {
-        console.log('Ouverture du modal pour ID :', id);
+    function openEditModal(id, nom, prenom, email, departement, dateEmbauche, dateDebauche, actif) {
         const modal = document.getElementById('editModal');
         const form = document.getElementById('editForm');
-
-        if (modal && form) {
-            modal.classList.remove('hidden');
-            form.action = `/employes/${id}`;
-            document.getElementById('editId').value = id;
-            document.getElementById('editNom').value = nom;
-            document.getElementById('editPrenom').value = prenom;
-            document.getElementById('editEmail').value = email;
-            document.getElementById('editDepartement').value = departement;
-            document.getElementById('editDateEmbauche').value = dateEmbauche;
-            document.getElementById('editDateDebauche').value = dateDebauche || '';
-        } else {
-            console.error('Modal ou formulaire non trouvé.');
-        }
+        modal.classList.remove('hidden');
+        form.action = `/employes/${id}`;
+        document.getElementById('editId').value = id;
+        document.getElementById('editNom').value = nom;
+        document.getElementById('editPrenom').value = prenom;
+        document.getElementById('editEmail').value = email;
+        document.getElementById('editDepartement').value = departement;
+        document.getElementById('editDateEmbauche').value = dateEmbauche;
+        document.getElementById('editDateDebauche').value = dateDebauche || '';
+        // Note : actif n'est pas utilisé dans le formulaire pour l'instant, mais il est passé ici
+        console.log('Actif actuel:', actif); // Pour débogage
     }
 
     function closeEditModal() {
-        const modal = document.getElementById('editModal');
-        if (modal) {
-            modal.classList.add('hidden');
-        } else {
-            console.error('Modal non trouvé pour fermeture.');
-        }
+        document.getElementById('editModal').classList.add('hidden');
     }
+
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const employees = document.querySelectorAll('.employee-item');
+
+        employees.forEach(employee => {
+            const nom = employee.getAttribute('data-nom').toLowerCase();
+            employee.style.display = nom.includes(searchTerm) ? '' : 'none';
+        });
+    });
 </script>
 </body>
 </html>
