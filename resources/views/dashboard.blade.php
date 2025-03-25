@@ -81,9 +81,10 @@
         </a>
     </nav>
     <div class="absolute bottom-0 p-4">
-        <a href="/logout" class="flex items-center text-red-500 hover:text-red-400">
-            <i class="fas fa-sign-out-alt mr-3"></i> Déconnexion
-        </a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit">Se déconnecter</button>
+        </form>
     </div>
 </aside>
 

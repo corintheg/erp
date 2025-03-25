@@ -9,14 +9,26 @@ class SalaireController extends Controller
 {
     public function index()
     {
-        // Récupérer tous les salaires avec les employés associés
-        $salaries = Salaire::all();
-
-        // Calcul du total des salaires
+        $salaries = Salaire::with('employe')->get();
         $totalSalaries = $salaries->sum('montant');
 
-        // Passer les données à la vue
-        return view('salaries.index', compact('salaries', 'totalSalaries'));
+        $salaryDistribution = $salaries->map(function ($salaire) {
+            return [
+                'nom' => $salaire->employe ? $salaire->employe->nom : 'Inconnu',
+                'montant' => $salaire->montant,
+            ];
+        });
+
+        $salaryEvolution = $salaries->groupBy(function ($salaire) {
+            return $salaire->date_debut->format('Y-m');
+        })->map(function ($group) {
+            return [
+                'nom' => $group->first()->employe ? $group->first()->employe->nom : 'Inconnu',
+                'data' => $group->pluck('montant')->all(),
+            ];
+        });
+
+        return view('finance', compact('salaries', 'totalSalaries', 'salaryDistribution', 'salaryEvolution'));
     }
 
     public function create()
