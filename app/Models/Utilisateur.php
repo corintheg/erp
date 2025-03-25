@@ -11,10 +11,15 @@ class Utilisateur extends Authenticatable
 
     protected $primaryKey = 'id_utilisateur';
 
-    protected $fillable = ['username', 'mot_de_passe'];
+    protected $fillable = ['id_employe',
+        'username',
+        'mot_de_passe',
+        'email',
+        'date_creation',
+        'date_modification'];
 
     protected $hidden = ['mot_de_passe'];
-
+    public $timestamps = false;
     /**
      * Retourne le mot de passe pour l'authentification.
      * Laravel utilisera cette méthode pour récupérer le hash.
@@ -61,4 +66,11 @@ class Utilisateur extends Authenticatable
     {
         return $this->roles->contains('nom_role', $roleName);
     }
+
+    public function employe()
+    {
+        return $this->belongsTo(Employe::class, 'id_employe', 'id_employe');
+    }
+
+
 }
