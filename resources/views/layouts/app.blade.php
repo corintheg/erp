@@ -48,7 +48,7 @@
     </style>
 </head>
 
-<body class="bg-gray-100 font-sans flex">
+<body class="bg-gray-100 font-sans flex overflow-x-hidden">
 
     <!-- Bouton Burger (plus gros, en bas à droite, visible en dessous de 769px) -->
     <button id="burger-btn" class="fixed bottom-6 right-6 z-50 p-4 text-white bg-green-600 rounded-full shadow">
@@ -65,10 +65,18 @@
         </div>
         </div>
         <nav class="mt-6">
-            <form method="POST" action="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+            <a href="{{ route('dashboard') }}" class="flex items-center p-4 hover:bg-gray-700 ">
                 @csrf
-                <i class="fas fa-tachometer-alt mr-3"></i> <button type="submit" class="mr-3">Dashboard</button>
-            </form>
+                <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+            </a>
+            <a href="{{ route('admin.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                @csrf
+                <i class="fas fa-tachometer-alt mr-3"></i> Admin
+            </a>
+            <a href="{{ route('fournisseurs.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                @csrf
+                <i class="fas fa-tachometer-alt mr-3"></i> Fournisseurs
+            </a>
             <form method="POST" action="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700 ">
                 @csrf
                 <i class="fas fa-warehouse mr-3"></i> <button type="submit" class="mr-3">Inventaire</button>

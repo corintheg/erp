@@ -10,14 +10,14 @@ class EmployeController extends Controller
     public function create()
     {
         $employes = Employe::orderBy('date_embauche', 'desc')->limit(15)->get();
-        return view('employes.add_employe', compact('employes'));
+        return view('employes.create', compact('employes'));
     }
     public function index()
     {
         $employes = Employe::all();
-        return view('employes.management', compact('employes'));
+        return view('employes.index', compact('employes'));
     }
-    public function add_employe(Request $request)
+    public function store(Request $request)
     {
         $messages = [
             'nom.required' => 'Le nom est obligatoire.',
@@ -46,9 +46,21 @@ class EmployeController extends Controller
         $employe->date_embauche = $request->date_embauche;
         $employe->departement = $request->departement;
         $employe->save();
-        return redirect()->route('add_employe')->with('success', 'Demande de congé approuvée avec succès.');
+        return redirect()->route('employes.index')->with('success', 'Employé ajouté avec succès.');
 
     }
+
+    public function edit($id)
+    {
+        // Récupérer l'employé à modifier
+        $employe = Employe::findOrFail($id);
+        // (Optionnel) Récupérer la liste des employés pour afficher la liste à côté du formulaire
+        $employes = Employe::all();
+
+        // Retourner la vue d'édition en passant l'employé (et la liste si besoin)
+        return view('employes.edit', compact('employe', 'employes'));
+    }
+
     public function update(Request $request, $id)
     {
         // Validation des données

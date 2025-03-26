@@ -55,7 +55,7 @@ class FournisseurController extends Controller
         return view('fournisseurs.edit', compact('fournisseur'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Fournisseur $fournisseur)
     {
         $request->validate([
             'nom' => 'required|string|max:100',
@@ -69,7 +69,6 @@ class FournisseurController extends Controller
         $data = $request->all();
         $data['site_web'] = $this->formatSiteWeb($data['site_web']);
 
-        $fournisseur = Fournisseur::findOrFail($id);
         $fournisseur->update($data);
 
         return redirect()->route('fournisseurs.index')
