@@ -11,15 +11,13 @@ class Utilisateur extends Authenticatable
 
     protected $primaryKey = 'id_utilisateur';
 
-    protected $fillable = ['id_employe',
-        'username',
-        'mot_de_passe',
-        'email',
-        'date_creation',
-        'date_modification'];
+    protected $fillable = ['username', 'mot_de_passe'];
 
     protected $hidden = ['mot_de_passe'];
-    public $timestamps = false;
+
+    const CREATED_AT = 'date_creation';
+    const UPDATED_AT = 'date_modification';
+
     /**
      * Retourne le mot de passe pour l'authentification.
      * Laravel utilisera cette méthode pour récupérer le hash.
