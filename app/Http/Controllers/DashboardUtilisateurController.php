@@ -22,9 +22,12 @@ class DashboardUtilisateurController extends Controller
         }
 
         // Récupérer les congés de l'employé
-//        $conges = $employe->conges()->latest()->get();
-        $conges = $employe->conges();
+        $conges = $employe->conges()->get();
+//        $conges = $employe->conges();
 
-        return view('dashboard.employe', compact('conges'));
+        // Récupérer les salaires de l'employé
+        $salaires = $employe->salaires()->get();
+
+        return view('dashboard.employe', compact('conges', 'salaires'));
     }
 }
