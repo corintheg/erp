@@ -1,137 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERP System - Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        /* Animation pour la sidebar */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s ease-in-out;
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0 !important;
-            }
-
-            /* Barre de recherche dans le header cachée, dans la sidebar visible */
-            #search-bar-header {
-                display: none !important;
-            }
-
-            #search-bar-sidebar {
-                display: block !important;
-            }
-        }
-
-        /* Gestion du bouton burger */
-        @media (min-width: 769px) {
-            #burger-btn {
-                display: none !important;
-            }
-        }
-
-        /* Par défaut, la barre de recherche dans la sidebar est cachée */
-        #search-bar-sidebar {
-            display: none;
-        }
-    </style>
-</head>
-
-<body class="bg-gray-100 font-sans flex">
-
-    <!-- Bouton Burger (plus gros, en bas à droite, visible en dessous de 769px) -->
-    <button id="burger-btn" class="fixed bottom-6 right-6 z-50 p-4 text-white bg-green-600 rounded-full shadow">
-        <i class="fas fa-bars text-2xl"></i>
-    </button>
-
-    <!-- Sidebar (hauteur 100%) -->
-    <aside id="sidebar" class="sidebar w-64 bg-gray-800 text-[#55deaf] h-full fixed">
-        <div class="p-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold">ERP System</h1>
-            <button id="close-btn" class="md:hidden text-white">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    </div>
-    <nav class="mt-6">
-        <a href="/dashboard" class="flex items-center p-4 hover:bg-gray-700">
-            <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
-        </a>
-        <a href="/inventory" class="flex items-center p-4 hover:bg-gray-700">
-            <i class="fas fa-warehouse mr-3"></i> Inventaire
-        </a>
-        <a href="/hr" class="flex items-center p-4 hover:bg-gray-700">
-            <i class="fas fa-users mr-3"></i> Ressources Humaines
-        </a>
-        <a href="/finance" class="flex items-center p-4 hover:bg-gray-700">
-            <i class="fas fa-chart-line mr-3"></i> Finances
-        </a>
-        <a href="/settings" class="flex items-center p-4 hover:bg-gray-700">
-            <i class="fas fa-cog mr-3"></i> Paramètres
-        </a>
-    </nav>
-    <div class="absolute bottom-0 p-4">
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit">Se déconnecter</button>
-        </form>
-    </div>
-</aside>
-
-<!-- Main Content -->
-<main class="main-content flex-1 ml-64 p-6">
-    <!-- Header -->
-    <header class="bg-white shadow p-4 rounded-lg mb-6 flex justify-between items-center">
-        <h2 class="text-2xl font-semibold">Tableau de Bord</h2>
-        <div class="flex items-center space-x-4">
-            <!-- Barre de recherche dans le header (visible à partir de 769px) -->
-            <div id="search-bar-header" class="relative">
-                <input type="text" placeholder="Rechercher..."
-                    class="w-full bg-gray-700 text-white border rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#55deaf]">
-                <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-            </div>
-        </div>
-        <nav class="mt-6">
-            <a href="/dashboard" class="flex items-center p-4 hover:bg-gray-700">
-                <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
-            </a>
-            <a href="/inventory" class="flex items-center p-4 hover:bg-gray-700">
-                <i class="fas fa-warehouse mr-3"></i> Inventaire
-            </a>
-            <a href="/hr" class="flex items-center p-4 hover:bg-gray-700">
-                <i class="fas fa-users mr-3"></i> Ressources Humaines
-            </a>
-            <a href="/finance" class="flex items-center p-4 hover:bg-gray-700">
-                <i class="fas fa-chart-line mr-3"></i> Finances
-            </a>
-            <a href="/settings" class="flex items-center p-4 hover:bg-gray-700">
-                <i class="fas fa-cog mr-3"></i> Paramètres
-            </a>
-        </nav>
-        <div class="absolute bottom-0 p-4">
-            <form method="post" action="{{ route('logout') }}">
-                @csrf
-                <button class="flex items-center text-red-500 hover:text-red-400">
-                    <i class="fas fa-sign-out-alt mr-3"></i> Déconnexion
-                </button>
-            </form>
-        </div>
-    </aside>
-
-    <!-- Main Content -->
+@section('content')
     <main class="main-content flex-1 ml-64 p-6">
-        <!-- Header -->
         <header class="bg-white shadow p-4 rounded-lg mb-6 flex justify-between items-center">
             <h2 class="text-2xl font-semibold">Tableau de Bord</h2>
             <div class="flex items-center space-x-4">
@@ -208,7 +78,6 @@
             </div>
         </div>
     </main>
-
     <script>
         // JavaScript pour gérer l'ouverture/fermeture de la sidebar
         const sidebar = document.getElementById('sidebar');
@@ -357,6 +226,4 @@
             }
         });
     </script>
-</body>
-
-</html>
+@endsection
