@@ -34,17 +34,16 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::prefix('admin')->group(function () {
-        Route::get('/', [AdminController::class, 'dashboard'])->name('admin.index');
-        Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
-        Route::post('/', [AdminController::class, 'store'])->name('admin.store');
-        Route::get('/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit');
-        Route::put('/{id}', [AdminController::class, 'update'])->name('admin.update');
-        Route::delete('/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
-    });
-    Route::middleware(PermissionMiddleware::class . ':superadmin,admin')->group(function () {
-        Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.index');
 
+    Route::middleware(PermissionMiddleware::class . ':superadmin,admin')->group(function () {
+        Route::prefix('admin')->group(function () {
+            Route::get('/', [AdminController::class, 'dashboard'])->name('admin.index');
+            Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
+            Route::post('/', [AdminController::class, 'store'])->name('admin.store');
+            Route::get('/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit');
+            Route::put('/{id}', [AdminController::class, 'update'])->name('admin.update');
+            Route::delete('/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+        });
 
     });
 
@@ -59,19 +58,21 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager,rh')->group(function () {
-        Route::get('/add_employe', [EmployeController::class, 'view_add_employe']);
-        Route::post('/add_employe', [EmployeController::class, 'add_employe']);
-
-        //GESTION DES EMPLOYÉS
-        // Route pour afficher le formulaire (GET)
-        Route::get('/add_employe', [EmployeController::class, 'create']);
-        Route::post('/add_employe', [EmployeController::class, 'add_employe'])->name('add_employe');
+        // GESTION DES EMPLOYÉS
         Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
+        Route::get('/employes/create', [EmployeController::class, 'create'])->name('employes.create');
+        Route::post('/employes', [EmployeController::class, 'store'])->name('employes.store');
+        Route::get('/employes/{id}/edit', [EmployeController::class, 'edit'])->name('employes.edit');
         Route::put('/employes/{id}', [EmployeController::class, 'update'])->name('employes.update');
-
     });
     Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager,finance,livreur')->group(function () {
-        Route::resource('fournisseurs', FournisseurController::class);
+        Route::put('fournisseurs/{fournisseur}', [FournisseurController::class, 'update'])->name('fournisseurs.update');
+        Route::delete('fournisseurs/{fournisseur}', [FournisseurController::class, 'destroy'])->name('fournisseurs.destroy');
+        Route::get('fournisseurs', [FournisseurController::class, 'index'])->name('fournisseurs.index');
+        Route::get('fournisseurs/create', [FournisseurController::class, 'create'])->name('fournisseurs.create');
+        Route::post('fournisseurs', [FournisseurController::class, 'store'])->name('fournisseurs.store');
+        Route::get('fournisseurs/{fournisseur}/edit', [FournisseurController::class, 'edit'])->name('fournisseurs.edit');
+
     });
 
 });
