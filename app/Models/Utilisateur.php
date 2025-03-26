@@ -11,12 +11,14 @@ class Utilisateur extends Authenticatable
 
     protected $primaryKey = 'id_utilisateur';
 
-    protected $fillable = ['id_employe',
+    protected $fillable = [
+        'id_employe',
         'username',
         'mot_de_passe',
         'email',
         'date_creation',
-        'date_modification'];
+        'date_modification'
+    ];
 
     protected $hidden = ['mot_de_passe'];
 
@@ -68,6 +70,11 @@ class Utilisateur extends Authenticatable
     public function hasRole(string $roleName): bool
     {
         return $this->roles->contains('nom_role', $roleName);
+    }
+
+    public function hasAnyRole(array $roles): bool
+    {
+        return $this->roles->pluck('nom_role')->intersect($roles)->isNotEmpty();
     }
 
     public function employe()
