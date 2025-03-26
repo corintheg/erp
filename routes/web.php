@@ -66,15 +66,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/leave_request', [CongeController::class, 'view_leave_request'])->name('leave.request');
     Route::post('/leave_request', [CongeController::class, 'leave_request'])->name('leave.request.store');
 });
-Route::get('/finance', function () {
-    return view('finance');
-});
+Route::get('/finance', [SalaireController::class, 'index'])->name('finance');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/finance', function () {
-        return view('/finance');
-
-
-
-
-    });});
