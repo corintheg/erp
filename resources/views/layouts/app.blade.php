@@ -69,40 +69,39 @@
                 @csrf
                 <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
             </a>
-            <a href="{{ route('admin.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                @csrf
-                <i class="fas fa-tachometer-alt mr-3"></i> Admin
-            </a>
-            <a href="{{ route('fournisseurs.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                @csrf
-                <i class="fas fa-tachometer-alt mr-3"></i> Fournisseurs
-            </a>
+            @if ((Auth::user()->hasAnyRole(['superadmin', 'superadmin'])))
+                <a href="{{ route('admin.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                    <i class="fa-solid fa-user-tie mr-3"></i> Admin
+                </a>
+            @endif
+            @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'finance', 'livreur']))
+                <a href="{{ route('fournisseurs.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                    <i class="fas fa-tachometer-alt mr-3"></i> Fournisseurs
+                </a>
+                <a href="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                    <i class="fas fa-warehouse mr-3"></i> Inventaire
+                </a>
+            @endif
+            @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'finance']))
+                <a href="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                    <i class="fas fa-chart-line mr-3"></i> Finances
+                </a>
+            @endif
+
             <form method="POST" action="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                @csrf
-                <i class="fas fa-warehouse mr-3"></i> <button type="submit" class="mr-3">Inventaire</button>
-            </form>
-            <form method="POST" action="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                @csrf
                 <i class="fas fa-users mr-3"></i> <button type="submit" class="mr-3">RH</button>
             </form>
-            <form method="POST" action="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+
+
+            <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <i class="fas fa-chart-line mr-3"></i> <button type="submit" class="mr-3">Finances</button>
+                <button type="submit" class="flex items-center p-4 hover:bg-gray-700 text-red-400 w-full text-left    ">
+                    <i class="fa-solid fa-door-open mr-3"></i> Se déconnecter
+                </button>
             </form>
-            <button type="submit" class="">
-                <form method="POST" action="{{ route('logout') }}"
-                    class="flex items-center p-4 hover:bg-gray-700 pr-[129px]">
-                    @csrf
-                    <i class="fas fa-cog mr-3"></i> Paramètres
-                </form>
-            </button>
+
         </nav>
-        <div class="absolute bottom-0">
-            <form method="POST" action="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700">
-                @csrf
-                <button type="submit" class="mr-3 text-red-400">Se déconnecter</button>
-            </form>
-        </div>
+
     </aside>
 
     @yield('content')
