@@ -28,7 +28,7 @@ class SalaireController extends Controller
             ];
         });
 
-        return view('finance', compact('salaries', 'totalSalaries', 'salaryDistribution', 'salaryEvolution'));
+        return view('finance.index', compact('salaries', 'totalSalaries', 'salaryDistribution', 'salaryEvolution'));
     }
 
     public function create()
