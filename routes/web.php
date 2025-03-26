@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SalaireController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardUtilisateurController;
 
 
 
@@ -96,3 +97,4 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+Route::get('/dashboard/user', [DashboardUtilisateurController::class, 'index'])->name('dashboard.user')->middleware('auth');
