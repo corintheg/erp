@@ -80,4 +80,4 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-Route::get('/dashboard/user', [DashboardUtilisateurController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::get('/dashboard/user', [DashboardUtilisateurController::class, 'index'])->name('dashboard.user')->middleware('auth');

@@ -79,4 +79,16 @@ class Utilisateur extends Authenticatable
         return $this->hasMany(Conge::class, 'id_employe', 'id_employe');
     }
 
+
+    protected static function booted()
+    {
+        static::created(function ($utilisateur) {
+            $role = Role::where('nom_role', 'employe')->first();
+
+            if ($role) {
+                    $utilisateur->roles()->attach($role->id_role);
+            }
+        });
+    }
+
 }
