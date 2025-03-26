@@ -69,6 +69,7 @@
                 @csrf
                 <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
             </a>
+
             @if ((Auth::user()->hasAnyRole(['superadmin', 'superadmin'])))
                 <a href="{{ route('admin.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
                     <i class="fa-solid fa-user-tie mr-3"></i> Admin

@@ -28,9 +28,9 @@ Route::middleware(['auth'])->group(function () {
 
 
     // DASHBOARD
-
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+//
+//    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+//    Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     // FINANCES 
 
