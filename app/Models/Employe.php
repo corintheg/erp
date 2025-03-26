@@ -28,5 +28,9 @@ class Employe extends Model
     {
         return $this->hasOne(Utilisateur::class, 'id_employe', 'id_employe');
     }
+    public function conges()
+    {
+        return $this->hasMany(Conge::class, 'id_employe', 'id_employe');
+    }
 
 }

@@ -74,6 +74,9 @@ class Utilisateur extends Authenticatable
     {
         return $this->belongsTo(Employe::class, 'id_employe', 'id_employe');
     }
-
+    public function conges()
+    {
+        return $this->hasMany(Conge::class, 'id_employe', 'id_employe');
+    }
 
 }

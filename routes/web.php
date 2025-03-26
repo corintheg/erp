@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SalaireController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardUtilisateurController;
 
 Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
 
@@ -78,3 +79,4 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+Route::get('/dashboard/user', [DashboardUtilisateurController::class, 'index'])->name('dashboard')->middleware('auth');
