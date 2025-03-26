@@ -10,7 +10,7 @@ class Employe extends Model
     use HasFactory;
 
     protected $table = 'employes';
-
+    
     protected $primaryKey = 'id_employe';
 
     protected $fillable = [
@@ -27,6 +27,10 @@ class Employe extends Model
     public function utilisateur()
     {
         return $this->hasOne(Utilisateur::class, 'id_employe', 'id_employe');
+    }
+    public function conges()
+    {
+        return $this->hasMany(Conge::class, 'id_employe', 'id_employe');
     }
 
 }
