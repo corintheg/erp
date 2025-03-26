@@ -64,4 +64,11 @@ class Utilisateur extends Authenticatable
     {
         return $this->roles->contains('nom_role', $roleName);
     }
+
+    public function employe()
+    {
+        return $this->belongsTo(Employe::class, 'id_employe', 'id_employe');
+    }
+
+
 }
