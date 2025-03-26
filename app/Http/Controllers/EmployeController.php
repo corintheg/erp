@@ -46,7 +46,7 @@ class EmployeController extends Controller
         $employe->date_embauche = $request->date_embauche;
         $employe->departement = $request->departement;
         $employe->save();
-        return redirect()->route('add_employe')->with('success', 'Demande de congé approuvée avec succès.');
+        return redirect()->route('add_employe')->with('success', 'Ajout réussi.');
 
     }
     public function update(Request $request, $id)
