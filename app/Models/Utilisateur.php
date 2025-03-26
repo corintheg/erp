@@ -11,7 +11,12 @@ class Utilisateur extends Authenticatable
 
     protected $primaryKey = 'id_utilisateur';
 
-    protected $fillable = ['username', 'mot_de_passe'];
+    protected $fillable = ['id_employe',
+        'username',
+        'mot_de_passe',
+        'email',
+        'date_creation',
+        'date_modification'];
 
     protected $hidden = ['mot_de_passe'];
 
