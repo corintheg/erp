@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Gestion des Fournisseurs | ERP</title>
-</head>
-
-<body class="bg-gray-100">
-    <div class="flex min-h-screen">
+@section('content')
+    <main class="flex min-h-screen w-full md:w-[70%] ml-auto max-w-screen-xl">
 
 
         <div class="flex-1 p-6">
@@ -77,8 +69,7 @@
                                                     class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200">
                                                     Éditer
                                                 </a>
-                                                <form
-                                                    action="{{ route('fournisseurs.destroy', $fournisseur->id_fournisseur) }}"
+                                                <form action="{{ route('fournisseurs.destroy', $fournisseur->id_fournisseur) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
@@ -103,7 +94,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     <script>
 
         document.getElementById('searchInput').addEventListener('input', filterTable);
@@ -124,6 +115,4 @@
             filterTable();
         }
     </script>
-</body>
-
-</html>
+@endsection

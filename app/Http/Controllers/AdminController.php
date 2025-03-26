@@ -57,7 +57,6 @@ class AdminController extends Controller
         $currentUser = Auth::user();
         $selectedRoles = $request->input('roles', []);
 
-        // Définir les rôles interdits selon le rôle de l'utilisateur connecté
         if ($currentUser->hasRole('admin')) {
             $forbiddenRoles = ['superadmin', 'admin'];
         } elseif ($currentUser->hasRole('superadmin')) {
@@ -66,12 +65,10 @@ class AdminController extends Controller
             $forbiddenRoles = [];
         }
 
-        // Récupérer les IDs des rôles autorisés
         $allowedRoleIds = Role::whereNotIn('nom_role', $forbiddenRoles)
             ->pluck('id_role')
             ->toArray();
 
-        // Vérifier que les rôles soumis sont autorisés
         foreach ($selectedRoles as $roleId) {
             if (!in_array($roleId, $allowedRoleIds)) {
                 return redirect()->back()
