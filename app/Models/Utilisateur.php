@@ -11,9 +11,17 @@ class Utilisateur extends Authenticatable
 
     protected $primaryKey = 'id_utilisateur';
 
-    protected $fillable = ['username', 'mot_de_passe'];
+    protected $fillable = ['id_employe',
+        'username',
+        'mot_de_passe',
+        'email',
+        'date_creation',
+        'date_modification'];
 
     protected $hidden = ['mot_de_passe'];
+
+    const CREATED_AT = 'date_creation';
+    const UPDATED_AT = 'date_modification';
 
     /**
      * Retourne le mot de passe pour l'authentification.
@@ -61,4 +69,11 @@ class Utilisateur extends Authenticatable
     {
         return $this->roles->contains('nom_role', $roleName);
     }
+
+    public function employe()
+    {
+        return $this->belongsTo(Employe::class, 'id_employe', 'id_employe');
+    }
+
+
 }

@@ -14,12 +14,7 @@ class Employe extends Model
     protected $primaryKey = 'id_employe';
 
     protected $fillable = [
-        'nom',
-        'prenom',
-        'email',
-        'telephone',
-        'date_embauche',
-        'departement',
+        'nom', 'prenom', 'email', 'departement', 'date_embauche', 'date_debauche', 'actif'
     ];
 
     public $timestamps = false;
@@ -27,6 +22,11 @@ class Employe extends Model
     public function salaires()
     {
         return $this->hasMany(Salaire::class, 'id_employe');
+    }
+
+    public function utilisateur()
+    {
+        return $this->hasOne(Utilisateur::class, 'id_employe', 'id_employe');
     }
 
 }

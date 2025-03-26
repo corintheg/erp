@@ -32,4 +32,8 @@ class DashboardController extends Controller
 
         return view('dashboard', compact('employeeStats', 'financeStats', 'stockStats'));
     }
+    public function dashboard()
+    {
+        return view('dashboard.index');
+    }
 }

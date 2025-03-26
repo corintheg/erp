@@ -9,15 +9,15 @@ class EmployeController extends Controller
 {
     public function create()
     {
-        $employes = Employe::all();
-        return view('employes.add_employe', compact('employes'));
+        $employes = Employe::orderBy('date_embauche', 'desc')->limit(15)->get();
+        return view('employes.create', compact('employes'));
     }
     public function index()
     {
         $employes = Employe::all();
-        return view('employes.management', compact('employes'));
+        return view('employes.index', compact('employes'));
     }
-    public function add_employe(Request $request)
+    public function store(Request $request)
     {
         $messages = [
             'nom.required' => 'Le nom est obligatoire.',
@@ -34,7 +34,7 @@ class EmployeController extends Controller
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'email' => 'required|email|unique:employes,email',
-            'departement' => 'required|in:rh,finance,informatique,livraison',
+            'departement' => 'required|in:rh,finance,informatique,livraison,employe',
             'telephone' => 'required|string|max:20|unique:employes,telephone',
             'date_embauche' => 'required|date',
         ], $messages);
@@ -46,7 +46,21 @@ class EmployeController extends Controller
         $employe->date_embauche = $request->date_embauche;
         $employe->departement = $request->departement;
         $employe->save();
+        return redirect()->route('employes.index')->with('success', 'Employé ajouté avec succès.');
+
     }
+
+    public function edit($id)
+    {
+        // Récupérer l'employé à modifier
+        $employe = Employe::findOrFail($id);
+        // (Optionnel) Récupérer la liste des employés pour afficher la liste à côté du formulaire
+        $employes = Employe::all();
+
+        // Retourner la vue d'édition en passant l'employé (et la liste si besoin)
+        return view('employes.edit', compact('employe', 'employes'));
+    }
+
     public function update(Request $request, $id)
     {
         // Validation des données
@@ -59,17 +73,34 @@ class EmployeController extends Controller
             'date_debauche' => 'nullable|date|after_or_equal:date_embauche',
         ]);
 
-        //dd($request->all());
+        // Trouver l'employé
         $employe = Employe::findOrFail($id);
-        $employe->update($request->only([
+
+        // Préparer les données pour la mise à jour
+        $data = $request->only([
             'nom',
             'prenom',
             'email',
             'departement',
             'date_embauche',
             'date_debauche'
-        ]));
+        ]);
 
-        return redirect()->route('employes.index')->with('success', 'Employé mis à jour avec succès.');
+        // Mettre à jour 'actif' en fonction de 'date_debauche'
+        $data['actif'] = $request->filled('date_debauche') ? 0 : 1;
+
+        // Mettre à jour l'employé
+        $updated = $employe->update($data);
+
+        // Vérifier si la mise à jour a réussi
+        if ($updated) {
+            return redirect()->route('employes.index')->with('success', 'Employé mis à jour avec succès.');
+        } else {
+            return redirect()->route('employes.index')->with('error', 'Erreur lors de la mise à jour de l\'employé.');
+        }
+    }
+    public function salaires()
+    {
+        return $this->hasMany(Salaire::class, 'id_employe');
     }
 }
