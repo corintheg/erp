@@ -66,9 +66,12 @@
         </div>
         <nav class="mt-6">
             <a href="{{ route('dashboard') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                @csrf
                 <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
             </a>
+            <a href="{{ route('user.dashboard') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                <i class="fas fa-tachometer-alt mr-3"></i> Demander des congés
+            </a>
+
             @if ((Auth::user()->hasAnyRole(['superadmin', 'superadmin'])))
                 <a href="{{ route('admin.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
                     <i class="fa-solid fa-user-tie mr-3"></i> Admin
@@ -88,9 +91,14 @@
                 </a>
             @endif
 
-            <form method="POST" action="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                <i class="fas fa-users mr-3"></i> <button type="submit" class="mr-3">RH</button>
-            </form>
+            @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'rh']))
+                <a href="{{ route('employes.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                    <i class="fas fa-users mr-3"></i> Employés
+                </a>
+                <a href="{{ route('leave.approval') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                    <i class="fas fa-users mr-3"></i> Congés
+                </a>
+            @endif
 
 
             <form method="POST" action="{{ route('logout') }}">
