@@ -28,10 +28,11 @@ Route::middleware(['auth'])->group(function () {
 
 
     // DASHBOARD
-//
-//    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-//    Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/user/dashboard', [DashboardUtilisateurController::class, 'index'])->name('user.dashboard');
+    Route::post('/user/dashboard', [DashboardUtilisateurController::class, 'dashboard'])->name('user.dashboard');
     // FINANCES 
 
     Route::middleware(PermissionMiddleware::class . ':superadmin,admin,finance')->group(function () {
