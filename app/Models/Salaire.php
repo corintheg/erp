@@ -8,7 +8,7 @@ class Salaire extends Model
 {
     use HasFactory;
 
-    protected $table = 'salaire';
+    protected $table = 'salaires';
     protected $primaryKey = 'id_salaire';
     protected $fillable = ['id_employe', 'montant', 'date_debut', 'date_fin'];
 

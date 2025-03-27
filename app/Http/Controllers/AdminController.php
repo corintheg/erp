@@ -9,20 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    /**
-     * Affiche la liste des utilisateurs (index).
-     * URL : GET /admin
-     */
+
     public function dashboard()
     {
         $utilisateurs = Utilisateur::with('roles')->get();
         return view('admin.index', compact('utilisateurs'));
     }
 
-    /**
-     * Affiche le formulaire de création d'un nouvel utilisateur.
-     * URL : GET /admin/create
-     */
     public function create()
     {
         $currentUser = Auth::user();
@@ -41,10 +34,7 @@ class AdminController extends Controller
         return view('admin.create', compact('roles'));
     }
 
-    /**
-     * Traite la création d'un nouvel utilisateur.
-     * URL : POST /admin
-     */
+
     public function store(Request $request)
     {
         // Validation de base
@@ -94,10 +84,6 @@ class AdminController extends Controller
             ->with('success', 'Utilisateur créé avec succès.');
     }
 
-    /**
-     * Affiche le formulaire d'édition d'un utilisateur.
-     * URL : GET /admin/{id}/edit
-     */
     public function edit($id)
     {
         $utilisateur = Utilisateur::findOrFail($id);
@@ -114,10 +100,6 @@ class AdminController extends Controller
         return view('admin.edit', compact('utilisateur', 'roles'));
     }
 
-    /**
-     * Traite la mise à jour d'un utilisateur existant.
-     * URL : PUT /admin/{id}
-     */
     public function update(Request $request, $id)
     {
         $utilisateur = Utilisateur::findOrFail($id);
@@ -132,6 +114,7 @@ class AdminController extends Controller
         $currentUser = Auth::user();
         $selectedRoles = $request->input('roles', []);
 
+        // Définition des rôles interdits pour modification
         if ($currentUser->hasRole('admin')) {
             $forbiddenRoles = ['superadmin', 'admin'];
         } elseif ($currentUser->hasRole('superadmin')) {
@@ -140,6 +123,7 @@ class AdminController extends Controller
             $forbiddenRoles = [];
         }
 
+        // Récupère les ID des rôles autorisés à être modifiés (ceux qui sont affichés dans le formulaire)
         $allowedRoleIds = Role::whereNotIn('nom_role', $forbiddenRoles)
             ->pluck('id_role')
             ->toArray();
@@ -153,16 +137,21 @@ class AdminController extends Controller
         }
 
         $utilisateur->username = $request->input('username');
-
         if ($request->filled('password')) {
             $utilisateur->password = $request->input('password');
         }
-
         $utilisateur->save();
 
-        // Synchroniser les rôles en fonction des rôles autorisés
-        if (!empty($selectedRoles)) {
-            $utilisateur->roles()->sync($selectedRoles);
+        $currentAssignedRoleIds = $utilisateur->roles()->pluck('roles.id_role')->toArray();
+
+        $preservedRoles = array_filter($currentAssignedRoleIds, function ($roleId) use ($allowedRoleIds) {
+            return !in_array($roleId, $allowedRoleIds);
+        });
+
+        $finalRoles = array_unique(array_merge($selectedRoles, $preservedRoles));
+
+        if (!empty($finalRoles)) {
+            $utilisateur->roles()->sync($finalRoles);
         } else {
             $utilisateur->roles()->detach();
         }
@@ -172,10 +161,6 @@ class AdminController extends Controller
             ->with('success', 'Utilisateur mis à jour avec succès.');
     }
 
-    /**
-     * Supprime un utilisateur.
-     * URL : DELETE /admin/{id}
-     */
     public function destroy($id)
     {
         $utilisateur = Utilisateur::findOrFail($id);
