@@ -10,13 +10,11 @@ use App\Http\Controllers\SalaireController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StockMovementController;
-
-Route::get('/stocks', [StockMovementController::class, 'index'])->name('stock.index');
-Route::get('/stocks/create', [StockMovementController::class, 'create'])->name('stock.create');
-Route::post('/stocks', [StockMovementController::class, 'store'])->name('stock.store');
-Route::delete('/stocks/{movement}', [StockMovementController::class, 'destroy'])->name('stock.destroy');
-
 use App\Http\Controllers\DashboardUtilisateurController;
+use App\Http\Controllers\InventoryController;
+
+
+
 
 Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
 Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
@@ -75,6 +73,12 @@ Route::middleware(['auth'])->group(function () {
 
     });
 
+    // STOCKS 
+    Route::get('/stocks', [StockMovementController::class, 'index'])->name('stock.index');
+    Route::get('/stocks/create', [StockMovementController::class, 'create'])->name('stock.create');
+    Route::post('/stocks', [StockMovementController::class, 'store'])->name('stock.store');
+    Route::delete('/stocks/{movement}', [StockMovementController::class, 'destroy'])->name('stock.destroy');
+
 
     //GESTION DES DEMANDE DE CONGÉ
     Route::get('/conges', [CongeController::class, 'approval'])->name('conges.index');
@@ -112,7 +116,6 @@ Route::get('/inventory', function () {
     $items = ['item1', 'item2', 'item3']; // Exemple de données
     return view('inventory', ['items' => $items]);
 });
-use App\Http\Controllers\InventoryController;
 
 Route::get('/inventory', [InventoryController::class, 'index']);
 
