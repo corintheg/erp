@@ -91,7 +91,10 @@
                     <i class="fas fa-tachometer-alt mr-3"></i> Fournisseurs
                 </a>
                 <a href="{{ route('commandes.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                    <i class="fas fa-warehouse mr-3"></i> Commandes
+                    <i class="fa-solid fa-cart-shopping mr-3"></i> Commandes
+                </a>
+                <a href="{{ route('stocks.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                    <i class="fas fa-warehouse mr-3"></i> Stocks
                 </a>
             @endif
             <form method="POST" action="{{ route('logout') }}">

@@ -11,6 +11,7 @@ use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardUtilisateurController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\StockController;
 
 
 
@@ -101,6 +102,15 @@ Route::middleware(['auth'])->group(function (): void {
             Route::get('/{commande}/edit', [CommandeController::class, 'edit'])->name('commandes.edit');
             Route::put('/{commande}', [CommandeController::class, 'update'])->name('commandes.update');
             Route::delete('/{commande}', [CommandeController::class, 'destroy'])->name('commandes.destroy');
+        });
+
+        Route::prefix('stocks')->group(function () {
+            Route::get('/', [StockController::class, 'index'])->name('stocks.index');
+            Route::get('/create', [StockController::class, 'create'])->name('stocks.create');
+            Route::post('/', [StockController::class, 'store'])->name('stocks.store');
+            Route::get('/{stock}/edit', [StockController::class, 'edit'])->name('stocks.edit');
+            Route::put('/{stock}', [StockController::class, 'update'])->name('stocks.update');
+            Route::delete('/{stock}', [StockController::class, 'destroy'])->name('stocks.destroy');
         });
     });
 
