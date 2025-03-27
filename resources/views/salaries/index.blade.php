@@ -36,10 +36,6 @@
     </div>
     <nav class="mt-6">
         <a href="{{ route('dashboard') }}" class="flex items-center p-4 hover:bg-gray-700"><i class="fas fa-tachometer-alt mr-3"></i> Dashboard</a>
-        <a href="{{ route('inventory') }}" class="flex items-center p-4 hover:bg-gray-700"><i class="fas fa-warehouse mr-3"></i> Inventaire</a>
-        <a href="{{ route('hr') }}" class="flex items-center p-4 hover:bg-gray-700"><i class="fas fa-users mr-3"></i> Ressources Humaines</a>
-        <a href="{{ route('salaries.index') }}" class="flex items-center p-4 bg-gray-700"><i class="fas fa-chart-line mr-3"></i> Finances</a>
-        <a href="{{ route('settings') }}" class="flex items-center p-4 hover:bg-gray-700"><i class="fas fa-cog mr-3"></i> Paramètres</a>
     </nav>
     <div class="absolute bottom-0 p-4">
         <a href="{{ route('logout') }}" class="flex items-center text-red-500 hover:text-red-400"><i class="fas fa-sign-out-alt mr-3"></i> Déconnexion</a>
@@ -85,7 +81,7 @@
                         <td class="p-2">{{ $salaire->date_fin ? \Carbon\Carbon::parse($salaire->date_fin)->format('d/m/Y') : '-' }}</td>
                         <td class="p-2">
                             <a href="{{ route('salaries.edit', $salaire->id_salaire) }}" class="text-blue-600 hover:underline mr-2"><i class="fas fa-edit"></i></a>
-                            <form action="{{ route('salaries.delete', $salaire->id_salaire) }}" method="POST" class="inline">
+                            <form action="{{ route('salaries.destroy', $salaire->id_salaire) }}" method="POST" class="inline">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Voulez-vous vraiment supprimer ce salaire ?')"><i class="fas fa-trash"></i></button>
                             </form>

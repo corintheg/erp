@@ -35,15 +35,15 @@ Route::middleware(['auth'])->group(function (): void {
     // FINANCES
 
     Route::middleware(PermissionMiddleware::class . ':superadmin,admin,finance')->group(function () {
-        Route::prefix('finance')->group(function () {
+      //  Route::prefix('finance')->group(function () {
             Route::get('/', [SalaireController::class, 'index'])->name('finance.index');
             Route::get('/salaries', [SalaireController::class, 'index'])->name('finance.salaries');
-            Route::get('/salaries/create', [SalaireController::class, 'create'])->name('finance.salaries.create');
-            Route::post('/salaries', [SalaireController::class, 'store'])->name('finance.salaries.store');
-            Route::get('/salaries/{id}/edit', [SalaireController::class, 'edit'])->name('finance.salaries.edit');
+            Route::get('/salaries/create', [SalaireController::class, 'create'])->name('salaries.create');
+            Route::post('/salaries', [SalaireController::class, 'store'])->name('salaries.store');
+            Route::get('/salaries/{id}/edit', [SalaireController::class, 'edit'])->name('salaries.edit');
             Route::put('/salaries/{id}', [SalaireController::class, 'update'])->name('salaries.update');
-            Route::delete('/salaries/{id}', [SalaireController::class, 'destroy'])->name('finance.salaries.destroy');
-        });
+            Route::delete('/salaries/{id}', [SalaireController::class, 'destroy'])->name('salaries.destroy');
+       // });
     });
 
     // PERMISSIONS ADMIN
