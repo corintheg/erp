@@ -13,7 +13,7 @@ class SalaireController extends Controller
         $totalSalaries = $salaries->sum('montant');
 
         if ($request->ajax()) {
-            return response()->json(['salaries' => $salaries, 'totalSalaries' => $totalSalaries]);
+            return response()->json(['salaires' => $salaries, 'totalSalaries' => $totalSalaries]);
         }
 
         return view('salaries.index', compact('salaries', 'totalSalaries'));
