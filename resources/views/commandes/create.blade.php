@@ -34,7 +34,8 @@
                     <label for="reference_commande" class="block text-gray-700 font-medium mb-2">
                         Référence de la commande
                     </label>
-                    <input type="text" id="reference_commande" name="reference_commande" value="{{ old('reference_commande') }}" required
+                    <input type="text" id="reference_commande" name="reference_commande"
+                        value="{{ old('reference_commande') }}" required
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
                 </div>
 
@@ -48,12 +49,29 @@
                         <option value="">-- Aucun --</option>
                         @foreach ($fournisseurs as $fournisseur)
                             <option value="{{ $fournisseur->id_fournisseur }}"
-                                {{ old('id_fournisseur') == $fournisseur->id_fournisseur ? 'selected' : '' }}>
-                                {{ $fournisseur->nom }}
-                            </option>
+                            {{ old('id_fournisseur') == $fournisseur->id_fournisseur ? 'selected' : '' }}>
+                            {{ $fournisseur->nom }} </option>
                         @endforeach
                     </select>
                 </div>
+
+                <!-- Destinataire -->
+<div class="mb-4">
+    <label for="destinataire" class="block text-gray-700 font-medium mb-2">
+        Destinataire
+    </label>
+    <input type="text" id="destinataire" name="destinataire" value="{{ old('destinataire') }}"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+</div>
+<!-- Date de livraison -->
+<div class="mb-4">
+    <label for="date_livraison" class="block text-gray-700 font-medium mb-2">
+        Date de livraison
+    </label>
+    <input type="date" id="date_livraison" name="date_livraison"
+        value="{{ old('date_livraison') }}"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+</div>
 
                 <!-- Statut (menu déroulant) -->
                 <div class="mb-4">
@@ -64,8 +82,7 @@
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
                         <option value="">-- Sélectionnez un statut --</option>
                         @foreach ($statuts as $statut)
-                            <option value="{{ $statut }}"
-                                {{ old('statut_livraison') == $statut ? 'selected' : '' }}>
+                            <option value="{{ $statut }}" {{ old('statut_livraison') == $statut ? 'selected' : '' }}>
                                 {{ $statut }}
                             </option>
                         @endforeach

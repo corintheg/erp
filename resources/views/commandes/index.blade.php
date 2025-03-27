@@ -41,6 +41,7 @@
                             <th class="px-4 py-3 font-semibold text-gray-700">ID</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Référence</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Fournisseur</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Destinataire</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Statut</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Date création</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Date modification</th>
@@ -50,13 +51,12 @@
                     <tbody id="commandesList">
                         @forelse ($commandes as $commande)
                                             @php
-                                                // Classes de couleur pour chaque statut
+                                                // Définition des classes de couleur pour chaque statut
                                                 $statusClasses = [
                                                     'En attente' => 'bg-yellow-200 text-yellow-700',
                                                     'En cours' => 'bg-blue-200 text-blue-700',
                                                     'Livrée' => 'bg-green-200 text-green-700',
                                                 ];
-                                                // Par défaut si le statut ne correspond pas
                                                 $classe = $statusClasses[$commande->statut_livraison] ?? 'bg-gray-200 text-gray-700';
                                             @endphp
 
@@ -70,6 +70,9 @@
                                                     @else
                                                         N/A
                                                     @endif
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    {{ $commande->destinataire ?? 'N/A' }}
                                                 </td>
                                                 <td class="px-4 py-3">
                                                     <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full {{ $classe }}">
@@ -97,7 +100,7 @@
                                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-4 text-gray-500">
+                                <td colspan="8" class="text-center py-4 text-gray-500">
                                     Aucune commande trouvée.
                                 </td>
                             </tr>

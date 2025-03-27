@@ -16,9 +16,11 @@ class Commande extends Model
     protected $fillable = [
         'reference_commande',
         'id_fournisseur',
+        'destinataire',
         'statut_livraison',
         'date_creation',
-        'date_modification',
+        'date_livraison',
+        'commentaires',
     ];
 
     // Si vous voulez que Laravel gère automatiquement created_at/updated_at,

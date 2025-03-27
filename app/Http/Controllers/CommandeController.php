@@ -20,30 +20,35 @@ class CommandeController extends Controller
         $fournisseurs = Fournisseur::all();
 
         // Liste des statuts possibles (vous pouvez lister les valeurs de l’ENUM)
-        $statuts = ['En attente', 'En cours', 'Livrée'];
+        $statuts = ['En cours', 'Livré', 'Annulé'];
 
         return view('commandes.create', compact('fournisseurs', 'statuts'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'reference_commande' => 'required|string|max:100',
             'id_fournisseur' => 'nullable|integer',
-            'statut_livraison' => 'required|string|max:50', // Doit être l'une des 3 valeurs
+            'destinataire' => 'nullable|string|max:255',
+            'statut_livraison' => 'required|string|max:50',
+            'date_livraison' => 'nullable|date',
         ]);
 
-        Commande::create($request->all());
+
+        Commande::create($data);
 
         return redirect()->route('commandes.index')
             ->with('success', 'Commande créée avec succès !');
     }
 
+
+
     public function edit($id)
     {
         $commande = Commande::findOrFail($id);
         $fournisseurs = Fournisseur::all();
-        $statuts = ['En attente', 'En cours', 'Livré'];
+        $statuts = ['En cours', 'Livré', 'Annulé'];
 
         return view('commandes.edit', compact('commande', 'fournisseurs', 'statuts'));
     }
