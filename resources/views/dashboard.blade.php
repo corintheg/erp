@@ -5,12 +5,6 @@
         <header class="bg-white shadow p-4 rounded-lg mb-6 flex justify-between items-center">
             <h2 class="text-2xl font-semibold">Tableau de Bord</h2>
             <div class="flex items-center space-x-4">
-                <!-- Barre de recherche dans le header (visible à partir de 769px) -->
-                <div id="search-bar-header" class="relative">
-                    <input type="text" placeholder="Rechercher..."
-                        class="border rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
-                </div>
                 <div class="flex items-center">
                     <i class="fas fa-user-circle text-2xl mr-2"></i>
                     <span>Admin User</span>
@@ -45,36 +39,6 @@
                     <a href="/inventory" class="text-blue-600 hover:underline text-sm">Voir plus</a>
                 </div>
                 <canvas id="stockChart" height="150"></canvas>
-            </div>
-
-            <!-- Card: Notifications -->
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-lg font-medium mb-4">Notifications</h3>
-                <ul class="space-y-2">
-                    <li class="flex items-center text-sm">
-                        <i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>
-                        Stock faible: Produit A
-                    </li>
-                    <li class="flex items-center text-sm">
-                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                        Paiement reçu
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Card: Tâches -->
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-lg font-medium mb-4">Tâches en cours</h3>
-                <ul class="space-y-2">
-                    <li class="flex items-center text-sm">
-                        <input type="checkbox" class="mr-2">
-                        Vérifier inventaire Q1
-                    </li>
-                    <li class="flex items-center text-sm">
-                        <input type="checkbox" class="mr-2">
-                        Réunion équipe RH
-                    </li>
-                </ul>
             </div>
         </div>
     </main>

@@ -213,17 +213,17 @@
         }
     });
 
-        // const salaryEvolutionData = {
-        {{--    labels: @json($salaryEvolution->pluck('data')->flatten(1)->pluck('date_debut')->unique()->sort()),--}}
-        {{--    datasets: @json($salaryEvolution->map(function ($item) {--}}
-        //         return [
-        //             'label' => $item['nom'],
-        //             'data' => array_column($item['data'], 'montant'),
-        //             'borderColor' => 'rgba(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random()*255) + ',' + Math.floor(Math.random()*255) + ',0.6)',
-        //             'fill' => false
-        //         ];
-        //     })->values())
-        // };
+         {{--const salaryEvolutionData = {--}}
+         {{--  labels: @json($salaryEvolution->pluck('data')->flatten(1)->pluck('date_debut')->unique()->sort()),--}}
+         {{--  datasets: @json($salaryEvolution->map(function ($item) {--}}
+         {{--        return [--}}
+         {{--           'label' => $item['nom'],--}}
+         {{--            'data' => array_column($item['data'], 'montant'),--}}
+         {{--            'borderColor' => 'rgba(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random()*255) + ',' + Math.floor(Math.random()*255) + ',0.6)',--}}
+         {{--            'fill' => false--}}
+         {{--        ];--}}
+         {{--    })->values())--}}
+         {{--};--}}
 
     new Chart(document.getElementById('salaryEvolutionChart').getContext('2d'), {
         type: 'line',

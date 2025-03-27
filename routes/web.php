@@ -76,6 +76,10 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+Route::get('/inventory', function () {
+    $items = ['item1', 'item2', 'item3']; // Exemple de données
+    return view('inventory', ['items' => $items]);
+});
+use App\Http\Controllers\InventoryController;
 
-
-
+Route::get('/inventory', [InventoryController::class, 'index']);
