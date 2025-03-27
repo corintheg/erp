@@ -65,43 +65,35 @@
         </div>
         </div>
         <nav class="mt-6">
-            <a href="{{ route('dashboard') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                @csrf
-                <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
-            </a>
-            <a href="{{ route('user.dashboard') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                <i class="fas fa-tachometer-alt mr-3"></i> Demander des congés
-            </a>
-
             @if ((Auth::user()->hasAnyRole(['superadmin', 'superadmin'])))
                 <a href="{{ route('admin.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
                     <i class="fa-solid fa-user-tie mr-3"></i> Admin
                 </a>
             @endif
-            @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'finance', 'livreur']))
-                <a href="{{ route('fournisseurs.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                    <i class="fas fa-tachometer-alt mr-3"></i> Fournisseurs
-                </a>
-                <a href="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                    <i class="fas fa-warehouse mr-3"></i> Inventaire
-                </a>
-            @endif
-            @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'finance']))
-                <a href="{{ route('logout') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                    <i class="fas fa-chart-line mr-3"></i> Finances
-                </a>
-            @endif
-
+            <a href="{{ route('dashboard') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+            </a>
+            <a href="{{ route('user.dashboard') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                <i class="fa-solid fa-plane-departure mr-3"></i>Mes congés
+            </a>
             @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'rh']))
                 <a href="{{ route('employes.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
                     <i class="fas fa-users mr-3"></i> Employés
                 </a>
                 <a href="{{ route('conges.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                    <i class="fas fa-users mr-3"></i> Congés
+                    <i class="fa-solid fa-calendar-days mr-3"></i> Gérer les congés
                 </a>
             @endif
 
 
+            @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'finance', 'livreur', 'manager']))
+                <a href="{{ route('fournisseurs.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                    <i class="fas fa-tachometer-alt mr-3"></i> Fournisseurs
+                </a>
+                <a href="{{ route('commandes.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                    <i class="fas fa-warehouse mr-3"></i> Commandes
+                </a>
+            @endif
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="flex items-center p-4 hover:bg-gray-700 text-red-400 w-full text-left    ">
