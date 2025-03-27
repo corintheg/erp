@@ -10,6 +10,11 @@
                 + Nouveau fournisseur
             </a>
         </header>
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <!-- Contenu principal -->
         <div class="bg-white rounded-lg shadow-md p-6">

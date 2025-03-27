@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Conge;
+use App\Models\Employe;
 
 class DashboardUtilisateurController extends Controller
 {
@@ -14,8 +15,9 @@ class DashboardUtilisateurController extends Controller
 
         $employe = $utilisateur->employe;
 
-        if (!$employe) {
-            return redirect()->back()->with('error', 'Aucun employé associé à votre compte.');
+        if ($utilisateur->id_employee == null) {
+            return redirect()->back()->with('error', "Votre compte n'est pas lié à un employé");
+
         }
 
         $conges = $employe->conges()->get();
@@ -27,7 +29,7 @@ class DashboardUtilisateurController extends Controller
         return view('user.index', compact('conges', 'salaires'));
     }
 
-//    public function dashboard()
+    //    public function dashboard()
 //    {
 //        return view('user.index');
 //    }

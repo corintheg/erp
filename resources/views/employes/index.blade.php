@@ -18,6 +18,11 @@
             </div>
         @endif
 
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
         <!-- Tableau des employés -->
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="mb-4 flex flex-col sm:flex-row gap-4">
