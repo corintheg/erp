@@ -55,7 +55,7 @@
             </div>
             <div class="flex items-center">
                 <i class="fas fa-user-circle text-2xl mr-2"></i>
-                <span>{{ Auth::user()->name ?? 'Admin User' }}</span>
+                <span>{{ Auth::user()->username }}</span>
             </div>
         </div>
     </header>
@@ -79,7 +79,7 @@
                     <tbody id="salaries-body">
                     @foreach ($salaries as $salaire)
                     <tr class="border-b">
-                        <td class="p-2">{{ $salaire->employe ? $salaire->employe->nom : 'Inconnu' }}</td>
+                        <td class="p-2">{{ $salaire->id_employe}}</td>
                         <td class="p-2">{{ number_format($salaire->montant, 2, ',', ' ') }}</td>
                         <td class="p-2">{{ \Carbon\Carbon::parse($salaire->date_debut)->format('d/m/Y') }}</td>
                         <td class="p-2">{{ $salaire->date_fin ? \Carbon\Carbon::parse($salaire->date_fin)->format('d/m/Y') : '-' }}</td>
@@ -96,14 +96,7 @@
                 </table>
             </div>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-medium mb-4">Répartition des Salaires</h3>
-            <canvas id="salaryDistributionChart" height="150"></canvas>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow lg:col-span-2">
-            <h3 class="text-lg font-medium mb-4">Évolution des Salaires</h3>
-            <canvas id="salaryEvolutionChart" height="150"></canvas>
-        </div>
+
         <div class="bg-white p-6 rounded-lg shadow">
             <h3 class="text-lg font-medium mb-4">Total des Salaires</h3>
             <p class="text-2xl font-bold text-green-600" id="total-salaries">{{ number_format($totalSalaries, 2, ',', ' ') }} €</p>

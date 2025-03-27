@@ -53,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/salaries/create', [SalaireController::class, 'create'])->name('finance.salaries.create');
             Route::post('/salaries', [SalaireController::class, 'store'])->name('finance.salaries.store');
             Route::get('/salaries/{id}/edit', [SalaireController::class, 'edit'])->name('finance.salaries.edit');
-            Route::put('/salaries/{id}', [SalaireController::class, 'update'])->name('finance.salaries.update');
+            Route::put('/salaries/{id}', [SalaireController::class, 'update'])->name('salaries.update');
             Route::delete('/salaries/{id}', [SalaireController::class, 'destroy'])->name('finance.salaries.destroy');
         });
     });

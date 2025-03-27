@@ -13,7 +13,7 @@
                 <label for="id_employe" class="block text-sm font-medium text-gray-700">Employé</label>
                 <select name="id_employe" id="id_employe" class="w-full border border-gray-300 rounded p-2" required>
                     @foreach($employes as $employe)
-                        <option value=>{{ $employe->nom }} {{ $employe->prenom }}</option>
+                        <option value="{{ $employe->id_employe }} ">{{ $employe->nom }} {{ $employe->prenom }}</option>
                     @endforeach
                 </select>
                 @error('id_employe')
