@@ -66,6 +66,7 @@
         </div>
         <nav class="mt-6">
             <a href="{{ route('dashboard') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                @csrf
                 <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
             </a>
             <a href="{{ route('user.dashboard') }}" class="flex items-center p-4 hover:bg-gray-700 ">

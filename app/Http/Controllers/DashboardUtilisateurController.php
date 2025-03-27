@@ -10,18 +10,14 @@ class DashboardUtilisateurController extends Controller
 
     public function index()
     {
-        // Récupérer l'utilisateur connecté
         $utilisateur = auth()->user();
 
-        // Récupérer l'employé associé à cet utilisateur
         $employe = $utilisateur->employe;
 
-        // Vérifier si l'employé existe
         if (!$employe) {
             return redirect()->back()->with('error', 'Aucun employé associé à votre compte.');
         }
 
-        // Récupérer les congés de l'employé
         $conges = $employe->conges()->get();
         //        $conges = $employe->conges();
 
@@ -31,8 +27,8 @@ class DashboardUtilisateurController extends Controller
         return view('user.index', compact('conges', 'salaires'));
     }
 
-    public function dashboard()
-    {
-        return view('user.index');
-    }
+//    public function dashboard()
+//    {
+//        return view('user.index');
+//    }
 }
