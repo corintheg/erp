@@ -47,6 +47,6 @@ class CongeController extends Controller
         $conge->statut = 'En attente';
         $conge->save();
 
-        return response()->json(['message' => 'Demande de congé enregistrée avec succès !']);
+        return redirect()->route('conges.index')->with('success', 'Demande de congé enregistrée avec succès !');
     }
 }

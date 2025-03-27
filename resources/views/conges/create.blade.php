@@ -1,94 +1,85 @@
-<!-- resources/views/conges/create.blade.php -->
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demande de congé</title>
-    <!-- Inclusion de Bootstrap pour un design simple -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .btn-custom {
-            background-color: #38d62c;
-            border-color: #38d62c;
-            color: white;
-        }
-        .btn-custom:hover {
-            background-color: #2fb724;
-            border-color: #2fb724;
-        }
-    </style>
-</head>
-<body>
-<div class="container mt-5">
-    <h2 class="mb-4">Nouvelle demande de congé</h2>
+@extends('layouts.app')
 
-    <!-- Affichage des erreurs de validation -->
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+@section('content')
+    <main class="main-content flex-1 ml-0 md:ml-64 p-6 text-sm">
+        <!-- Header de la page -->
+        <header class="bg-white shadow p-4 rounded-lg mb-6">
+            <h2 class="text-2xl font-semibold">Nouvelle demande de congé</h2>
+        </header>
+
+        <!-- Affichage des erreurs de validation -->
+        @if ($errors->any())
+            <div class="mb-4 p-2 bg-red-100 text-red-700 rounded-md">
+                <ul class="list-disc pl-4">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- Formulaire de création de congé -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <form action="{{ route('conges.create.store') }}" method="POST">
+                @csrf
+
+                <!-- Champ caché pour l'ID de l'utilisateur -->
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id_employe }}">
+
+                <!-- Type de congé -->
+                <div class="mb-4">
+                    <label for="type_conge" class="block text-gray-700 font-medium mb-2">Type de congé</label>
+                    <select id="type_conge" name="type_conge" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                        <option value="">Sélectionnez un type</option>
+                        <option value="RTT" {{ old('type_conge') == 'RTT' ? 'selected' : '' }}>RTT</option>
+                        <option value="CP" {{ old('type_conge') == 'CP' ? 'selected' : '' }}>Congés Payés (CP)</option>
+                        <option value="Maladie" {{ old('type_conge') == 'Maladie' ? 'selected' : '' }}>Maladie</option>
+                    </select>
+                </div>
+
+                <!-- Date de début -->
+                <div class="mb-4">
+                    <label for="date_debut" class="block text-gray-700 font-medium mb-2">Date de début</label>
+                    <input type="date" id="date_debut" name="date_debut" value="{{ old('date_debut') }}" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                </div>
+
+                <!-- Date de fin -->
+                <div class="mb-4">
+                    <label for="date_fin" class="block text-gray-700 font-medium mb-2">Date de fin</label>
+                    <input type="date" id="date_fin" name="date_fin" value="{{ old('date_fin') }}" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                </div>
+
+                <!-- Raison -->
+                <div class="mb-4">
+                    <label for="raison" class="block text-gray-700 font-medium mb-2">Raison</label>
+                    <textarea id="raison" name="raison" rows="3" placeholder="Expliquez la raison de votre demande"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">{{ old('raison') }}</textarea>
+                </div>
+
+                <!-- Bouton de soumission -->
+                <div>
+                    <button type="submit" id="submitButton"
+                        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+                        Soumettre la demande
+                    </button>
+                </div>
+            </form>
         </div>
-    @endif
+    </main>
 
-    <form action="/leave_request" method="POST" class="card p-4">
-        @csrf
+    <script>
+        const typeCongeSelect = document.getElementById('type_conge');
+        const submitButton = document.getElementById('submitButton');
 
-        <!-- Champ caché pour l'ID de l'utilisateur -->
-        <input type="hidden" name="user_id" value="{{ Auth::user()->id_employe }}">
-
-        <!-- Type de congé -->
-        <div class="mb-3">
-            <label for="type_conge" class="form-label">Type de congé</label>
-            <select class="form-select" id="type_conge" name="type_conge" required>
-                <option value="">Sélectionnez un type</option>
-                <option value="RTT">RTT</option>
-                <option value="CP">Congés Payés (CP)</option>
-                <option value="Maladie">Maladie</option>
-            </select>
-        </div>
-
-        <!-- Date de début -->
-        <div class="mb-3">
-            <label for="date_debut" class="form-label">Date de début</label>
-            <input type="date" class="form-control" id="date_debut" name="date_debut"
-                   value="{{ old('date_debut') }}" required>
-        </div>
-
-        <!-- Date de fin -->
-        <div class="mb-3">
-            <label for="date_fin" class="form-label">Date de fin</label>
-            <input type="date" class="form-control" id="date_fin" name="date_fin"
-                   value="{{ old('date_fin') }}" required>
-        </div>
-
-        <!-- Raison -->
-        <div class="mb-3">
-            <label for="raison" class="form-label">Raison</label>
-            <textarea class="form-control" id="raison" name="raison" rows="3"
-                      placeholder="Expliquez la raison de votre demande">{{ old('raison') }}</textarea>
-        </div>
-
-        <!-- Bouton de soumission -->
-        <button type="submit" class="btn btn-custom" id="submitButton">Soumettre la demande</button>
-    </form>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    const typeCongeSelect = document.getElementById('type_conge');
-    const submitButton = document.getElementById('submitButton');
-
-    typeCongeSelect.addEventListener('change', function() {
-        if (this.value === 'Maladie') {
-            submitButton.textContent = 'Envoyer le congé';
-        } else {
-            submitButton.textContent = 'Soumettre la demande';
-        }
-    });
-</script>
-</body>
-</html>
+        typeCongeSelect.addEventListener('change', function () {
+            if (this.value === 'Maladie') {
+                submitButton.textContent = 'Envoyer le congé';
+            } else {
+                submitButton.textContent = 'Soumettre la demande';
+            }
+        });
+    </script>
+@endsection
