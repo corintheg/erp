@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employe;
 use Illuminate\Http\Request;
 use App\Models\Salaire;
 
@@ -9,7 +10,7 @@ class SalaireController extends Controller
 {
     public function index(Request $request)
     {
-        $salaries = Salaire::with('employe')->get();
+        $salaries = Salaire::with('employes')->get();
         $totalSalaries = $salaries->sum('montant');
 
         if ($request->ajax()) {
@@ -21,7 +22,9 @@ class SalaireController extends Controller
 
     public function create()
     {
-        return view('salaries.create');
+        // Récupérer les employés
+        $employes = Employe::all();  // Nous récupérons tous les employés pour les afficher dans le formulaire
+        return view('salaries.create', compact('employes'));  // Passer les employés à la vue
     }
 
     public function store(Request $request)
