@@ -113,7 +113,9 @@
 
     </aside>
 
+
     @yield('content')
+
 
 
 </body>
