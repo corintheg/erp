@@ -9,15 +9,21 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SalaireController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StockMovementController;
+
+Route::get('/stocks', [StockMovementController::class, 'index'])->name('stock.index');
+Route::get('/stocks/create', [StockMovementController::class, 'create'])->name('stock.create');
+Route::post('/stocks', [StockMovementController::class, 'store'])->name('stock.store');
+Route::delete('/stocks/{movement}', [StockMovementController::class, 'destroy'])->name('stock.destroy');
+
 
 Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
-
-Route::get('/finance/salaries', [SalaireController::class, 'index'])->name('salaries.index');
-Route::get('/finance/salaries/add', [SalaireController::class, 'create'])->name('salaries.create');
-Route::post('/finance/salaries', [SalaireController::class, 'store'])->name('salaries.store');
-Route::get('/finance/salaries/edit/{id}', [SalaireController::class, 'edit'])->name('salaries.edit');
-Route::put('/finance/salaries/{id}', [SalaireController::class, 'update'])->name('salaries.update');
-Route::delete('/finance/salaries/{id}', [SalaireController::class, 'destroy'])->name('salaries.delete');
+Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
+Route::get('/salaries/create', [SalaireController::class, 'create'])->name('salaries.create');
+Route::post('/salaries', [SalaireController::class, 'store'])->name('salaries.store');
+Route::get('/salaries/{id}/edit', [SalaireController::class, 'edit'])->name('salaries.edit');
+Route::put('/salaries/{id}', [SalaireController::class, 'update'])->name('salaries.update');
+Route::delete('/salaries/{id}', [SalaireController::class, 'destroy'])->name('salaries.delete');
 
 Route::middleware('auth')->group(function () {
     Route::get('/inventory', fn() => view('inventory'))->name('inventory');
