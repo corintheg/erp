@@ -19,7 +19,7 @@
                         bord</a>
                     <a href="#"
                         class="block px-4 py-2 rounded-md hover:bg-gray-700 transition duration-200">Employés</a>
-                    <a href="{{ route('leave.approval') }}" class="block px-4 py-2 rounded-md bg-gray-700">Congés</a>
+                    <a href="{{ route('conges') }}" class="block px-4 py-2 rounded-md bg-gray-700">Congés</a>
                     <a href="#"
                         class="block px-4 py-2 rounded-md hover:bg-gray-700 transition duration-200">Rapports</a>
                     <form method="POST" action="{{ route('logout') }}" class="mt-4">
@@ -91,14 +91,15 @@
                                         data-type="{{ $conge->type_conge }}"
                                         data-name="{{ strtolower($conge->employe->nom ?? '') }} {{ strtolower($conge->employe->prenom ?? '') }}">
                                         <td class="px-4 py-3">{{ $conge->employe->nom ?? 'N/A' }}
-                                            {{ $conge->employe->prenom ?? '' }}</td>
+                                            {{ $conge->employe->prenom ?? '' }}
+                                        </td>
                                         <td class="px-4 py-3">{{ $conge->date_debut }}</td>
                                         <td class="px-4 py-3">{{ $conge->date_fin }}</td>
                                         <td class="px-4 py-3">{{ $conge->type_conge }}</td>
                                         <td class="px-4 py-3">
                                             <span
                                                 class="inline-block px-2 py-1 text-xs font-semibold rounded-full
-                                                {{ ($conge->statut === 'Validé' ? 'bg-green-100 text-green-800' : ($conge->statut === 'Annulé' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800')) }}">
+                                                        {{ ($conge->statut === 'Validé' ? 'bg-green-100 text-green-800' : ($conge->statut === 'Annulé' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800')) }}">
                                                 {{ $conge->statut }}
                                             </span>
                                         </td>
@@ -106,7 +107,7 @@
                                         <td class="px-4 py-3">
                                             @if ($conge->statut === 'En attente')
                                                 <div class="flex gap-2">
-                                                    <form action="{{ route('leave.approve', $conge->id_conge) }}" method="POST"
+                                                    <form action="{{ route('conges.approve', $conge->id_conge) }}" method="POST"
                                                         class="flex items-center gap-2">
                                                         @csrf
                                                         <button type="submit"
@@ -114,7 +115,7 @@
                                                             Approuver
                                                         </button>
                                                     </form>
-                                                    <form action="{{ route('leave.reject', $conge->id_conge) }}" method="POST"
+                                                    <form action="{{ route('conges.reject', $conge->id_conge) }}" method="POST"
                                                         class="flex items-center gap-2">
                                                         @csrf
                                                         <button type="submit"
