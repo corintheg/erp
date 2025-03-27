@@ -13,9 +13,10 @@ class DashboardUtilisateurController extends Controller
     {
         $utilisateur = auth()->user();
 
+
         $employe = $utilisateur->employe;
 
-        if ($utilisateur->id_employee == null) {
+        if (!$employe) {
             return redirect()->back()->with('error', "Votre compte n'est pas lié à un employé");
 
         }

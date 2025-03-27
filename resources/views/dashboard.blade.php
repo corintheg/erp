@@ -13,7 +13,7 @@
                 </div>
                 <div class="flex items-center">
                     <i class="fas fa-user-circle text-2xl mr-2"></i>
-                    <span class="first-letter:uppercase">{{ Auth::user()->username ?? 'Admin User' }}</span>
+                    <span class="first-letter:uppercase">{{ Auth::user()->username ?? 'User' }}</span>
                 </div>
             </div>
         </header>

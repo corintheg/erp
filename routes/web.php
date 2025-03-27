@@ -62,11 +62,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
-    Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
     //GESTION DES DEMANDE DE CONGÉ
     Route::get('/conges', [CongeController::class, 'approval'])->name('conges.index');
-    Route::post('/conges/{id}', [CongeController::class, 'approveLeave'])->name('conges.approve');
-    Route::post('/leave_reject/{id}', [CongeController::class, 'rejectLeave'])->name('conges.reject');
+    Route::post('/conges/{id}/approve', [CongeController::class, 'approveLeave'])->name('conges.approve');
+    Route::post('/conges/{id}/reject', [CongeController::class, 'rejectLeave'])->name('conges.reject');
     Route::get('/conges/create', [CongeController::class, 'view_leave_request'])->name('conges.create');
     Route::post('/conges/create', [CongeController::class, 'leave_request'])->name('conges.create.store');
 
