@@ -10,7 +10,7 @@ class CongeController extends Controller
     public function approval()
     {
         $conges = Conge::with('employe')->get();
-        return view('leave.approval', compact('conges'));
+        return view('conges.index', compact('conges'));
     }
 
     public function approveLeave(Request $request, $id)
@@ -19,7 +19,7 @@ class CongeController extends Controller
         $conge->statut = 'Validé';
         $conge->save();
 
-        return redirect()->route('leave.approval')->with('success', 'Demande de congé approuvée avec succès.');
+        return redirect()->route('conges.index')->with('success', 'Demande de congé approuvée avec succès.');
     }
 
     public function rejectLeave(Request $request, $id)
@@ -28,12 +28,12 @@ class CongeController extends Controller
         $conge->statut = 'Annulé';
         $conge->save();
 
-        return redirect()->route('leave.approval')->with('success', 'Demande de congé refusée avec succès.');
+        return redirect()->route('conges.index')->with('success', 'Demande de congé refusée avec succès.');
     }
 
     public function view_leave_request()
     {
-        return view('leave.leave_request');
+        return view('conges.create');
     }
 
     public function leave_request(Request $request)
@@ -47,6 +47,6 @@ class CongeController extends Controller
         $conge->statut = 'En attente';
         $conge->save();
 
-        return response()->json(['message' => 'Demande de congé enregistrée avec succès !']);
+        return redirect()->route('conges.index')->with('success', 'Demande de congé enregistrée avec succès !');
     }
 }

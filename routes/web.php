@@ -9,8 +9,22 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SalaireController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StockMovementController;
+
+Route::get('/stocks', [StockMovementController::class, 'index'])->name('stock.index');
+Route::get('/stocks/create', [StockMovementController::class, 'create'])->name('stock.create');
+Route::post('/stocks', [StockMovementController::class, 'store'])->name('stock.store');
+Route::delete('/stocks/{movement}', [StockMovementController::class, 'destroy'])->name('stock.destroy');
+
 use App\Http\Controllers\DashboardUtilisateurController;
 
+Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
+Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
+Route::get('/salaries/create', [SalaireController::class, 'create'])->name('salaries.create');
+Route::post('/salaries', [SalaireController::class, 'store'])->name('salaries.store');
+Route::get('/salaries/{id}/edit', [SalaireController::class, 'edit'])->name('salaries.edit');
+Route::put('/salaries/{id}', [SalaireController::class, 'update'])->name('salaries.update');
+Route::delete('/salaries/{id}', [SalaireController::class, 'destroy'])->name('salaries.delete');
 
 
 Route::middleware('auth')->group(function () {
@@ -33,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/user/dashboard', [DashboardUtilisateurController::class, 'index'])->name('user.dashboard');
     Route::post('/user/dashboard', [DashboardUtilisateurController::class, 'dashboard'])->name('user.dashboard');
-    // FINANCES 
+    // FINANCES
 
     Route::middleware(PermissionMiddleware::class . ':superadmin,admin,finance')->group(function () {
         Route::prefix('finance')->group(function () {
@@ -62,13 +76,12 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
-    Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
     //GESTION DES DEMANDE DE CONGÉ
-    Route::get('/leave_approval', [CongeController::class, 'approval'])->name('leave.approval');
-    Route::post('/leave_approve/{id}', [CongeController::class, 'approveLeave'])->name('leave.approve');
-    Route::post('/leave_reject/{id}', [CongeController::class, 'rejectLeave'])->name('leave.reject');
-    Route::get('/leave_request', [CongeController::class, 'view_leave_request'])->name('leave.request');
-    Route::post('/leave_request', [CongeController::class, 'leave_request'])->name('leave.request.store');
+    Route::get('/conges', [CongeController::class, 'approval'])->name('conges.index');
+    Route::post('/conges/{id}/approve', [CongeController::class, 'approveLeave'])->name('conges.approve');
+    Route::post('/conges/{id}/reject', [CongeController::class, 'rejectLeave'])->name('conges.reject');
+    Route::get('/conges/create', [CongeController::class, 'view_leave_request'])->name('conges.create');
+    Route::post('/conges/create', [CongeController::class, 'leave_request'])->name('conges.create.store');
 
     // GESTION EMPLOYES
 
@@ -95,7 +108,12 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+Route::get('/inventory', function () {
+    $items = ['item1', 'item2', 'item3']; // Exemple de données
+    return view('inventory', ['items' => $items]);
+});
+use App\Http\Controllers\InventoryController;
 
-
+Route::get('/inventory', [InventoryController::class, 'index']);
 
 Route::get('/dashboard/user', [DashboardUtilisateurController::class, 'index'])->name('dashboard.user')->middleware('auth');

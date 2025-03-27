@@ -14,11 +14,16 @@
                 </div>
                 <div class="flex items-center">
                     <i class="fas fa-user-circle text-2xl mr-2"></i>
-                    <span>{{ Auth::user()->name ?? 'Admin User' }}</span>
+                    <span>{{ Auth::user()->username ?? 'Admin User' }}</span>
                 </div>
             </div>
         </header>
 
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
         <!-- Salaries Content -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Card: Liste des Salaires -->

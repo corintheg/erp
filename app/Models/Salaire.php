@@ -1,30 +1,16 @@
 <?php
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Salaire extends Model
 {
-    protected $table = 'salaires';
+    use HasFactory;
+
+    protected $table = 'salaire';
     protected $primaryKey = 'id_salaire';
-    public $timestamps = false;
-
-    protected $fillable = [
-        'id_employe',
-        'montant',
-        'date_debut',
-        'date_fin',
-        'date_creation',
-        'date_modification',
-    ];
-
-    protected $casts = [
-        'date_debut' => 'date',
-        'date_fin' => 'date',
-        'date_creation' => 'datetime',
-        'date_modification' => 'datetime',
-    ];
+    protected $fillable = ['id_employe', 'montant', 'date_debut', 'date_fin'];
 
     public function employe()
     {
