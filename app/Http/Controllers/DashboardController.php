@@ -22,7 +22,8 @@ class DashboardController extends Controller
         $financeStats = DB::table('finances')
             ->select(
                 DB::raw("SUM(CASE WHEN type_operation = 'revenu' THEN montant ELSE 0 END) as revenus"),
-                DB::raw("SUM(CASE WHEN type_operation = 'depense' THEN montant ELSE 0 END) as depenses")
+                DB::raw("SUM(CASE WHEN type_operation = 'depense' THEN montant ELSE 0 END) as depenses"),
+                DB::raw("SUM(CASE WHEN type_operation = 'facture' THEN montant ELSE 0 END) as factures"),
             )
             ->first();
         $stockStats = DB::table('stocks')

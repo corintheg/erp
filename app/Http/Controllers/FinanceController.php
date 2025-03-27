@@ -3,71 +3,88 @@
 namespace App\Http\Controllers;
 
 use App\Models\Finance;
-use App\Models\Salaire;
+use App\Models\Fournisseur;
 use Illuminate\Http\Request;
 
 class FinanceController extends Controller
 {
-    // Récupération des transactions financières
     public function index()
     {
-        $transactions = Finance::all();
-        return response()->json($transactions);
+        $finances = Finance::all();
+
+        return view('finances.index', compact('finances'));
     }
 
-    // Création d'une transaction
+    public function create()
+    {
+        $fournisseurs = Fournisseur::all();
+
+        $types = ['dépense', 'revenu', 'facture', 'taxe'];
+        $categories = ['Marketing', 'Salaire', 'Fournisseur'];
+        $statuts = ['Payé', 'En attente', 'Annulé'];
+
+        return view('finances.create', compact('fournisseurs', 'types', 'categories', 'statuts'));
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'type_operation' => 'required|in:dépense,revenu,facture,taxe',
-            'montant'        => 'required|numeric',
+            'description' => 'nullable|string',
+            'montant' => 'required|numeric',
             'date_operation' => 'required|date',
+            'categorie' => 'required|in:Marketing,Salaire,Fournisseur',
+            'id_fournisseur' => 'nullable|integer',
+            'statut' => 'required|in:Payé,En attente,Annulé',
+            'reference_facture' => 'nullable|string',
         ]);
 
-        $transaction = Finance::create($request->all());
-        return response()->json([
-            'message'     => 'Transaction créée avec succès',
-            'transaction' => $transaction
-        ], 201);
+
+        Finance::create($data);
+
+        return redirect()->route('finances.index')
+            ->with('success', 'Enregistrement financier créé avec succès !');
     }
 
-    // Affichage d'une transaction spécifique
-    public function show($id)
+    public function edit($id)
     {
-        $transaction = Finance::findOrFail($id);
-        return response()->json($transaction);
+        $finance = Finance::findOrFail($id);
+        $fournisseurs = Fournisseur::all();
+
+        $types = ['dépense', 'revenu', 'facture', 'taxe'];
+        $categories = ['Marketing', 'Salaire', 'Fournisseur'];
+        $statuts = ['Payé', 'En attente', 'Annulé'];
+
+        return view('finances.edit', compact('finance', 'fournisseurs', 'types', 'categories', 'statuts'));
     }
 
-    // Mise à jour d'une transaction
     public function update(Request $request, $id)
     {
-        $transaction = Finance::findOrFail($id);
-        $transaction->update($request->all());
-        return response()->json([
-            'message'     => 'Transaction mise à jour',
-            'transaction' => $transaction
+        $finance = Finance::findOrFail($id);
+
+        $data = $request->validate([
+            'type_operation' => 'required|in:dépense,revenu,facture,taxe',
+            'description' => 'nullable|string',
+            'montant' => 'required|numeric',
+            'date_operation' => 'required|date',
+            'categorie' => 'required|in:Marketing,Salaire,Fournisseur',
+            'id_fournisseur' => 'nullable|integer',
+            'statut' => 'required|in:Payé,En attente,Annulé',
+            'reference_facture' => 'nullable|string',
         ]);
+
+        $finance->update($data);
+
+        return redirect()->route('finances.index')
+            ->with('success', 'Enregistrement financier mis à jour avec succès !');
     }
 
-    // Suppression d'une transaction
     public function destroy($id)
     {
-        $transaction = Finance::findOrFail($id);
-        $transaction->delete();
-        return response()->json([
-            'message' => 'Transaction supprimée'
-        ]);
-    }
-}
+        $finance = Finance::findOrFail($id);
+        $finance->delete();
 
-// Déplacer cette méthode dans un autre contrôleur (ex: SalaireController)
-class SalaireController extends Controller
-{
-    public function index()
-    {
-        $salaries = Salaire::all();
-        $totalSalaries = $salaries->sum('montant');
-
-        return view('finances.index', compact('salaries', 'totalSalaries'));
+        return redirect()->route('finances.index')
+            ->with('success', 'Enregistrement financier supprimé avec succès !');
     }
 }
