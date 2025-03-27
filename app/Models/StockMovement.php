@@ -9,7 +9,7 @@ class StockMovement extends Model
 {
     use HasFactory;
 
-    protected $table = 'mouvements_stock';
+    protected $table = 'stock_movements';
 
     protected $fillable = ['id_produit', 'type', 'quantite', 'date', 'commentaire'];
 
