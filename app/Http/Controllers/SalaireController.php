@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -44,6 +45,13 @@ class SalaireController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'employe_nom' => 'required|string|max:255',
+            'montant' => 'required|numeric',
+            'date_debut' => 'required|date',
+            'date_fin' => 'nullable|date|after_or_equal:date_debut'
+        ]);
+
         $salaire = Salaire::findOrFail($id);
         $salaire->update($request->all());
         return redirect()->route('salaries.index')->with('success', 'Salaire mis à jour.');

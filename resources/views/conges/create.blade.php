@@ -38,7 +38,7 @@
         @csrf
 
         <!-- Champ caché pour l'ID de l'utilisateur -->
-        <input type="hidden" name="user_id" value="{{ Auth::user()->id_utilisateur }}">
+        <input type="hidden" name="user_id" value="{{ Auth::user()->id_employe }}">
 
         <!-- Type de congé -->
         <div class="mb-3">

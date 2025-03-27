@@ -7,10 +7,16 @@
             <div class="flex items-center space-x-4">
                 <div class="flex items-center">
                     <i class="fas fa-user-circle text-2xl mr-2"></i>
-                    <span>Admin User</span>
+                    <span class="first-letter:uppercase">{{ Auth::user()->username ?? 'Admin User' }}</span>
                 </div>
             </div>
         </header>
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
+
 
         <!-- Dashboard Content -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">

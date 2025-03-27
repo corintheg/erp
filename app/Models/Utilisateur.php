@@ -11,12 +11,14 @@ class Utilisateur extends Authenticatable
 
     protected $primaryKey = 'id_utilisateur';
 
-    protected $fillable = ['id_employe',
+    protected $fillable = [
+        'id_employe',
         'username',
         'mot_de_passe',
         'email',
         'date_creation',
-        'date_modification'];
+        'date_modification'
+    ];
 
     protected $hidden = ['mot_de_passe'];
 
@@ -70,10 +72,30 @@ class Utilisateur extends Authenticatable
         return $this->roles->contains('nom_role', $roleName);
     }
 
+    public function hasAnyRole(array $roles): bool
+    {
+        return $this->roles->pluck('nom_role')->intersect($roles)->isNotEmpty();
+    }
+
     public function employe()
     {
         return $this->belongsTo(Employe::class, 'id_employe', 'id_employe');
     }
+    public function conges()
+    {
+        return $this->hasMany(Conge::class, 'id_employe', 'id_employe');
+    }
 
+
+    protected static function booted()
+    {
+        static::created(function ($utilisateur) {
+            $role = Role::where('nom_role', 'employe')->first();
+
+            if ($role) {
+                    $utilisateur->roles()->attach($role->id_role);
+            }
+        });
+    }
 
 }
