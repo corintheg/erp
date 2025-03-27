@@ -17,7 +17,6 @@ use App\Http\Controllers\InventoryController;
 
 
 Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
-Route::get('/salaries', [SalaireController::class, 'index'])->name('salaries.index');
 Route::get('/salaries/create', [SalaireController::class, 'create'])->name('salaries.create');
 Route::post('/salaries', [SalaireController::class, 'store'])->name('salaries.store');
 Route::get('/salaries/{id}/edit', [SalaireController::class, 'edit'])->name('salaries.edit');
@@ -111,12 +110,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
 });
+Route::resource('salaries', SalaireController::class);
 
-Route::get('/inventory', function () {
-    $items = ['item1', 'item2', 'item3']; // Exemple de données
-    return view('inventory', ['items' => $items]);
-});
 
-Route::get('/inventory', [InventoryController::class, 'index']);
+Route::apiResource('salaires', SalaireController::class);
 
 Route::get('/dashboard/user', [DashboardUtilisateurController::class, 'index'])->name('dashboard.user')->middleware('auth');
