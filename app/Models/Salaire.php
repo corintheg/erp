@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Salaire extends Model
 {
+<<<<<<< HEAD
+    use HasFactory;
+
+=======
+>>>>>>> 717b6efad3616ad9d2e40de4dd6ac30e8e6b6b51
     protected $table = 'salaires';
     protected $primaryKey = 'id_salaire';
     public $timestamps = false;
