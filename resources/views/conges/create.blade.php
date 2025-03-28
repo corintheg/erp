@@ -65,7 +65,11 @@
                 </div>
 
                 <!-- Bouton de soumission -->
-                <div>
+                <div class="flex justify-between items-center">
+                    <a href="{{ route('user.dashboard') }}"
+                        class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                        Annuler
+                    </a>
                     <button type="submit" id="submitButton"
                         class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
                         Soumettre la demande

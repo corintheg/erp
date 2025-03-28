@@ -35,6 +35,9 @@ Route::middleware(['auth'])->group(function (): void {
     Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/user/dashboard', [DashboardUtilisateurController::class, 'index'])->name('user.dashboard');
     Route::post('/user/dashboard', [DashboardUtilisateurController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/user/edit/{id}', [DashboardUtilisateurController::class, 'edit'])->name('user.edit');
+    Route::put('/user/update/{id}', [DashboardUtilisateurController::class, 'update'])->name('user.update');
+
 
     // FINANCES
 
@@ -98,7 +101,7 @@ Route::middleware(['auth'])->group(function (): void {
         Route::get('/conges', [CongeController::class, 'approval'])->name('conges.index');
         Route::post('/conges/{id}/approve', [CongeController::class, 'approveLeave'])->name('conges.approve');
         Route::post('/conges/{id}/reject', [CongeController::class, 'rejectLeave'])->name('conges.reject');
-            });
+    });
 
     Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager,finance,livreur')->group(function () {
 

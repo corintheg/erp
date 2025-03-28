@@ -12,14 +12,17 @@
         </header>
 
         <!-- Messages de succès ou d'erreur -->
-        @if (session('success'))
-            <div class="mb-4 p-2 bg-green-100 text-green-700 rounded-md">
-                {{ session('success') }}
+        @if (session('error'))
+            <div class="flex items-center gap-3 bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg shadow mb-4">
+                <i class="fas fa-exclamation-triangle text-xl"></i>
+                <span class="text-base">{{ session('error') }}</span>
             </div>
         @endif
-        @if (session('error'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                {{ session('error') }}
+        @if (session('success'))
+            <div
+                class="flex items-center gap-3 bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-lg shadow mb-4">
+                <i class="fas fa-check-circle text-xl"></i>
+                <span class="text-base">{{ session('success') }}</span>
             </div>
         @endif
 

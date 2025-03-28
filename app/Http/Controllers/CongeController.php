@@ -47,6 +47,6 @@ class CongeController extends Controller
         $conge->statut = 'En attente';
         $conge->save();
 
-        return redirect()->route('conges.create')->with('success', 'Demande de congé enregistrée avec succès !');
+        return redirect()->route('user.dashboard')->with('success', 'Demande de congé enregistrée avec succès !');
     }
 }
