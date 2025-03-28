@@ -431,7 +431,7 @@
             <span>Vos congés</span>
             <div class="actions">
                 <input type="text" class="filter-input" id="congeFilter" placeholder="Filtrer par type ou statut...">
-                <a href="{{ route('conges   .create') }}" class="request-leave-btn">
+            <a href="{{ route('conges.create') }}" class="request-leave-btn">
                     <i class="fas fa-plus"></i> Demande de congé
                 </a>
             </div>
