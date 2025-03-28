@@ -29,9 +29,21 @@ class DashboardUtilisateurController extends Controller
 
         return view('user.index', compact('conges', 'salaires'));
     }
+    public function edit($id)
+    {
+        $user = auth()->user(); // ou Utilisateur::findOrFail($id);
+        return view('user.edit', compact('user'));
+    }
+    public function update(Request $request, $id)
+    {
+        $utilisateur = auth()->user();
 
-    //    public function dashboard()
-//    {
-//        return view('user.index');
-//    }
+        $utilisateur->username = $request->input('username');
+        $utilisateur->email = $request->input('email');
+        if ($request->filled('password')) {
+            $utilisateur->password = $request->input('password');
+        }
+        $utilisateur->save();
+        return redirect()->route('user.dashboard')->with('success', 'Profil mis à jour avec succès');
+    }
 }

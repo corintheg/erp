@@ -65,7 +65,7 @@
         </div>
         </div>
         <nav class="mt-6">
-            @if ((Auth::user()->hasAnyRole(['superadmin', 'superadmin'])))
+            @if ((Auth::user()->hasAnyRole(['superadmin', 'admin'])))
                 <a href="{{ route('admin.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
                     <i class="fa-solid fa-user-tie mr-3"></i> Admin
                 </a>

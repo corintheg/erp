@@ -19,15 +19,11 @@ class AdminController extends Controller
     public function create()
     {
         $currentUser = Auth::user();
-        // Filtrer les rôles disponibles en fonction du rôle de l'utilisateur connecté
         if ($currentUser->hasRole('superadmin')) {
-            // Le superadmin peut assigner tous les rôles sauf superadmin lui-même
             $roles = Role::where('nom_role', '!=', 'superadmin')->get();
         } elseif ($currentUser->hasRole('admin')) {
-            // L'admin peut assigner tous les rôles sauf superadmin et admin
             $roles = Role::whereNotIn('nom_role', ['superadmin', 'admin'])->get();
         } else {
-            // Autres profils : on peut choisir de ne proposer aucun rôle ou une liste réduite
             $roles = collect();
         }
 
@@ -40,6 +36,7 @@ class AdminController extends Controller
         // Validation de base
         $request->validate([
             'username' => 'required|string|max:50|unique:utilisateurs,username',
+            'email' => 'required|email|unique:utilisateurs,email',
             'password' => 'required|string|min:6|confirmed',
             'roles' => 'nullable|array',
         ]);
@@ -70,7 +67,7 @@ class AdminController extends Controller
         // Création de l'utilisateur
         $utilisateur = new Utilisateur();
         $utilisateur->username = $request->input('username');
-        // Le mutator du modèle hashera automatiquement le mot de passe
+        $utilisateur->email = $request->input('email');
         $utilisateur->password = $request->input('password');
         $utilisateur->save();
 
@@ -83,6 +80,7 @@ class AdminController extends Controller
             ->route('admin.index')
             ->with('success', 'Utilisateur créé avec succès.');
     }
+
 
     public function edit($id)
     {
@@ -107,6 +105,7 @@ class AdminController extends Controller
         $request->validate([
             'username' => 'required|string|max:50|unique:utilisateurs,username,'
                 . $utilisateur->id_utilisateur . ',id_utilisateur',
+            'email' => 'required|email|unique:utilisateurs,email,' . $utilisateur->id_utilisateur . ',id_utilisateur',
             'password' => 'nullable|string|min:6|confirmed',
             'roles' => 'nullable|array',
         ]);
@@ -114,7 +113,6 @@ class AdminController extends Controller
         $currentUser = Auth::user();
         $selectedRoles = $request->input('roles', []);
 
-        // Définition des rôles interdits pour modification
         if ($currentUser->hasRole('admin')) {
             $forbiddenRoles = ['superadmin', 'admin'];
         } elseif ($currentUser->hasRole('superadmin')) {
@@ -123,7 +121,6 @@ class AdminController extends Controller
             $forbiddenRoles = [];
         }
 
-        // Récupère les ID des rôles autorisés à être modifiés (ceux qui sont affichés dans le formulaire)
         $allowedRoleIds = Role::whereNotIn('nom_role', $forbiddenRoles)
             ->pluck('id_role')
             ->toArray();
@@ -137,10 +134,12 @@ class AdminController extends Controller
         }
 
         $utilisateur->username = $request->input('username');
+        $utilisateur->email = $request->input('email');
         if ($request->filled('password')) {
             $utilisateur->password = $request->input('password');
         }
         $utilisateur->save();
+
 
         $currentAssignedRoleIds = $utilisateur->roles()->pluck('roles.id_role')->toArray();
 

@@ -12,22 +12,32 @@
         </header>
 
         <!-- Message de succès -->
+        @if (session('error'))
+            <div class="flex items-center gap-3 bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg shadow mb-4">
+                <i class="fas fa-exclamation-triangle text-xl"></i>
+                <span class="text-base">{{ session('error') }}</span>
+            </div>
+        @endif
         @if (session('success'))
-            <div class="mb-4 p-2 bg-green-100 text-green-700 rounded-md">
-                {{ session('success') }}
+            <div
+                class="flex items-center gap-3 bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-lg shadow mb-4">
+                <i class="fas fa-check-circle text-xl"></i>
+                <span class="text-base">{{ session('success') }}</span>
             </div>
         @endif
 
-        @if (session('error'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                {{ session('error') }}
-            </div>
-        @endif
         <!-- Tableau des employés -->
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="mb-4 flex flex-col sm:flex-row gap-4">
-                <input type="text" id="searchInput" placeholder="Rechercher par nom, prénom, email..."
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                <input type="text" id="searchInput" placeholder="Rechercher par nom, prénom, email, département..."
+                    class="w-full sm:w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                <!-- Filtre Actif -->
+                <select id="activeFilter"
+                    class="w-full sm:w-1/4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                    <option value="all">Tous</option>
+                    <option value="yes">Actif : Oui</option>
+                    <option value="no">Actif : Non</option>
+                </select>
             </div>
 
             <div class="overflow-x-auto">
@@ -47,7 +57,9 @@
                     <tbody id="employeeList">
                         @forelse ($employes as $employe)
                             <tr class="border-b hover:bg-gray-50 employee-item" data-nom="{{ strtolower($employe->nom) }}"
-                                data-prenom="{{ strtolower($employe->prenom) }}" data-email="{{ strtolower($employe->email) }}">
+                                data-prenom="{{ strtolower($employe->prenom) }}" data-email="{{ strtolower($employe->email) }}"
+                                data-departement="{{ strtolower($employe->departement) }}"
+                                data-actif="{{ $employe->actif ? 'yes' : 'no' }}">
                                 <td class="px-4 py-3">{{ $employe->nom }}</td>
                                 <td class="px-4 py-3">{{ $employe->prenom }}</td>
                                 <td class="px-4 py-3">{{ $employe->email }}</td>
@@ -59,7 +71,6 @@
                                         class="inline-block px-2 py-1 text-xs font-semibold rounded-full {{ $employe->actif ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700' }}">
                                         {{ $employe->actif ? 'Oui' : 'Non' }}
                                     </span>
-
                                 </td>
                                 <td class="px-4 py-3">
                                     <a href="{{ route('employes.edit', $employe->id_employe) }}"
@@ -81,20 +92,39 @@
         </div>
 
         <script>
-            document.getElementById('searchInput').addEventListener('input', function (e) {
-                const searchTerm = e.target.value.toLowerCase();
+            // Fonction pour filtrer les employés
+            function filterEmployees() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const activeFilter = document.getElementById('activeFilter').value;
                 const employees = document.querySelectorAll('.employee-item');
+
                 employees.forEach(employee => {
                     const nom = employee.getAttribute('data-nom');
                     const prenom = employee.getAttribute('data-prenom');
                     const email = employee.getAttribute('data-email');
-                    if (nom.includes(searchTerm) || prenom.includes(searchTerm) || email.includes(searchTerm)) {
+                    const departement = employee.getAttribute('data-departement');
+                    const actif = employee.getAttribute('data-actif');
+
+                    // Vérifier si l'employé correspond au terme de recherche
+                    const matchesSearch = nom.includes(searchTerm) || prenom.includes(searchTerm) || email.includes(searchTerm) || departement.includes(searchTerm);
+
+                    // Vérifier si l'employé correspond au filtre actif
+                    const matchesActive = activeFilter === 'all' || actif === activeFilter;
+
+                    // Afficher ou masquer l'employé
+                    if (matchesSearch && matchesActive) {
                         employee.style.display = 'table-row';
                     } else {
                         employee.style.display = 'none';
                     }
                 });
-            });
+            }
+
+            // Écouteur pour la barre de recherche
+            document.getElementById('searchInput').addEventListener('input', filterEmployees);
+
+            // Écouteur pour le filtre actif
+            document.getElementById('activeFilter').addEventListener('change', filterEmployees);
         </script>
     </main>
 @endsection

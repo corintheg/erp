@@ -11,7 +11,7 @@
 
 <body class="bg-light">
     <div class="container text-center mt-5">
-        <h1 class="display-4 text-danger">404 - Session expirée</h1>
+        <h1 class="display-4 text-danger">419 - Session expirée</h1>
         <p class="lead mb-4">Votre session n'est plus valable, veuillez vous reconnecter.</p>
 
 
