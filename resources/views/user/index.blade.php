@@ -22,10 +22,10 @@
 
         /* Header */
         .header {
-            background: linear-gradient(45deg, #38d62c 0%, #55deaf 100%); /* Couleur principale à tertiaire */
+            background: linear-gradient(45deg, #38d62c 0%, #55deaf 100%);
             color: white;
             padding: 15px 30px;
-            box-shadow: 0 4px 15px rgba(56, 214, 44, 0.2); /* Ombre basée sur la couleur principale */
+            box-shadow: 0 4px 15px rgba(56, 214, 44, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -47,32 +47,48 @@
 
         /* Bouton de déconnexion (dans le header) */
         .logout-btn {
-            background-color: #55deaf; /* Couleur tertiaire */
+            background-color: #55deaf;
             color: white;
             padding: 8px 16px;
             border-radius: 10px;
             text-decoration: none;
             transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 2px 8px rgba(85, 222, 175, 0.3); /* Ombre basée sur la couleur tertiaire */
+            box-shadow: 0 2px 8px rgba(85, 222, 175, 0.3);
         }
 
         .logout-btn:hover {
-            background-color: #38d62c; /* Couleur principale */
+            background-color: #38d62c;
             transform: scale(1.05);
         }
 
         /* Bouton Retour au tableau de bord */
         .dashboard-btn {
+            background-color: #87e8b6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(135, 232, 182, 0.3);
+        }
+
+        .dashboard-btn:hover {
+            background-color: #55deaf;
+            transform: scale(1.05);
+        }
+
+        /* Bouton Demande de congé */
+        .request-leave-btn {
             background-color: #87e8b6; /* Couleur secondaire */
             color: white;
             padding: 8px 16px;
             border-radius: 10px;
             text-decoration: none;
             transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 2px 8px rgba(135, 232, 182, 0.3); /* Ombre basée sur la couleur secondaire */
+            box-shadow: 0 2px 8px rgba(135, 232, 182, 0.3);
         }
 
-        .dashboard-btn:hover {
+        .request-leave-btn:hover {
             background-color: #55deaf; /* Couleur tertiaire */
             transform: scale(1.05);
         }
@@ -84,12 +100,12 @@
         }
 
         .profile-header {
-            background: linear-gradient(45deg, #38d62c 0%, #55deaf 100%); /* Couleur principale à tertiaire */
+            background: linear-gradient(45deg, #38d62c 0%, #55deaf 100%);
             color: white;
             padding: 25px;
             border-radius: 20px;
             margin-bottom: 30px;
-            box-shadow: 0 6px 20px rgba(56, 214, 44, 0.2); /* Ombre basée sur la couleur principale */
+            box-shadow: 0 6px 20px rgba(56, 214, 44, 0.2);
             display: flex;
             align-items: center;
             gap: 20px;
@@ -117,7 +133,7 @@
             align-items: center;
             justify-content: center;
             font-size: 2.2rem;
-            color: #38d62c; /* Couleur principale */
+            color: #38d62c;
             border: 4px solid #fff;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             z-index: 1;
@@ -166,6 +182,12 @@
             align-items: center;
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
+        }
+
+        .card-header .actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
         .card-body {
@@ -224,28 +246,28 @@
 
         .filter-input:focus {
             outline: none;
-            border-color: #55deaf; /* Couleur tertiaire */
-            box-shadow: 0 0 8px rgba(85, 222, 175, 0.2); /* Ombre basée sur la couleur tertiaire */
+            border-color: #55deaf;
+            box-shadow: 0 0 8px rgba(85, 222, 175, 0.2);
         }
 
         .status-pending {
-            color: #f1c40f; /* Conservé pour contraste */
+            color: #f1c40f;
             font-weight: 500;
         }
 
         .status-approved {
-            color: #38d62c; /* Couleur principale */
+            color: #38d62c;
             font-weight: 500;
         }
 
         .status-rejected {
-            color: #e74c3c; /* Conservé pour contraste */
+            color: #e74c3c;
             font-weight: 500;
         }
 
         /* Bouton d'édition du profil */
         .edit-btn {
-            background-color: #87e8b6; /* Couleur secondaire */
+            background-color: #87e8b6;
             color: white;
             padding: 8px 16px;
             border-radius: 10px;
@@ -254,7 +276,7 @@
         }
 
         .edit-btn:hover {
-            background-color: #55deaf; /* Couleur tertiaire */
+            background-color: #55deaf;
             transform: scale(1.05);
         }
 
@@ -305,7 +327,7 @@
                 width: 100%;
             }
 
-            .logout-btn, .dashboard-btn {
+            .logout-btn, .dashboard-btn, .request-leave-btn {
                 padding: 6px 12px;
                 font-size: 0.9rem;
                 width: 100%;
@@ -335,6 +357,12 @@
             .filter-input {
                 max-width: 100%;
                 margin-bottom: 10px;
+            }
+
+            .card-header .actions {
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
             }
 
             .table th, .table td {
@@ -374,7 +402,7 @@
 </form>
 
 <div class="container">
-       <!-- Section des informations personnelles -->
+    <!-- Section des informations personnelles -->
     <div class="card">
         <div class="card-header">
             <span>Informations personnelles</span>
@@ -390,10 +418,6 @@
                     <span>{{ auth()->user()->email }}</span>
                 </li>
                 <li>
-                    <span>Département</span>
-                    <span>{{ auth()->user()->departement }}</span>
-                </li>
-                <li>
                     <span>Date d'inscription</span>
                     <span>{{ auth()->user()->date_creation->format('d/m/Y') }}</span>
                 </li>
@@ -405,7 +429,12 @@
     <div class="card">
         <div class="card-header">
             <span>Vos congés</span>
-            <input type="text" class="filter-input" id="congeFilter" placeholder="Filtrer par type ou statut...">
+            <div class="actions">
+                <input type="text" class="filter-input" id="congeFilter" placeholder="Filtrer par type ou statut...">
+                <a href="{{ route('conges   .create') }}" class="request-leave-btn">
+                    <i class="fas fa-plus"></i> Demande de congé
+                </a>
+            </div>
         </div>
         <div class="card-body">
             @if($conges->isEmpty())
@@ -439,7 +468,9 @@
     <div class="card">
         <div class="card-header">
             <span>Vos salaires</span>
-            <input type="text" class="filter-input" id="salaireFilter" placeholder="Filtrer par date...">
+            <div class="actions">
+                <input type="text" class="filter-input" id="salaireFilter" placeholder="Filtrer par date...">
+            </div>
         </div>
         <div class="card-body">
             @if($salaires->isEmpty())

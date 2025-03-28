@@ -17,7 +17,12 @@
                 </ul>
             </div>
         @endif
-
+        <!-- Message de succès -->
+        @if (session('success'))
+            <div class="mb-4 p-2 bg-green-100 text-green-700 rounded-md">
+                {{ session('success') }}
+            </div>
+        @endif
         <!-- Formulaire de création de congé -->
         <div class="bg-white rounded-lg shadow-md p-6">
             <form action="{{ route('conges.create.store') }}" method="POST">
