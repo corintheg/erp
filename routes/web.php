@@ -26,13 +26,18 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function (): void {
 
-
+    //CONGÉS
+    Route::get('/conges/create', [CongeController::class, 'view_leave_request'])->name('conges.create');
+    Route::post('/conges/create', [CongeController::class, 'leave_request'])->name('conges.create.store');
     // DASHBOARD
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/user/dashboard', [DashboardUtilisateurController::class, 'index'])->name('user.dashboard');
     Route::post('/user/dashboard', [DashboardUtilisateurController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/user/edit/{id}', [DashboardUtilisateurController::class, 'edit'])->name('user.edit');
+    Route::put('/user/update/{id}', [DashboardUtilisateurController::class, 'update'])->name('user.update');
+
 
     // FINANCES
 
@@ -96,10 +101,6 @@ Route::middleware(['auth'])->group(function (): void {
         Route::get('/conges', [CongeController::class, 'approval'])->name('conges.index');
         Route::post('/conges/{id}/approve', [CongeController::class, 'approveLeave'])->name('conges.approve');
         Route::post('/conges/{id}/reject', [CongeController::class, 'rejectLeave'])->name('conges.reject');
-        Route::get('/conges/create', [CongeController::class, 'view_leave_request'])->name('conges.create');
-        Route::post('/conges/create', [CongeController::class, 'leave_request'])->name('conges.create.store');
-
-
     });
 
     Route::middleware(PermissionMiddleware::class . ':superadmin,admin,manager,finance,livreur')->group(function () {

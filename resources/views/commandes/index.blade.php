@@ -12,14 +12,17 @@
         </header>
 
         <!-- Messages de succès ou d'erreur -->
-        @if (session('success'))
-            <div class="mb-4 p-2 bg-green-100 text-green-700 rounded-md">
-                {{ session('success') }}
+        @if (session('error'))
+            <div class="flex items-center gap-3 bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg shadow mb-4">
+                <i class="fas fa-exclamation-triangle text-xl"></i>
+                <span class="text-base">{{ session('error') }}</span>
             </div>
         @endif
-        @if (session('error'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                {{ session('error') }}
+        @if (session('success'))
+            <div
+                class="flex items-center gap-3 bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-lg shadow mb-4">
+                <i class="fas fa-check-circle text-xl"></i>
+                <span class="text-base">{{ session('success') }}</span>
             </div>
         @endif
 
@@ -43,8 +46,8 @@
                             <th class="px-4 py-3 font-semibold text-gray-700">Fournisseur</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Destinataire</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Statut</th>
-                            <th class="px-4 py-3 font-semibold text-gray-700">Date création</th>
-                            <th class="px-4 py-3 font-semibold text-gray-700">Date modification</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Date livraison</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Date creation</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
@@ -53,7 +56,7 @@
                                             @php
                                                 // Définition des classes de couleur pour chaque statut
                                                 $statusClasses = [
-                                                    'En attente' => 'bg-yellow-200 text-yellow-700',
+                                                    'Annulé' => 'bg-red-200 text-red-700',
                                                     'En cours' => 'bg-blue-200 text-blue-700',
                                                     'Livrée' => 'bg-green-200 text-green-700',
                                                 ];
@@ -79,8 +82,8 @@
                                                         {{ $commande->statut_livraison }}
                                                     </span>
                                                 </td>
+                                                <td class="px-4 py-3">{{ $commande->date_livraison }}</td>
                                                 <td class="px-4 py-3">{{ $commande->date_creation }}</td>
-                                                <td class="px-4 py-3">{{ $commande->date_modification }}</td>
                                                 <td class="px-4 py-3">
                                                     <div class="flex gap-2">
                                                         <a href="{{ route('commandes.edit', $commande->id_livraison) }}"

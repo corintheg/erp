@@ -24,7 +24,7 @@ class EmployeObserver
             'date_modification' => now()
         ];
 
-        //dd($data); // Vérifiez les données avant l'insertion
+        //dd($data);
 
         Utilisateur::create($data);
     }

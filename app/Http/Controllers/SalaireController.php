@@ -10,14 +10,14 @@ class SalaireController extends Controller
 {
     public function index(Request $request)
     {
-        $salaries = Salaire::with('employes')->get();
-        $totalSalaries = $salaries->sum('montant');
+        $salaires = Salaire::with('employe')->get();
+        $totalSalaries = $salaires->sum('montant');
 
         if ($request->ajax()) {
-            return response()->json(['salaires' => $salaries, 'totalSalaries' => $totalSalaries]);
+            return response()->json(['salaires' => $salaires, 'totalSalaries' => $totalSalaries]);
         }
 
-        return view('salaires.index', compact('salaries', 'totalSalaries'));
+        return view('salaires.index', compact('salaires', 'totalSalaries'));
     }
 
 
@@ -85,4 +85,5 @@ class SalaireController extends Controller
         Salaire::findOrFail($id)->delete();
         return redirect()->route('salaires.index')->with('success', 'Salaire supprimé.');
     }
+
 }

@@ -28,8 +28,8 @@ class Salaire extends Model
         'date_modification' => 'datetime',
     ];
 
-    public function employes()
+    public function employe()
     {
-        return $this->belongsTo(Employe::class, 'id_employe', 'id_employe');
+        return $this->belongsTo(Employe::class, 'id_employe');
     }
 }

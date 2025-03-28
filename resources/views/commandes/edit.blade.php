@@ -72,8 +72,9 @@
                             Date de livraison
                         </label>
                         <input type="date" id="date_livraison" name="date_livraison"
-                            value="{{ old('date_livraison') }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+    value="{{ old('date_livraison', $commande->date_livraison ? \Carbon\Carbon::parse($commande->date_livraison)->format('Y-m-d') : date('Y-m-d')) }}"
+    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+
                     </div>
 
                 <!-- Statut (menu déroulant) -->
