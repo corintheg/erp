@@ -22,7 +22,7 @@ class DashboardUtilisateurController extends Controller
         }
 
         $conges = $employe->conges()->get();
-        //        $conges = $employe->conges();
+        //$conges = $employe->conges();
 
         // Récupérer les salaires de l'employé
         $salaires = $employe->salaires()->get();
