@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\FinanceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardUtilisateurController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\StockController;
 
 
 
@@ -35,6 +37,14 @@ Route::middleware(['auth'])->group(function (): void {
     // FINANCES
 
     Route::middleware(PermissionMiddleware::class . ':superadmin,admin,finance')->group(function () {
+        Route::prefix('finance')->group(function () {
+            Route::get('/', [FinanceController::class, 'index'])->name('finances.index');
+            Route::get('/create', [FinanceController::class, 'create'])->name('finances.create');
+            Route::post('/', [FinanceController::class, 'store'])->name('finances.store');
+            Route::get('/{id}/edit', [FinanceController::class, 'edit'])->name('finances.edit');
+            Route::put('/{id}', [FinanceController::class, 'update'])->name('finances.update');
+            Route::delete('/{id}', [FinanceController::class, 'destroy'])->name('finances.destroy');
+        });
       //  Route::prefix('finance')->group(function () {
             Route::get('/', [SalaireController::class, 'index'])->name('finance.index');
             Route::get('/salaries', [SalaireController::class, 'index'])->name('finance.salaries');
@@ -62,7 +72,7 @@ Route::middleware(['auth'])->group(function (): void {
 
     });
 
-    // STOCKS 
+    // STOCKS
     Route::get('/stocks', [StockMovementController::class, 'index'])->name('stock.index');
     Route::get('/stocks/create', [StockMovementController::class, 'create'])->name('stock.create');
     Route::post('/stocks', [StockMovementController::class, 'store'])->name('stock.store');
@@ -112,6 +122,15 @@ Route::middleware(['auth'])->group(function (): void {
             Route::get('/{commande}/edit', [CommandeController::class, 'edit'])->name('commandes.edit');
             Route::put('/{commande}', [CommandeController::class, 'update'])->name('commandes.update');
             Route::delete('/{commande}', [CommandeController::class, 'destroy'])->name('commandes.destroy');
+        });
+
+        Route::prefix('stocks')->group(function () {
+            Route::get('/', [StockController::class, 'index'])->name('stocks.index');
+            Route::get('/create', [StockController::class, 'create'])->name('stocks.create');
+            Route::post('/', [StockController::class, 'store'])->name('stocks.store');
+            Route::get('/{stock}/edit', [StockController::class, 'edit'])->name('stocks.edit');
+            Route::put('/{stock}', [StockController::class, 'update'])->name('stocks.update');
+            Route::delete('/{stock}', [StockController::class, 'destroy'])->name('stocks.destroy');
         });
     });
 

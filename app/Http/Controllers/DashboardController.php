@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -9,32 +10,34 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // 📌 Statistiques des employés (Regroupement par rôle)
-        $employeeStats = DB::table('roles')
-            ->join('utilisateurs', 'roles.id_role', '=', 'id_role')
-            ->select('roles.nom_role', DB::raw('COUNT(roles.id_role) as total'))
-            ->groupBy('roles.nom_role')
+
+        // ----------------------------------------
+        $employeeDeptStats = Employe::where('actif', 1)
+            ->select('departement', DB::raw('COUNT(*) as total'))
+            ->groupBy('departement')
             ->get();
 
+        $activeEmployeesCount = Employe::where('actif', 1)->count();
 
-        // 📌 Statistiques financières (Revenus & Dépenses)
         $financeStats = DB::table('finances')
             ->select(
                 DB::raw("SUM(CASE WHEN type_operation = 'revenu' THEN montant ELSE 0 END) as revenus"),
-                DB::raw("SUM(CASE WHEN type_operation = 'depense' THEN montant ELSE 0 END) as depenses")
+                DB::raw("SUM(CASE WHEN type_operation = 'depense' THEN montant ELSE 0 END) as depenses"),
+                DB::raw("SUM(CASE WHEN type_operation = 'facture' THEN montant ELSE 0 END) as factures"),
             )
             ->first();
-
-        // 📌 Statistiques des stocks
         $stockStats = DB::table('stocks')
             ->select('nom_produit', 'quantite')
             ->get();
 
-        return view('dashboard', compact('employeeStats', 'financeStats', 'stockStats'));
-    }
-    public function dashboard()
-    {
-
-        return view('dashboard.index');
+        // ----------------------------------------
+        // Retour de la vue
+        // ----------------------------------------
+        return view('dashboard', [
+            'financeStats' => $financeStats,
+            'stockStats' => $stockStats,
+            'employeeDeptStats' => $employeeDeptStats,
+            'activeEmployeesCount' => $activeEmployeesCount,
+        ]);
     }
 }

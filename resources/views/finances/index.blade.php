@@ -2,11 +2,12 @@
 
 @section('content')
     <main class="main-content flex-1 ml-0 md:ml-64 p-6 text-sm">
+        <!-- Header -->
         <header class="bg-white shadow p-4 rounded-lg mb-6 flex justify-between items-center">
-            <h2 class="text-2xl font-semibold">Gestion du Stock</h2>
-            <a href="{{ route('stocks.create') }}"
+            <h2 class="text-2xl font-semibold">Gestion Finance</h2>
+            <a href="{{ route('finances.create') }}"
                 class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
-                + Nouveau produit
+                + Nouvelle entrée
             </a>
         </header>
 
@@ -21,9 +22,10 @@
             </div>
         @endif
 
+        <!-- Contenu principal -->
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="mb-4 flex flex-col sm:flex-row gap-4">
-                <input type="text" id="searchInput" placeholder="Rechercher par nom de produit..."
+                <input type="text" id="searchInput" placeholder="Rechercher par description..."
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <button id="resetFilters"
                     class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition duration-200">
@@ -36,38 +38,45 @@
                     <thead class="bg-gray-200">
                         <tr>
                             <th class="px-4 py-3 font-semibold text-gray-700">ID</th>
-                            <th class="px-4 py-3 font-semibold text-gray-700">Nom</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Type</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Description</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Montant</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Date d'opération</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Catégorie</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Fournisseur</th>
-                            <th class="px-4 py-3 font-semibold text-gray-700">Quantité</th>
-                            <th class="px-4 py-3 font-semibold text-gray-700">Seuil Alerte</th>
-                            <th class="px-4 py-3 font-semibold text-gray-700">Prix Achat</th>
-                            <th class="px-4 py-3 font-semibold text-gray-700">Prix Vente</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Statut</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Réf Facture</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Date création</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="stockList">
-                        @forelse ($stocks as $stock)
-                            <tr class="border-b hover:bg-gray-50 stock-item" data-name="{{ strtolower($stock->nom_produit) }}">
-                                <td class="px-4 py-3">{{ $stock->id_produit }}</td>
-                                <td class="px-4 py-3">{{ $stock->nom_produit }}</td>
+                    <tbody id="financeList">
+                        @forelse ($finances as $finance)
+                            <tr class="border-b hover:bg-gray-50 finance-item"
+                                data-description="{{ strtolower($finance->description ?? '') }}">
+                                <td class="px-4 py-3">{{ $finance->id_finance }}</td>
+                                <td class="px-4 py-3">{{ $finance->type_operation }}</td>
+                                <td class="px-4 py-3">{{ $finance->description ?? 'N/A' }}</td>
+                                <td class="px-4 py-3">{{ $finance->montant }}</td>
+                                <td class="px-4 py-3">{{ $finance->date_operation }}</td>
+                                <td class="px-4 py-3">{{ $finance->categorie }}</td>
                                 <td class="px-4 py-3">
-                                    @if($stock->fournisseur)
-                                        {{ $stock->fournisseur->nom }}
+                                    @if($finance->fournisseur)
+                                        {{ $finance->fournisseur->nom }}
                                     @else
                                         N/A
                                     @endif
                                 </td>
-                                <td class="px-4 py-3">{{ $stock->quantite ?? 'N/A' }}</td>
-                                <td class="px-4 py-3">{{ $stock->seuil_alerte ?? 'N/A' }}</td>
-                                <td class="px-4 py-3">{{ $stock->prix_achat ?? 'N/A' }}</td>
-                                <td class="px-4 py-3">{{ $stock->prix_vente ?? 'N/A' }}</td>
+                                <td class="px-4 py-3">{{ $finance->statut }}</td>
+                                <td class="px-4 py-3">{{ $finance->reference_facture ?? 'N/A' }}</td>
+                                <td class="px-4 py-3">{{ $finance->date_creation }}</td>
                                 <td class="px-4 py-3">
                                     <div class="flex gap-2">
-                                        <a href="{{ route('stocks.edit', $stock->id_produit) }}"
+                                        <a href="{{ route('finances.edit', $finance->id_finance) }}"
                                             class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200">
                                             Éditer
                                         </a>
-                                        <form action="{{ route('stocks.destroy', $stock->id_produit) }}" method="POST">
+                                        <form action="{{ route('finances.destroy', $finance->id_finance) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
@@ -80,8 +89,8 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center py-4 text-gray-500">
-                                    Aucun produit trouvé.
+                                <td colspan="11" class="text-center py-4 text-gray-500">
+                                    Aucune entrée financière trouvée.
                                 </td>
                             </tr>
                         @endforelse
@@ -97,10 +106,10 @@
 
         function filterTable() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const stocks = document.getElementsByClassName('stock-item');
-            Array.from(stocks).forEach((stock) => {
-                const name = stock.getAttribute('data-name') || '';
-                stock.style.display = name.includes(searchTerm) ? 'table-row' : 'none';
+            const items = document.getElementsByClassName('finance-item');
+            Array.from(items).forEach((item) => {
+                const desc = item.getAttribute('data-description') || '';
+                item.style.display = desc.includes(searchTerm) ? 'table-row' : 'none';
             });
         }
 
