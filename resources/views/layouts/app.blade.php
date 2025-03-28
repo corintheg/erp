@@ -74,7 +74,7 @@
                 <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
             </a>
             <a href="{{ route('user.dashboard') }}" class="flex items-center p-4 hover:bg-gray-700 ">
-                <i class="fa-solid fa-plane-departure mr-3"></i>Mes congés
+                <i class="fa-solid fa-plane-departure mr-3"></i>Mon profil
             </a>
             @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'rh']))
                 <a href="{{ route('employes.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
