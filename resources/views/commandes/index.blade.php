@@ -43,8 +43,8 @@
                             <th class="px-4 py-3 font-semibold text-gray-700">Fournisseur</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Destinataire</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Statut</th>
-                            <th class="px-4 py-3 font-semibold text-gray-700">Date création</th>
-                            <th class="px-4 py-3 font-semibold text-gray-700">Date modification</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Date livraison</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Date creation</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
@@ -53,7 +53,7 @@
                                             @php
                                                 // Définition des classes de couleur pour chaque statut
                                                 $statusClasses = [
-                                                    'En attente' => 'bg-yellow-200 text-yellow-700',
+                                                    'Annulé' => 'bg-red-200 text-red-700',
                                                     'En cours' => 'bg-blue-200 text-blue-700',
                                                     'Livrée' => 'bg-green-200 text-green-700',
                                                 ];
@@ -79,8 +79,8 @@
                                                         {{ $commande->statut_livraison }}
                                                     </span>
                                                 </td>
+                                                <td class="px-4 py-3">{{ $commande->date_livraison }}</td>
                                                 <td class="px-4 py-3">{{ $commande->date_creation }}</td>
-                                                <td class="px-4 py-3">{{ $commande->date_modification }}</td>
                                                 <td class="px-4 py-3">
                                                     <div class="flex gap-2">
                                                         <a href="{{ route('commandes.edit', $commande->id_livraison) }}"

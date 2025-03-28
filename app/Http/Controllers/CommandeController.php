@@ -16,10 +16,8 @@ class CommandeController extends Controller
 
     public function create()
     {
-        // Liste des fournisseurs
         $fournisseurs = Fournisseur::all();
 
-        // Liste des statuts possibles (vous pouvez lister les valeurs de l’ENUM)
         $statuts = ['En cours', 'Livré', 'Annulé'];
 
         return view('commandes.create', compact('fournisseurs', 'statuts'));
@@ -32,7 +30,7 @@ class CommandeController extends Controller
             'id_fournisseur' => 'nullable|integer',
             'destinataire' => 'nullable|string|max:255',
             'statut_livraison' => 'required|string|max:50',
-            'date_livraison' => 'nullable|date',
+            'date_livraison' => 'required|date',
         ]);
 
 
@@ -61,6 +59,7 @@ class CommandeController extends Controller
             'reference_commande' => 'required|string|max:100',
             'id_fournisseur' => 'nullable|integer',
             'statut_livraison' => 'required|string|max:50',
+            'date_livraison' => 'nullable|date',
         ]);
 
         $commande->update($request->all());

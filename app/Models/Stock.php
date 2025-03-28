@@ -10,7 +10,7 @@ class Stock extends Model
     protected $primaryKey = 'id_produit';
 
     protected $fillable = [
-        'id_fournisseur', // Ajouté ici
+        'id_fournisseur',
         'nom_produit',
         'description',
         'quantite',
