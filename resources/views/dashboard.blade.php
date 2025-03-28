@@ -7,10 +7,26 @@
             <div class="flex items-center space-x-4">
                 <div class="flex items-center">
                     <i class="fas fa-user-circle text-2xl mr-2"></i>
-                    <span class="first-letter:uppercase">{{ Auth::user()->username ?? 'User' }}</span>
+                    <div>
+                        <span class="first-letter:uppercase">{{ Auth::user()->username ?? 'User' }}</span>
+                        @php
+                            $roles = Auth::user()->roles;
+                            $filteredRoles = $roles->reject(function ($role) {
+                                return $role->nom_role === 'employe';
+                            });
+                            if ($filteredRoles->isEmpty()) {
+                                $filteredRoles = $roles;
+                            }
+                        @endphp
+                        <div class="text-xs text-gray-500 firt-letter:uppercase">
+                            {{ $filteredRoles->pluck('nom_role')->join(', ') }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
+
+
         @if (session('error'))
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                 {{ session('error') }}
@@ -21,7 +37,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="bg-white p-2 rounded-lg shadow">
                 <div class="flex justify-between items-center mb-2">
-                    <h3 class="text-lg font-medium">Revenus vs Dépenses</h3>
+                    <h3 class="text-lg font-medium">Finances</h3>
                 </div>
                 <canvas id="financeChart" height="40"></canvas>
             </div>

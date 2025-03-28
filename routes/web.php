@@ -45,15 +45,22 @@ Route::middleware(['auth'])->group(function (): void {
             Route::put('/{id}', [FinanceController::class, 'update'])->name('finances.update');
             Route::delete('/{id}', [FinanceController::class, 'destroy'])->name('finances.destroy');
         });
-      //  Route::prefix('finance')->group(function () {
-            Route::get('/', [SalaireController::class, 'index'])->name('finance.index');
-            Route::get('/salaries', [SalaireController::class, 'index'])->name('finance.salaries');
-            Route::get('/salaries/create', [SalaireController::class, 'create'])->name('salaries.create');
-            Route::post('/salaries', [SalaireController::class, 'store'])->name('salaries.store');
-            Route::get('/salaries/{id}/edit', [SalaireController::class, 'edit'])->name('salaries.edit');
-            Route::put('/salaries/{id}', [SalaireController::class, 'update'])->name('salaries.update');
-            Route::delete('/salaries/{id}', [SalaireController::class, 'destroy'])->name('salaries.destroy');
-       // });
+
+    });
+
+    Route::middleware(PermissionMiddleware::class . ':superadmin,admin,finance,rh')->group(function () {
+
+        // SALAIRES
+
+        Route::prefix('salaires')->group(function () {
+            Route::get('/', [SalaireController::class, 'index'])->name('salaires.index');
+            Route::get('/create', [SalaireController::class, 'create'])->name('salaires.create');
+            Route::post('/', [SalaireController::class, 'store'])->name('salaires.store');
+            Route::get('/{id}/edit', [SalaireController::class, 'edit'])->name('salaires.edit');
+            Route::put('/{id}', [SalaireController::class, 'update'])->name('salaires.update');
+            Route::delete('/{id}', [SalaireController::class, 'destroy'])->name('salaires.destroy');
+        });
+
     });
 
     // PERMISSIONS ADMIN
@@ -71,14 +78,6 @@ Route::middleware(['auth'])->group(function (): void {
         });
 
     });
-
-    // STOCKS
-    Route::get('/stocks', [StockMovementController::class, 'index'])->name('stock.index');
-    Route::get('/stocks/create', [StockMovementController::class, 'create'])->name('stock.create');
-    Route::post('/stocks', [StockMovementController::class, 'store'])->name('stock.store');
-    Route::delete('/stocks/{movement}', [StockMovementController::class, 'destroy'])->name('stock.destroy');
-
-
 
     // PERMISSIONS RH
 

@@ -84,6 +84,12 @@
                     <i class="fa-solid fa-calendar-days mr-3"></i> Gérer les congés
                 </a>
             @endif
+            @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'finance', 'rh']))
+                <a href="{{ route('salaires.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
+                    <i class="fa-solid fa-dollar-sign mr-3"></i>Salaires
+                </a>
+
+            @endif
 
             @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'finance']))
                 <a href="{{ route('finances.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
@@ -91,6 +97,7 @@
                 </a>
 
             @endif
+
 
             @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'finance', 'livreur', 'manager']))
                 <a href="{{ route('fournisseurs.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
