@@ -122,7 +122,3 @@ Les contributions sont les bienvenues ! Pour contribuer :
 5. Ouvrez une Pull Request.
 
 ---
-
-## Licence
-
-Ce projet est sous licence [MIT](LICENSE).
