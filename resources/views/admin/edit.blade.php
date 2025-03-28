@@ -4,8 +4,8 @@
     <main class="main-content flex-1 ml-0 md:ml-64 p-6 text-sm">
         <!-- Header de la page -->
         <header class="bg-white shadow p-4 rounded-lg mb-6">
-            <h2 class="text-2xl ">Modification de l'utilisateur : <span
-                    class="font-semibold ">{{ $utilisateur->username }}</span></h2>
+            <h2 class="text-2xl">Modification de l'utilisateur : <span
+                    class="font-semibold">{{ $utilisateur->username }}</span></h2>
         </header>
 
         <!-- Formulaire de modification -->
@@ -20,6 +20,16 @@
                     <input type="text" name="username" id="username" value="{{ old('username', $utilisateur->username) }}"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
                     @error('username')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Email -->
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                    <input type="email" name="email" id="email" value="{{ old('email', $utilisateur->email) }}"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                    @error('email')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>

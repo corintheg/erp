@@ -35,7 +35,7 @@
 
         <!-- Dashboard Content: deux colonnes sur grand écran -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white p-2 rounded-lg shadow">
+            <div class="bg-white p-4 rounded-lg shadow">
                 <div class="flex justify-between items-center mb-2">
                     <h3 class="text-lg font-medium">Finances</h3>
                 </div>
