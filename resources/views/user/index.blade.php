@@ -20,6 +20,63 @@
             min-height: 100vh;
         }
 
+        /* Header */
+        .header {
+            background: linear-gradient(45deg, #38d62c 0%, #55deaf 100%); /* Couleur principale à tertiaire */
+            color: white;
+            padding: 15px 30px;
+            box-shadow: 0 4px 15px rgba(56, 214, 44, 0.2); /* Ombre basée sur la couleur principale */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header .logo {
+            font-size: 1.5rem;
+            font-weight: 500;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .header-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Bouton de déconnexion (dans le header) */
+        .logout-btn {
+            background-color: #55deaf; /* Couleur tertiaire */
+            color: white;
+            padding: 8px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(85, 222, 175, 0.3); /* Ombre basée sur la couleur tertiaire */
+        }
+
+        .logout-btn:hover {
+            background-color: #38d62c; /* Couleur principale */
+            transform: scale(1.05);
+        }
+
+        /* Bouton Retour au tableau de bord */
+        .dashboard-btn {
+            background-color: #87e8b6; /* Couleur secondaire */
+            color: white;
+            padding: 8px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(135, 232, 182, 0.3); /* Ombre basée sur la couleur secondaire */
+        }
+
+        .dashboard-btn:hover {
+            background-color: #55deaf; /* Couleur tertiaire */
+            transform: scale(1.05);
+        }
+
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -27,12 +84,12 @@
         }
 
         .profile-header {
-            background: linear-gradient(45deg, #ff6f61 0%, #ff8a65 100%);
+            background: linear-gradient(45deg, #38d62c 0%, #55deaf 100%); /* Couleur principale à tertiaire */
             color: white;
             padding: 25px;
             border-radius: 20px;
             margin-bottom: 30px;
-            box-shadow: 0 6px 20px rgba(255, 111, 97, 0.2);
+            box-shadow: 0 6px 20px rgba(56, 214, 44, 0.2); /* Ombre basée sur la couleur principale */
             display: flex;
             align-items: center;
             gap: 20px;
@@ -60,7 +117,7 @@
             align-items: center;
             justify-content: center;
             font-size: 2.2rem;
-            color: #ff6f61;
+            color: #38d62c; /* Couleur principale */
             border: 4px solid #fff;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             z-index: 1;
@@ -167,47 +224,28 @@
 
         .filter-input:focus {
             outline: none;
-            border-color: #ff8a65;
-            box-shadow: 0 0 8px rgba(255, 138, 101, 0.2);
+            border-color: #55deaf; /* Couleur tertiaire */
+            box-shadow: 0 0 8px rgba(85, 222, 175, 0.2); /* Ombre basée sur la couleur tertiaire */
         }
 
         .status-pending {
-            color: #f1c40f;
+            color: #f1c40f; /* Conservé pour contraste */
             font-weight: 500;
         }
 
         .status-approved {
-            color: #00b894;
+            color: #38d62c; /* Couleur principale */
             font-weight: 500;
         }
 
         .status-rejected {
-            color: #e17055;
+            color: #e74c3c; /* Conservé pour contraste */
             font-weight: 500;
-        }
-
-        /* Bouton de déconnexion */
-        .logout-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #e17055;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 12px;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 2px 10px rgba(225, 112, 85, 0.3);
-        }
-
-        .logout-btn:hover {
-            background-color: #d35400;
-            transform: scale(1.05);
         }
 
         /* Bouton d'édition du profil */
         .edit-btn {
-            background-color: #ff8a65;
+            background-color: #87e8b6; /* Couleur secondaire */
             color: white;
             padding: 8px 16px;
             border-radius: 10px;
@@ -216,7 +254,7 @@
         }
 
         .edit-btn:hover {
-            background-color: #ff6f61;
+            background-color: #55deaf; /* Couleur tertiaire */
             transform: scale(1.05);
         }
 
@@ -251,6 +289,29 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px 20px;
+            }
+
+            .header .logo {
+                font-size: 1.2rem;
+            }
+
+            .header .header-buttons {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .logout-btn, .dashboard-btn {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+                width: 100%;
+                text-align: center;
+            }
+
             .profile-header {
                 flex-direction: column;
                 text-align: center;
@@ -281,13 +342,6 @@
                 padding: 8px;
             }
 
-            .logout-btn {
-                top: 15px;
-                right: 15px;
-                padding: 8px 16px;
-                font-size: 0.9rem;
-            }
-
             .edit-btn {
                 padding: 6px 12px;
                 font-size: 0.9rem;
@@ -300,45 +354,44 @@
     </style>
 </head>
 <body>
-<!-- Bouton de déconnexion -->
-<a href="{{ route('logout') }}" class="logout-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-    <i class="fas fa-sign-out-alt"></i> Déconnexion
-</a>
+<!-- Header -->
+<header class="header">
+    <div class="logo">Mon Profil</div>
+    <div class="header-buttons">
+        <!-- Bouton Retour au tableau de bord -->
+        <a href="{{ route('dashboard') }}" class="dashboard-btn">
+            <i class="fas fa-tachometer-alt"></i> Tableau de bord
+        </a>
+        <!-- Bouton de déconnexion -->
+        <a href="{{ route('logout') }}" class="logout-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="fas fa-sign-out-alt"></i> Déconnexion
+        </a>
+    </div>
+</header>
+
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     @csrf
 </form>
 
 <div class="container">
-    <!-- En-tête du profil -->
-    <div class="profile-header">
-        <div class="avatar">
-            <i class="fas fa-user"></i>
-        </div>
-        <div class="info">
-            <h1>{{ auth()->user()->name }}</h1>
-            <p>{{ auth()->user()->email }}</p>
-        </div>
-    </div>
-
-    <!-- Section des informations personnelles -->
+       <!-- Section des informations personnelles -->
     <div class="card">
         <div class="card-header">
             <span>Informations personnelles</span>
-            <a href="#" class="edit-btn"><i class="fas fa-edit"></i> Modifier</a>
         </div>
         <div class="card-body">
             <ul class="info-list">
                 <li>
                     <span>Nom</span>
-                    <span>{{ auth()->user()->name }}</span>
+                    <span>{{ auth()->user()->username }}</span>
                 </li>
                 <li>
                     <span>Email</span>
                     <span>{{ auth()->user()->email }}</span>
                 </li>
                 <li>
-                    <span>Rôle</span>
-                    <span>Employé</span>
+                    <span>Département</span>
+                    <span>{{ auth()->user()->departement }}</span>
                 </li>
                 <li>
                     <span>Date d'inscription</span>
@@ -372,7 +425,7 @@
                         <tr>
                             <td>{{ $conge->date_debut }}</td>
                             <td>{{ $conge->date_fin }}</td>
-                            <td>{{ $conge->type }}</td>
+                            <td>{{ $conge->type_conge }}</td>
                             <td class="status-{{ strtolower($conge->statut) }}">{{ $conge->statut }}</td>
                         </tr>
                     @endforeach

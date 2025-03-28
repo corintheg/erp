@@ -1,12 +1,12 @@
 <?php
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use HasFactory;
 
 class Salaire extends Model
 {
+    use HasFactory;
 
     protected $table = 'salaires';
     protected $primaryKey = 'id_salaire';
@@ -28,8 +28,8 @@ class Salaire extends Model
         'date_modification' => 'datetime',
     ];
 
-    public function employe()
+    public function employes()
     {
-        return $this->belongsTo(Employe::class, 'id_employe');
+        return $this->belongsTo(Employe::class, 'id_employe', 'id_employe');
     }
 }

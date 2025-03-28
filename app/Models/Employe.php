@@ -32,5 +32,4 @@ class Employe extends Model
     {
         return $this->hasMany(Conge::class, 'id_employe', 'id_employe');
     }
-
 }
