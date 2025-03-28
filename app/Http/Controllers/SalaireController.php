@@ -17,7 +17,7 @@ class SalaireController extends Controller
             return response()->json(['salaires' => $salaries, 'totalSalaries' => $totalSalaries]);
         }
 
-        return view('salaries.index', compact('salaries', 'totalSalaries'));
+        return view('salaires.index', compact('salaries', 'totalSalaries'));
     }
 
 
@@ -25,7 +25,7 @@ class SalaireController extends Controller
     {
         // Récupérer les employés
         $employes = Employe::all();  // Nous récupérons tous les employés pour les afficher dans le formulaire
-        return view('salaries.create', compact('employes'));  // Passer les employés à la vue
+        return view('salaires.create', compact('employes'));  // Passer les employés à la vue
     }
 
     public function store(Request $request)
@@ -45,7 +45,7 @@ class SalaireController extends Controller
                 'date_creation' => now(),
                 'date_modification' => now(),
             ]);
-            return redirect()->route('salaries.index')->with('success', 'Salaire ajouté avec succès.');
+            return redirect()->route('salaires.index')->with('success', 'Salaire ajouté avec succès.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'ajout du salaire.')->withInput();
         }
@@ -56,7 +56,7 @@ class SalaireController extends Controller
     {
         $salaire = Salaire::findOrFail($id);
         $employes = Employe::all();
-        return view('salaries.edit', compact('salaire', 'employes'));
+        return view('salaires.edit', compact('salaire', 'employes'));
     }
 
     public function update(Request $request, $id)
@@ -77,12 +77,12 @@ class SalaireController extends Controller
             'date_modification' => now(),
         ]);
 
-        return redirect()->route('salaries.index')->with('success', 'Salaire mis à jour.');
+        return redirect()->route('salaires.index')->with('success', 'Salaire mis à jour.');
     }
 
     public function destroy($id)
     {
         Salaire::findOrFail($id)->delete();
-        return redirect()->route('salaries.index')->with('success', 'Salaire supprimé.');
+        return redirect()->route('salaires.index')->with('success', 'Salaire supprimé.');
     }
 }
