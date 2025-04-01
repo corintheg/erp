@@ -17,7 +17,7 @@
 
     <div id="splash-screen"
         class="fixed inset-0 flex items-center justify-center bg-black text-white text-4xl font-bold z-50">
-        Application pour ordinateurs (non responsive)
+        Application pour ordinateurs (non responsive sur téléphone)
     </div>
 
     <div id="main-content" class="hidden w-full flex items-center justify-center">
