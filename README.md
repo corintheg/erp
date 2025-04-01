@@ -41,7 +41,7 @@ Un système ERP (Enterprise Resource Planning) conçu pour gérer les employés,
 1. Clonez le dépôt :
 
    ```bash
-   git clone https://gitlab.com/41M3Dev/erp.git
+   git clone https://github.com/corintheg/erp.git
    cd erp
    ```
 
@@ -61,7 +61,7 @@ Un système ERP (Enterprise Resource Planning) conçu pour gérer les employés,
    cp .env.example .env
    ```
 
-2. Configurez les variables d'environnement dans le fichier `.env` (base de données, mail, etc.).
+2. Configurez les variables d'environnement dans le fichier `.env` (base de données, etc).
 
 3. Bases de données dans la racine 'erp.sql' à importer sur phpmyadmin
 
@@ -122,3 +122,7 @@ Les contributions sont les bienvenues ! Pour contribuer :
 5. Ouvrez une Pull Request.
 
 ---
+
+## Licence
+
+Ce projet est sous licence [MIT](LICENSE).
