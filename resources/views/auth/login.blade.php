@@ -16,11 +16,13 @@
 <body class="min-h-screen bg-gradient-to-br from-[#38d62c] to-[#55deaf] flex items-center justify-center">
 
     <div id="splash-screen"
-        class="fixed inset-0 flex items-center justify-center bg-black text-white text-4xl font-bold z-50">
-        Application pour ordinateurs (non responsive sur téléphone)
+        class="fixed inset-0 flex items-center justify-center bg-black text-white text-2xl font-bold text-center p-4 z-50 transition-opacity duration-1000 opacity-100 md:hidden">
+        Application pour ordinateurs<br>(non responsive sur téléphone)
     </div>
 
-    <div id="main-content" class="hidden w-full flex items-center justify-center">
+
+    <div id="main-content"
+        class="w-full flex items-center justify-center transition-opacity duration-1000 opacity-0 md:opacity-100">
         <div class="bg-white bg-opacity-90 backdrop-blur p-10 rounded-xl shadow-2xl w-full max-w-md">
             <div class="mb-6 text-center">
                 <h1 class="text-3xl font-bold text-gray-800">Bienvenue</h1>
@@ -82,10 +84,15 @@
             document.getElementById('mot_de_passe').value = 'paul';
         }
 
-        setTimeout(() => {
-            document.getElementById('splash-screen').style.display = 'none';
-            document.getElementById('main-content').classList.remove('hidden');
-        }, 3000);
+        if (window.innerWidth < 768) {
+            setTimeout(() => {
+                document.getElementById('splash-screen').style.display = 'none';
+                document.getElementById('main-content').classList.remove('opacity-0');
+            }, 3000);
+        }
+        else {
+            document.getElementById('main-content').classList.remove('opacity-0');
+        }
     </script>
 </body>
 
