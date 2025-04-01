@@ -111,15 +111,10 @@ Un système ERP (Enterprise Resource Planning) conçu pour gérer les employés,
 
 ---
 
-## Contribuer
+## Contributeurs
 
-Les contributions sont les bienvenues ! Pour contribuer :
-
-1. Forkez le projet.
-2. Créez une branche pour votre fonctionnalité ou correction de bug (`git checkout -b feature/ma-fonctionnalite`).
-3. Commitez vos modifications (`git commit -m 'Ajout de ma fonctionnalité'`).
-4. Poussez votre branche (`git push origin feature/ma-fonctionnalite`).
-5. Ouvrez une Pull Request.
+- [@corintheg](https://github.com/corintheg)
+- [@41M3Dev](https://github.com/41M3Dev)
 
 ---
 
