@@ -50,7 +50,7 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="mb-4">
-                    <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
+                    <label for="username" class="block text-gray-700 font-medium mb-2">Pseudo</label>
                     <input type="text" name="username" id="username" placeholder="Votre username" required autofocus
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#38d62c]"
                         value="superadmin">
@@ -67,7 +67,6 @@
                     connecter</button>
             </form>
 
-            <!-- Bouton de test utilisateur -->
             <div class="mt-8 text-center">
                 <button onclick="remplirUser()"
                     class="inline-flex items-center gap-2 text-white bg-gray-500 px-6 py-3 rounded-lg shadow-lg text-base font-semibold hover:bg-gray-700 cursor-pointer transition duration-300">
@@ -83,7 +82,6 @@
             document.getElementById('mot_de_passe').value = 'paul';
         }
 
-        // Affiche la page après 2 secondes
         setTimeout(() => {
             document.getElementById('splash-screen').style.display = 'none';
             document.getElementById('main-content').classList.remove('hidden');
