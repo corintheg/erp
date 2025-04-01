@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="main-content flex-1 ml-0 md:ml-64 p-6 text-sm">
-        <!-- Header de la page -->
+    <main class="main-content flex-1 ml-0 md:ml-64 p-4 sm:p-6 text-sm">
+        <!-- Header -->
         <header class="bg-white shadow p-4 rounded-lg mb-6">
             <h2 class="text-2xl font-semibold">Modification d’une commande</h2>
         </header>
 
-        <!-- Messages de succès et d'erreur -->
+        <!-- Messages -->
         @if (session('success'))
             <div class="mb-4 p-2 bg-green-100 text-green-700 rounded-md">
                 {{ session('success') }}
@@ -24,13 +24,13 @@
             </div>
         @endif
 
-        <!-- Formulaire de modification -->
-        <div class="bg-white rounded-lg shadow-md p-6">
+        <!-- Formulaire -->
+        <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
             <form action="{{ route('commandes.update', $commande->id_livraison) }}" method="POST">
                 @csrf
                 @method('PUT')
 
-                <!-- Référence de la commande -->
+                <!-- Référence -->
                 <div class="mb-4">
                     <label for="reference_commande" class="block text-gray-700 font-medium mb-2">
                         Référence de la commande
@@ -40,7 +40,7 @@
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
                 </div>
 
-                <!-- Fournisseur (menu déroulant) -->
+                <!-- Fournisseur -->
                 <div class="mb-4">
                     <label for="id_fournisseur" class="block text-gray-700 font-medium mb-2">
                         Fournisseur
@@ -66,18 +66,18 @@
                         value="{{ old('destinataire', $commande->destinataire) }}"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
                 </div>
-                    <!-- Date de livraison -->
-                    <div class="mb-4">
-                        <label for="date_livraison" class="block text-gray-700 font-medium mb-2">
-                            Date de livraison
-                        </label>
-                        <input type="date" id="date_livraison" name="date_livraison"
-    value="{{ old('date_livraison', $commande->date_livraison ? \Carbon\Carbon::parse($commande->date_livraison)->format('Y-m-d') : date('Y-m-d')) }}"
-    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
 
-                    </div>
+                <!-- Date de livraison -->
+                <div class="mb-4">
+                    <label for="date_livraison" class="block text-gray-700 font-medium mb-2">
+                        Date de livraison
+                    </label>
+                    <input type="date" id="date_livraison" name="date_livraison"
+                        value="{{ old('date_livraison', $commande->date_livraison ? \Carbon\Carbon::parse($commande->date_livraison)->format('Y-m-d') : date('Y-m-d')) }}"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                </div>
 
-                <!-- Statut (menu déroulant) -->
+                <!-- Statut -->
                 <div class="mb-4">
                     <label for="statut_livraison" class="block text-gray-700 font-medium mb-2">
                         Statut de la livraison
@@ -94,13 +94,14 @@
                     </select>
                 </div>
 
-                <div class="flex justify-between items-center">
+                <!-- Boutons -->
+                <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mt-6">
                     <a href="{{ route('commandes.index') }}"
-                        class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                        class="w-full sm:w-auto text-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
                         Annuler
                     </a>
                     <button type="submit"
-                        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+                        class="w-full sm:w-auto px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
                         Mettre à jour la commande
                     </button>
                 </div>

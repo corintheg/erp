@@ -19,6 +19,7 @@
             .sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.3s ease-in-out;
+                z-index: 50;
             }
 
             .sidebar.open {
@@ -75,19 +76,19 @@
 
 <body class="bg-gray-100 font-sans flex overflow-x-hidden">
 
-    <!-- Bouton Burger (plus gros, en bas à droite, visible en dessous de 769px) -->
-    <button id="burger-btn" class="fixed bottom-6 right-6 z-50 p-4 text-white bg-green-600 rounded-full shadow">
+    <button id="burger-btn"
+        class="fixed top-4 right-4 z-50 p-3 bg-green-600 text-white rounded-xl shadow-lg hover:opacity-90 transition duration-300">
         <i class="fas fa-bars text-2xl"></i>
     </button>
 
-    <!-- Sidebar (hauteur 100%) -->
+
+
     <aside id="sidebar" class="sidebar w-64 bg-gray-800 text-green-300 h-full fixed">
         <div class="p-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold pt-5">Mini ERP</h1>
             <button id="close-btn" class="md:hidden text-white">
                 <i class="fas fa-times"></i>
             </button>
-        </div>
         </div>
         <nav class="mt-6">
             @if ((Auth::user()->hasAnyRole(['superadmin', 'admin'])))
@@ -113,17 +114,12 @@
                 <a href="{{ route('salaires.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
                     <i class="fa-solid fa-dollar-sign mr-3"></i>Salaires
                 </a>
-
             @endif
-
             @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'finance']))
                 <a href="{{ route('finances.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
                     <i class="fa-solid fa-wallet mr-3"></i> Finances
                 </a>
-
             @endif
-
-
             @if (Auth::user()->hasAnyRole(['superadmin', 'admin', 'finance', 'livreur', 'manager']))
                 <a href="{{ route('fournisseurs.index') }}" class="flex items-center p-4 hover:bg-gray-700 ">
                     <i class="fas fa-tachometer-alt mr-3"></i> Fournisseurs
@@ -137,23 +133,55 @@
             @endif
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="flex items-center p-4 hover:bg-gray-700 text-red-400 w-full text-left    ">
+                <button type="submit" class="flex items-center p-4 hover:bg-gray-700 text-red-400 w-full text-left">
                     <i class="fa-solid fa-door-open mr-3"></i> Se déconnecter
                 </button>
             </form>
-
         </nav>
-
     </aside>
 
-
     @yield('content')
-    <div
-        class="fixed-info fixed bottom-6 right-6 bg-white border  border-gray-300 shadow-lg rounded-lg px-5 py-3 text-sm text-gray-700 max-w-xs z-50">
-        <i class="fa-solid fa-circle-info text-green-600 mr-2"></i>
-        Faites toutes les modifications que vous souhaitez,<br> les données sont réinitialisées toutes les 12h (midi et
-        minuit).
+
+    <div id="notif"
+        class="fixed-info fixed bottom-6 right-6 bg-white border border-gray-300 shadow-lg rounded-lg px-5 py-3 text-sm text-gray-700 max-w-xs z-50"
+        style="display: none;">
+        <div class="flex justify-between items-start">
+            <div class="pr-4">
+                <i class="fa-solid fa-circle-info text-green-600 mr-2"></i>
+                Faites toutes les modifications que vous souhaitez,<br>
+                les données sont réinitialisées toutes les 12h (midi et minuit).
+            </div>
+            <button id="close-notif" class="text-gray-400 hover:text-gray-600 text-sm ml-2 mt-1">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
     </div>
+
+
+
+
+    <script>
+        const burgerBtn = document.getElementById('burger-btn');
+        const sidebar = document.getElementById('sidebar');
+        const closeBtn = document.getElementById('close-btn');
+
+        burgerBtn?.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        closeBtn?.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+        });
+
+        if (!sessionStorage.getItem('notifClosed')) {
+            document.getElementById('notif').style.display = 'block';
+        }
+
+        document.getElementById('close-notif')?.addEventListener('click', () => {
+            document.getElementById('notif')?.remove();
+            sessionStorage.setItem('notifClosed', 'true');
+        });
+    </script>
 
 
 </body>

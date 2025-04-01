@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="main-content flex-1 ml-0 md:ml-64 p-6 text-sm">
+    <main class="main-content flex-1 ml-0 md:ml-64 p-4 sm:p-6 text-sm">
         <!-- Header de la page -->
         <header class="bg-white shadow p-4 rounded-lg mb-6">
             <h2 class="text-2xl font-semibold">Créer un Nouvel Utilisateur</h2>
         </header>
 
-        <!-- Affichage des messages de succès et d'erreur -->
+        <!-- Messages -->
         @if (session('success'))
             <div class="mb-4 p-2 bg-green-100 text-green-700 rounded-md">
                 {{ session('success') }}
@@ -24,8 +24,8 @@
             </div>
         @endif
 
-        <!-- Formulaire de création -->
-        <div class="bg-white rounded-lg shadow-md p-6">
+        <!-- Formulaire -->
+        <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
             <form action="{{ route('admin.store') }}" method="POST">
                 @csrf
 
@@ -78,12 +78,13 @@
                     @enderror
                 </div>
 
-                <div class="flex justify-between items-center">
-                    <a href="{{ route('admin.index') }}" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mt-6">
+                    <a href="{{ route('admin.index') }}"
+                        class="w-full sm:w-auto text-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
                         Retour à la liste
                     </a>
                     <button type="submit"
-                        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+                        class="w-full sm:w-auto px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
                         Enregistrer
                     </button>
                 </div>

@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="main-content flex-1 ml-0 md:ml-64 p-6 text-sm">
+<main class="main-content flex-1 ml-0 md:ml-64 p-4 sm:p-6 text-sm">
+    <!-- Header -->
     <header class="bg-white shadow p-4 rounded-lg mb-6">
         <h2 class="text-2xl font-semibold">Modification du produit</h2>
     </header>
 
+    <!-- Alertes -->
     @if (session('success'))
         <div class="mb-4 p-2 bg-green-100 text-green-700 rounded-md">
             {{ session('success') }}
@@ -22,7 +24,8 @@
         </div>
     @endif
 
-    <div class="bg-white rounded-lg shadow-md p-6">
+    <!-- Formulaire -->
+    <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
         <form action="{{ route('stocks.update', $stock->id_produit) }}" method="POST">
             @csrf
             @method('PUT')
@@ -35,11 +38,11 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
             </div>
 
-            <!-- Fournisseur (menu déroulant) -->
+            <!-- Fournisseur -->
             <div class="mb-4">
                 <label for="id_fournisseur" class="block text-gray-700 font-medium mb-2">Fournisseur</label>
                 <select id="id_fournisseur" name="id_fournisseur"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
                     <option value="">-- Sélectionnez un fournisseur --</option>
                     @foreach ($fournisseurs as $fournisseur)
                         <option value="{{ $fournisseur->id_fournisseur }}"
@@ -89,9 +92,10 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
             </div>
 
-            <div class="flex justify-between items-center">
+            <!-- Boutons -->
+            <div class="flex flex-col sm:flex-row justify-between gap-2">
                 <a href="{{ route('stocks.index') }}"
-                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 text-center">
                     Annuler
                 </a>
                 <button type="submit"

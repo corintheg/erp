@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="main-content flex-1 ml-0 md:ml-64 p-6 text-sm">
-        <!-- Header de la page -->
-        <header class="bg-white shadow p-4 rounded-lg mb-6 flex justify-between items-center">
+    <main class="main-content flex-1 ml-0 md:ml-64 p-4 sm:p-6 text-sm">
+        <header
+            class="bg-white shadow p-4 rounded-lg mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <h2 class="text-2xl font-semibold">Gestion des Fournisseurs</h2>
             <a href="{{ route('fournisseurs.create') }}"
                 class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
                 + Nouveau fournisseur
             </a>
         </header>
+
         @if (session('error'))
             <div class="flex items-center gap-3 bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg shadow mb-4">
                 <i class="fas fa-exclamation-triangle text-xl"></i>
@@ -24,8 +25,7 @@
             </div>
         @endif
 
-        <!-- Contenu principal -->
-        <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
             <div class="mb-4 flex flex-col sm:flex-row gap-4">
                 <input type="text" id="searchInput" placeholder="Rechercher par nom de fournisseur..."
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -35,7 +35,8 @@
                 </button>
             </div>
 
-            <div class="overflow-x-auto">
+            <!-- Table desktop -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left">
                     <thead class="bg-gray-200">
                         <tr>
@@ -86,13 +87,51 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-4 text-gray-500">
-                                    Aucun fournisseur trouvé.
-                                </td>
+                                <td colspan="7" class="text-center py-4 text-gray-500">Aucun fournisseur trouvé.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Version mobile -->
+            <div class="md:hidden space-y-4">
+                @forelse ($fournisseurs as $fournisseur)
+                    <div class="border rounded-lg p-4 shadow fournisseur-item" data-name="{{ strtolower($fournisseur->nom) }}">
+                        <p class="font-semibold mb-2">(ID: {{ $fournisseur->id_fournisseur }}) {{ $fournisseur->nom }}</p>
+                        <p><span class="font-medium">Contact:</span> {{ $fournisseur->contact }}</p>
+                        <p><span class="font-medium">Email:</span> {{ $fournisseur->email }}</p>
+                        <p><span class="font-medium">Téléphone:</span> {{ $fournisseur->telephone }}</p>
+                        <p><span class="font-medium">Adresse:</span> {{ $fournisseur->adresse }}</p>
+                        <p><span class="font-medium">Site web:</span>
+                            @if ($fournisseur->site_web)
+                                <a href="{{ $fournisseur->site_web }}" target="_blank" class="text-blue-500 underline">
+                                    {{ $fournisseur->site_web }}
+                                </a>
+                            @else
+                                N/A
+                            @endif
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-2 mt-4">
+                            <a href="{{ route('fournisseurs.edit', $fournisseur->id_fournisseur) }}"
+                                class="text-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200">
+                                Éditer
+                            </a>
+                            <form action="{{ route('fournisseurs.destroy', $fournisseur->id_fournisseur) }}" method="POST"
+                                class="w-full sm:w-auto">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="w-full text-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200"
+                                    onclick="return confirm('Supprimer ce fournisseur ?')">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-center text-gray-500">Aucun fournisseur trouvé.</p>
+                @endforelse
             </div>
         </div>
     </main>
@@ -106,7 +145,7 @@
             const fournisseurs = document.getElementsByClassName('fournisseur-item');
             Array.from(fournisseurs).forEach((fournisseur) => {
                 const name = fournisseur.getAttribute('data-name') || '';
-                fournisseur.style.display = name.includes(searchTerm) ? 'table-row' : 'none';
+                fournisseur.style.display = name.includes(searchTerm) ? '' : 'none';
             });
         }
 
