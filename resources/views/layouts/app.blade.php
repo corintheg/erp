@@ -45,6 +45,22 @@
         #search-bar-sidebar {
             display: none;
         }
+
+        .fixed-info {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -56,9 +72,9 @@
     </button>
 
     <!-- Sidebar (hauteur 100%) -->
-    <aside id="sidebar" class="sidebar w-64 bg-gray-800 text-[#55deaf] h-full fixed">
+    <aside id="sidebar" class="sidebar w-64 bg-gray-800 text-green-300 h-full fixed">
         <div class="p-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold">ERP System</h1>
+            <h1 class="text-2xl font-bold pt-5">Mini ERP</h1>
             <button id="close-btn" class="md:hidden text-white">
                 <i class="fas fa-times"></i>
             </button>
@@ -123,7 +139,12 @@
 
 
     @yield('content')
-
+    <div
+        class="fixed-info fixed bottom-6 right-6 bg-white border  border-gray-300 shadow-lg rounded-lg px-5 py-3 text-sm text-gray-700 max-w-xs z-50">
+        <i class="fa-solid fa-circle-info text-green-600 mr-2"></i>
+        Faites toutes les modifications que vous souhaitez,<br> les données sont réinitialisées toutes les 12h (midi et
+        minuit).
+    </div>
 
 
 </body>

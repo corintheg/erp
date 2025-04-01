@@ -66,7 +66,7 @@
                         Date de Début
                     </label>
                     <input type="date" id="date_debut" name="date_debut"
-                        value="{{ old('date_debut', $salaire->date_debut) }}"
+                        value="{{ old('date_debut', optional($salaire->date_debut)->format('Y-m-d')) }}"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]"
                         required>
                     @error('date_debut')
@@ -78,12 +78,14 @@
                     <label for="date_fin" class="block text-gray-700 font-medium mb-2">
                         Date de Fin (optionnel)
                     </label>
-                    <input type="date" id="date_fin" name="date_fin" value="{{ old('date_fin', $salaire->date_fin) }}"
+                    <input type="date" id="date_fin" name="date_fin"
+                        value="{{ old('date_fin', optional($salaire->date_fin)->format('Y-m-d')) }}"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
                     @error('date_fin')
                         <span class="text-red-600 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
+
 
                 <div class="flex justify-between items-center">
                     <a href="{{ route('salaires.index') }}"

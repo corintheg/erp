@@ -61,7 +61,6 @@
     </div>
 
     <div class="max-w-[1100px] mx-auto p-[30px]">
-        <!-- Section des informations personnelles -->
         <div
             class="bg-white rounded-[20px] mb-[25px] transition-all duration-300 shadow-[0_4px_15px_rgba(0,0,0,0.08)] hover:-translate-y-2 hover:shadow-[0_8px_25px_rgba(0,0,0,0.12)]">
             <div

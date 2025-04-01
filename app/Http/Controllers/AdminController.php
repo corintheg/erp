@@ -37,7 +37,7 @@ class AdminController extends Controller
         $request->validate([
             'username' => 'required|string|max:50|unique:utilisateurs,username',
             'email' => 'required|email|unique:utilisateurs,email',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|confirmed',
             'roles' => 'nullable|array',
         ]);
 
@@ -106,7 +106,7 @@ class AdminController extends Controller
             'username' => 'required|string|max:50|unique:utilisateurs,username,'
                 . $utilisateur->id_utilisateur . ',id_utilisateur',
             'email' => 'required|email|unique:utilisateurs,email,' . $utilisateur->id_utilisateur . ',id_utilisateur',
-            'password' => 'nullable|string|min:6|confirmed',
+            'password' => 'nullable|string|confirmed',
             'roles' => 'nullable|array',
         ]);
 
@@ -162,7 +162,17 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
-        $utilisateur = Utilisateur::findOrFail($id);
+        $utilisateur = Utilisateur::with('roles')->findOrFail($id);
+
+        $protectedRoles = ['superadmin', 'admin'];
+        $hasProtectedRole = $utilisateur->roles->pluck('nom_role')->intersect($protectedRoles)->isNotEmpty();
+
+        if ($hasProtectedRole) {
+            return redirect()
+                ->route('admin.index')
+                ->with('error', 'Impossible de supprimer un utilisateur avec un rôle "superadmin" ou "admin".');
+        }
+
         $utilisateur->roles()->detach();
         $utilisateur->delete();
 
