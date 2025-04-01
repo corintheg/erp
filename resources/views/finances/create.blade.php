@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="main-content flex-1 ml-0 md:ml-64 p-6 text-sm">
+<main class="main-content flex-1 ml-0 md:ml-64 p-4 sm:p-6 text-sm">
     <header class="bg-white shadow p-4 rounded-lg mb-6">
         <h2 class="text-2xl font-semibold">Nouvelle entrée financière</h2>
     </header>
@@ -22,7 +22,7 @@
         </div>
     @endif
 
-    <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
         <form action="{{ route('finances.store') }}" method="POST">
             @csrf
 
@@ -109,19 +109,19 @@
             </div>
 
             <!-- ref_facture -->
-            <div class="mb-4">
+            <div class="mb-6">
                 <label for="reference_facture" class="block text-gray-700 font-medium mb-2">Réf. Facture (optionnel)</label>
                 <input type="text" id="reference_facture" name="reference_facture" value="{{ old('reference_facture') }}"
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
             </div>
 
-            <div class="flex justify-between items-center">
+            <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
                 <a href="{{ route('finances.index') }}"
-                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                    class="w-full sm:w-auto text-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
                     Annuler
                 </a>
                 <button type="submit"
-                    class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+                    class="w-full sm:w-auto px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
                     Enregistrer
                 </button>
             </div>

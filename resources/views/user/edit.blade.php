@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="main-content flex-1 ml-0 md:ml-64 p-6 text-sm">
+    <main class="main-content flex-1 ml-0 md:ml-64 p-4 sm:p-6 text-sm">
         <!-- Header -->
-        <header class="bg-white shadow p-4 rounded-lg mb-6">
+        <header
+            class="bg-white shadow p-4 rounded-lg mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <h2 class="text-2xl font-semibold">
                 Modification de votre profil : <span class="font-semibold">{{ $user->username }}</span>
             </h2>
@@ -27,7 +28,7 @@
         @endif
 
         <!-- Formulaire d'édition -->
-        <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
             <form action="{{ route('user.update', $user->id_utilisateur) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -78,13 +79,13 @@
                 </div>
 
                 <!-- Boutons d'action -->
-                <div class="flex justify-between items-center">
+                <div class="flex flex-col sm:flex-row justify-between gap-4">
                     <a href="{{ route('user.dashboard') }}"
-                        class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                        class="w-full sm:w-auto text-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
                         Annuler
                     </a>
                     <button type="submit"
-                        class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200">
+                        class="w-full sm:w-auto px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200">
                         Mettre à jour
                     </button>
                 </div>

@@ -25,12 +25,10 @@ class LoginController extends Controller
             'mot_de_passe.required' => 'Le champ mot de passe est obligatoire.',
         ]);
 
-        // Récupération de l'utilisateur par username
+
         $user = Utilisateur::where('username', $request->username)->first();
 
-        // Vérification manuelle du mot de passe
         if ($user && Hash::check($request->mot_de_passe, $user->getAuthPassword())) {
-            // Connexion de l'utilisateur
             Auth::login($user);
             $request->session()->regenerate();
             session()->flash('success', 'Connexion réussie !');

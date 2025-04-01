@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="main-content flex-1 ml-0 md:ml-64 p-6 text-sm">
+<main class="main-content flex-1 ml-0 md:ml-64 p-4 sm:p-6 text-sm">
     <header class="bg-white shadow p-4 rounded-lg mb-6">
         <h2 class="text-2xl font-semibold">Enregistrement d’un nouveau produit</h2>
     </header>
@@ -22,22 +22,22 @@
         </div>
     @endif
 
-    <div class="bg-white rounded-lg shadow-md p-6">
-        <form action="{{ route('stocks.store') }}" method="POST">
+    <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
+        <form action="{{ route('stocks.store') }}" method="POST" class="space-y-4">
             @csrf
 
             <!-- Nom du produit -->
-            <div class="mb-4">
-                <label for="nom_produit" class="block text-gray-700 font-medium mb-2">Nom du produit</label>
+            <div>
+                <label for="nom_produit" class="block text-gray-700 font-medium mb-1">Nom du produit</label>
                 <input type="text" id="nom_produit" name="nom_produit" value="{{ old('nom_produit') }}" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#38d62c] focus:outline-none">
             </div>
 
-            <!-- Fournisseur (menu déroulant) -->
-            <div class="mb-4">
-                <label for="id_fournisseur" class="block text-gray-700 font-medium mb-2">Fournisseur</label>
+            <!-- Fournisseur -->
+            <div>
+                <label for="id_fournisseur" class="block text-gray-700 font-medium mb-1">Fournisseur</label>
                 <select id="id_fournisseur" name="id_fournisseur"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-[#38d62c] focus:outline-none">
                     <option value="">-- Sélectionnez un fournisseur --</option>
                     @foreach ($fournisseurs as $fournisseur)
                         <option value="{{ $fournisseur->id_fournisseur }}"
@@ -49,43 +49,44 @@
             </div>
 
             <!-- Quantité -->
-            <div class="mb-4">
-                <label for="quantite" class="block text-gray-700 font-medium mb-2">Quantité</label>
+            <div>
+                <label for="quantite" class="block text-gray-700 font-medium mb-1">Quantité</label>
                 <input type="number" id="quantite" name="quantite" value="{{ old('quantite') }}" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#38d62c] focus:outline-none">
             </div>
 
             <!-- Description -->
-            <div class="mb-4">
-                <label for="description" class="block text-gray-700 font-medium mb-2">Description</label>
+            <div>
+                <label for="description" class="block text-gray-700 font-medium mb-1">Description</label>
                 <textarea id="description" name="description" rows="3"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">{{ old('description') }}</textarea>
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#38d62c] focus:outline-none">{{ old('description') }}</textarea>
             </div>
 
             <!-- Seuil d'alerte -->
-            <div class="mb-4">
-                <label for="seuil_alerte" class="block text-gray-700 font-medium mb-2">Seuil d'alerte</label>
+            <div>
+                <label for="seuil_alerte" class="block text-gray-700 font-medium mb-1">Seuil d'alerte</label>
                 <input type="number" id="seuil_alerte" name="seuil_alerte" value="{{ old('seuil_alerte') }}"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#38d62c] focus:outline-none">
             </div>
 
             <!-- Prix d'achat -->
-            <div class="mb-4">
-                <label for="prix_achat" class="block text-gray-700 font-medium mb-2">Prix d'achat</label>
+            <div>
+                <label for="prix_achat" class="block text-gray-700 font-medium mb-1">Prix d'achat</label>
                 <input type="number" step="0.01" id="prix_achat" name="prix_achat" value="{{ old('prix_achat') }}"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#38d62c] focus:outline-none">
             </div>
 
             <!-- Prix de vente -->
-            <div class="mb-4">
-                <label for="prix_vente" class="block text-gray-700 font-medium mb-2">Prix de vente</label>
+            <div>
+                <label for="prix_vente" class="block text-gray-700 font-medium mb-1">Prix de vente</label>
                 <input type="number" step="0.01" id="prix_vente" name="prix_vente" value="{{ old('prix_vente') }}"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38d62c]">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#38d62c] focus:outline-none">
             </div>
 
-            <div class="flex justify-between items-center">
+            <!-- Boutons -->
+            <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
                 <a href="{{ route('stocks.index') }}"
-                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                    class="px-4 py-2 bg-red-500 text-white rounded-md text-center hover:bg-red-600 transition duration-200">
                     Annuler
                 </a>
                 <button type="submit"

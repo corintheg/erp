@@ -6,8 +6,8 @@
         <header class="bg-white shadow p-4 rounded-lg mb-6 flex justify-between items-center">
             <h2 class="text-2xl font-semibold">Gestion des Congés</h2>
             <a href="{{ route('conges.create') }}"
-                class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
-                + Nouveau congé
+            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+            + Nouveau congé
             </a>
         </header>
         @if (session('error'))
@@ -50,8 +50,8 @@
                 </button>
             </div>
 
-            <!-- Tableau des congés -->
-            <div class="overflow-x-auto">
+            <!-- Desktop table -->
+            <div class="hidden sm:block overflow-x-auto">
                 <table class="w-full text-left">
                     <thead class="bg-gray-200">
                         <tr>
@@ -69,8 +69,7 @@
                             <tr class="border-b hover:bg-gray-50 request-item" data-status="{{ $conge->statut }}"
                                 data-type="{{ $conge->type_conge }}"
                                 data-name="{{ strtolower($conge->employe->nom ?? '') }} {{ strtolower($conge->employe->prenom ?? '') }}">
-                                <td class="px-4 py-3">
-                                    {{ $conge->employe->nom ?? 'N/A' }} {{ $conge->employe->prenom ?? '' }}
+                                <td class="px-4 py-3">{{ $conge->employe->nom ?? 'N/A' }} {{ $conge->employe->prenom ?? '' }}
                                 </td>
                                 <td class="px-4 py-3">{{ $conge->date_debut }}</td>
                                 <td class="px-4 py-3">{{ $conge->date_fin }}</td>
@@ -78,7 +77,7 @@
                                 <td class="px-4 py-3">
                                     <span
                                         class="inline-block px-2 py-1 text-xs font-semibold rounded-full
-                                                                {{ $conge->statut === 'Validé' ? 'bg-green-100 text-green-800' : ($conge->statut === 'Annulé' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                    {{ $conge->statut === 'Validé' ? 'bg-green-100 text-green-800' : ($conge->statut === 'Annulé' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
                                         {{ $conge->statut }}
                                     </span>
                                 </td>
@@ -86,16 +85,14 @@
                                 <td class="px-4 py-3">
                                     @if ($conge->statut === 'En attente')
                                         <div class="flex gap-2">
-                                            <form action="{{ route('conges.approve', $conge->id_conge) }}" method="POST"
-                                                class="flex items-center gap-2">
+                                            <form action="{{ route('conges.approve', $conge->id_conge) }}" method="POST">
                                                 @csrf
                                                 <button type="submit"
                                                     class="px-3 py-1 bg-[#38d62c] text-white rounded-md hover:bg-[#87e8b6] transition duration-200">
                                                     Approuver
                                                 </button>
                                             </form>
-                                            <form action="{{ route('conges.reject', $conge->id_conge) }}" method="POST"
-                                                class="flex items-center gap-2">
+                                            <form action="{{ route('conges.reject', $conge->id_conge) }}" method="POST">
                                                 @csrf
                                                 <button type="submit"
                                                     class="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
@@ -110,14 +107,61 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-4 text-gray-500">
-                                    Aucune demande de congé trouvée.
-                                </td>
+                                <td colspan="7" class="text-center py-4 text-gray-500">Aucune demande de congé trouvée.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
+
+            <!-- Mobile cards -->
+            <div class="sm:hidden space-y-4" id="leaveRequestsMobile">
+                @forelse ($conges as $conge)
+                    <div class="request-item border border-gray-200 rounded-lg p-4 shadow" data-status="{{ $conge->statut }}"
+                        data-type="{{ $conge->type_conge }}"
+                        data-name="{{ strtolower($conge->employe->nom ?? '') }} {{ strtolower($conge->employe->prenom ?? '') }}">
+                        <div class="mb-1"><span class="font-semibold">Employé :</span> {{ $conge->employe->nom ?? 'N/A' }}
+                            {{ $conge->employe->prenom ?? '' }}</div>
+                        <div class="mb-1"><span class="font-semibold">Début :</span> {{ $conge->date_debut }}</div>
+                        <div class="mb-1"><span class="font-semibold">Fin :</span> {{ $conge->date_fin }}</div>
+                        <div class="mb-1"><span class="font-semibold">Type :</span> {{ $conge->type_conge }}</div>
+                        <div class="mb-1">
+                            <span class="font-semibold">Statut :</span>
+                            <span
+                                class="inline-block px-2 py-1 text-xs font-semibold rounded-full
+                            {{ $conge->statut === 'Validé' ? 'bg-green-100 text-green-800' : ($conge->statut === 'Annulé' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                {{ $conge->statut }}
+                            </span>
+                        </div>
+                        <div class="mb-2"><span class="font-semibold">Commentaires :</span> {{ $conge->commentaires ?? 'N/A' }}
+                        </div>
+
+                        @if ($conge->statut === 'En attente')
+                            <div class="grid grid-cols-2 gap-2 mt-3">
+                                <form action="{{ route('conges.approve', $conge->id_conge) }}" method="POST" class="w-full">
+                                    @csrf
+                                    <button type="submit"
+                                        class="w-full text-center px-3 py-2 bg-[#38d62c] text-white rounded-md hover:bg-[#87e8b6] transition duration-200">
+                                        Approuver
+                                    </button>
+                                </form>
+                                <form action="{{ route('conges.reject', $conge->id_conge) }}" method="POST" class="w-full">
+                                    @csrf
+                                    <button type="submit"
+                                        class="w-full text-center px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                                        Refuser
+                                    </button>
+                                </form>
+                            </div>
+                        @else
+                            <div class="text-gray-500 mt-2">Action terminée</div>
+                        @endif
+                    </div>
+                @empty
+                    <p class="text-center text-gray-500">Aucune demande de congé trouvée.</p>
+                @endforelse
+            </div>
+
         </div>
     </main>
 
