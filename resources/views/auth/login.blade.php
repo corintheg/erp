@@ -84,8 +84,8 @@
 
     <script>
         function remplirUser() {
-            document.getElementById('username').value = 'paul';
-            document.getElementById('mot_de_passe').value = 'paul';
+            document.getElementById('username').value = 'corinthe';
+            document.getElementById('mot_de_passe').value = 'corinthe';
         }
 
 
